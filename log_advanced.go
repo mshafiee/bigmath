@@ -19,10 +19,20 @@ func BigLog1p(x *BigFloat, prec uint) *BigFloat {
 	if x.Sign() == 0 {
 		return NewBigFloat(0.0, prec)
 	}
-	if x.Sign() < -1 {
+	
+	// Check if x < -1
+	negOne := NewBigFloat(-1.0, prec)
+	if x.Cmp(negOne) < 0 {
 		// x < -1, log(1+x) is undefined
 		return NewBigFloat(math.NaN(), prec)
 	}
+	
+	// Check if x == -1
+	if x.Cmp(negOne) == 0 {
+		// log(0) = -Inf
+		return new(BigFloat).SetPrec(prec).SetInf(true)
+	}
+	
 	if x.IsInf() {
 		if x.Sign() > 0 {
 			return new(BigFloat).SetPrec(prec).SetInf(false)
