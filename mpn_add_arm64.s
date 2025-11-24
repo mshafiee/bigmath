@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // Multi-precision integer addition for ARM64 (optimized with loop unrolling)

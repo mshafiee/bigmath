@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // func evaluateChebyshevBigAsmARM64(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat

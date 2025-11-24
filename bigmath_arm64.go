@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 //go:build arm64
 
 package bigmath
@@ -48,4 +51,3 @@ func bigMatMulARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 
 //go:noescape
 func bigMatMulAsmARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3
-

@@ -1,6 +1,9 @@
 //go:build ignore
 // +build ignore
 
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // Logarithm function implementation in assembly for ARM64

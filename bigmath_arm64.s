@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // func bigVec3AddAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 // Package bigmath provides arbitrary-precision math operations for astronomical calculations
 // to achieve bit-exact matching with the C library and eliminate rounding errors.
 package bigmath

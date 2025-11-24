@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 package bigmath
 
 // Karatsuba multiplication for large operands (n >= 32 limbs)

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 package bigmath
 
 // DegNormBig normalizes an angle in degrees to [0, 360) using BigFloat
