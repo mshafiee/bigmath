@@ -10,6 +10,8 @@ linters-settings:
     checks: ["all"]
   govet:
     enable-all: true
+    disable:
+      - fieldalignment  # Memory optimization suggestions, not critical for test code
   shadow:
     enabled: true
   ineffassign:
@@ -63,6 +65,7 @@ issues:
       linters:
         - errcheck
         - gocritic
+        - gocyclo  # Test functions often have high complexity due to multiple test cases
     - path: ".*\\.s$"  # Exclude assembly files from all linters
       linters:
         - all
