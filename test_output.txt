@@ -1,0 +1,1554 @@
+=== RUN   TestDegNormBig
+=== RUN   TestDegNormBig/zero
+=== RUN   TestDegNormBig/positive
+=== RUN   TestDegNormBig/360
+=== RUN   TestDegNormBig/negative
+=== RUN   TestDegNormBig/large_positive
+=== RUN   TestDegNormBig/large_negative
+=== RUN   TestDegNormBig/between_cycles
+=== RUN   TestDegNormBig/negative_between_cycles
+=== RUN   TestDegNormBig/almost_360
+=== RUN   TestDegNormBig/just_over_360
+--- PASS: TestDegNormBig (0.00s)
+    --- PASS: TestDegNormBig/zero (0.00s)
+    --- PASS: TestDegNormBig/positive (0.00s)
+    --- PASS: TestDegNormBig/360 (0.00s)
+    --- PASS: TestDegNormBig/negative (0.00s)
+    --- PASS: TestDegNormBig/large_positive (0.00s)
+    --- PASS: TestDegNormBig/large_negative (0.00s)
+    --- PASS: TestDegNormBig/between_cycles (0.00s)
+    --- PASS: TestDegNormBig/negative_between_cycles (0.00s)
+    --- PASS: TestDegNormBig/almost_360 (0.00s)
+    --- PASS: TestDegNormBig/just_over_360 (0.00s)
+=== RUN   TestRadNormBig
+=== RUN   TestRadNormBig/zero
+=== RUN   TestRadNormBig/positive
+=== RUN   TestRadNormBig/negative
+=== RUN   TestRadNormBig/pi
+=== RUN   TestRadNormBig/negative_pi
+=== RUN   TestRadNormBig/just_over_pi
+=== RUN   TestRadNormBig/just_under_neg_pi
+=== RUN   TestRadNormBig/two_pi
+=== RUN   TestRadNormBig/negative_two_pi
+=== RUN   TestRadNormBig/three_pi
+--- PASS: TestRadNormBig (0.00s)
+    --- PASS: TestRadNormBig/zero (0.00s)
+    --- PASS: TestRadNormBig/positive (0.00s)
+    --- PASS: TestRadNormBig/negative (0.00s)
+    --- PASS: TestRadNormBig/pi (0.00s)
+    --- PASS: TestRadNormBig/negative_pi (0.00s)
+    --- PASS: TestRadNormBig/just_over_pi (0.00s)
+    --- PASS: TestRadNormBig/just_under_neg_pi (0.00s)
+    --- PASS: TestRadNormBig/two_pi (0.00s)
+    --- PASS: TestRadNormBig/negative_two_pi (0.00s)
+    --- PASS: TestRadNormBig/three_pi (0.00s)
+=== RUN   TestRadNorm02PiBig
+=== RUN   TestRadNorm02PiBig/zero
+=== RUN   TestRadNorm02PiBig/positive
+=== RUN   TestRadNorm02PiBig/pi
+=== RUN   TestRadNorm02PiBig/three_pi_over_two
+=== RUN   TestRadNorm02PiBig/two_pi
+=== RUN   TestRadNorm02PiBig/negative
+=== RUN   TestRadNorm02PiBig/negative_pi
+=== RUN   TestRadNorm02PiBig/large_positive
+=== RUN   TestRadNorm02PiBig/large_negative
+=== RUN   TestRadNorm02PiBig/just_under_two_pi
+--- PASS: TestRadNorm02PiBig (0.00s)
+    --- PASS: TestRadNorm02PiBig/zero (0.00s)
+    --- PASS: TestRadNorm02PiBig/positive (0.00s)
+    --- PASS: TestRadNorm02PiBig/pi (0.00s)
+    --- PASS: TestRadNorm02PiBig/three_pi_over_two (0.00s)
+    --- PASS: TestRadNorm02PiBig/two_pi (0.00s)
+    --- PASS: TestRadNorm02PiBig/negative (0.00s)
+    --- PASS: TestRadNorm02PiBig/negative_pi (0.00s)
+    --- PASS: TestRadNorm02PiBig/large_positive (0.00s)
+    --- PASS: TestRadNorm02PiBig/large_negative (0.00s)
+    --- PASS: TestRadNorm02PiBig/just_under_two_pi (0.00s)
+=== RUN   TestAngleNormalizationConsistency
+=== RUN   TestAngleNormalizationConsistency/idempotent_deg
+=== RUN   TestAngleNormalizationConsistency/idempotent_rad
+=== RUN   TestAngleNormalizationConsistency/idempotent_rad_02pi
+--- PASS: TestAngleNormalizationConsistency (0.00s)
+    --- PASS: TestAngleNormalizationConsistency/idempotent_deg (0.00s)
+    --- PASS: TestAngleNormalizationConsistency/idempotent_rad (0.00s)
+    --- PASS: TestAngleNormalizationConsistency/idempotent_rad_02pi (0.00s)
+=== RUN   TestAngleConversionEquivalence
+=== RUN   TestAngleConversionEquivalence/deg_-
+=== RUN   TestAngleConversionEquivalence/deg_Z
+=== RUN   TestAngleConversionEquivalence/deg_´
+=== RUN   TestAngleConversionEquivalence/deg_Ď
+=== RUN   TestAngleConversionEquivalence/deg_Ũ
+=== RUN   TestAngleConversionEquivalence/deg_�
+=== RUN   TestAngleConversionEquivalence/deg_ǂ
+=== RUN   TestAngleConversionEquivalence/deg_�#01
+--- PASS: TestAngleConversionEquivalence (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_- (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_Z (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_´ (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_Ď (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_Ũ (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_� (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_ǂ (0.00s)
+    --- PASS: TestAngleConversionEquivalence/deg_�#01 (0.00s)
+=== RUN   TestBigFloor
+=== RUN   TestBigFloor/positive
+=== RUN   TestBigFloor/negative
+=== RUN   TestBigFloor/integer
+=== RUN   TestBigFloor/zero
+=== RUN   TestBigFloor/small
+=== RUN   TestBigFloor/near_integer_below
+=== RUN   TestBigFloor/near_integer_above
+=== RUN   TestBigFloor/negative_near_integer
+=== RUN   TestBigFloor/exact_negative_integer
+=== RUN   TestBigFloor/positive_infinity
+=== RUN   TestBigFloor/negative_infinity
+=== RUN   TestBigFloor/very_large_positive
+=== RUN   TestBigFloor/very_large_negative
+=== RUN   TestBigFloor/precision_levels
+--- PASS: TestBigFloor (0.00s)
+    --- PASS: TestBigFloor/positive (0.00s)
+    --- PASS: TestBigFloor/negative (0.00s)
+    --- PASS: TestBigFloor/integer (0.00s)
+    --- PASS: TestBigFloor/zero (0.00s)
+    --- PASS: TestBigFloor/small (0.00s)
+    --- PASS: TestBigFloor/near_integer_below (0.00s)
+    --- PASS: TestBigFloor/near_integer_above (0.00s)
+    --- PASS: TestBigFloor/negative_near_integer (0.00s)
+    --- PASS: TestBigFloor/exact_negative_integer (0.00s)
+    --- PASS: TestBigFloor/positive_infinity (0.00s)
+    --- PASS: TestBigFloor/negative_infinity (0.00s)
+    --- PASS: TestBigFloor/very_large_positive (0.00s)
+    --- PASS: TestBigFloor/very_large_negative (0.00s)
+    --- PASS: TestBigFloor/precision_levels (0.00s)
+=== RUN   TestBigCeil
+=== RUN   TestBigCeil/positive
+=== RUN   TestBigCeil/negative
+=== RUN   TestBigCeil/integer
+=== RUN   TestBigCeil/zero
+=== RUN   TestBigCeil/near_integer_below
+=== RUN   TestBigCeil/near_integer_above
+=== RUN   TestBigCeil/negative_near_integer
+=== RUN   TestBigCeil/exact_negative_integer
+=== RUN   TestBigCeil/positive_infinity
+=== RUN   TestBigCeil/negative_infinity
+=== RUN   TestBigCeil/very_large_positive
+=== RUN   TestBigCeil/very_large_negative
+--- PASS: TestBigCeil (0.00s)
+    --- PASS: TestBigCeil/positive (0.00s)
+    --- PASS: TestBigCeil/negative (0.00s)
+    --- PASS: TestBigCeil/integer (0.00s)
+    --- PASS: TestBigCeil/zero (0.00s)
+    --- PASS: TestBigCeil/near_integer_below (0.00s)
+    --- PASS: TestBigCeil/near_integer_above (0.00s)
+    --- PASS: TestBigCeil/negative_near_integer (0.00s)
+    --- PASS: TestBigCeil/exact_negative_integer (0.00s)
+    --- PASS: TestBigCeil/positive_infinity (0.00s)
+    --- PASS: TestBigCeil/negative_infinity (0.00s)
+    --- PASS: TestBigCeil/very_large_positive (0.00s)
+    --- PASS: TestBigCeil/very_large_negative (0.00s)
+=== RUN   TestBigTrunc
+=== RUN   TestBigTrunc/positive
+=== RUN   TestBigTrunc/negative
+=== RUN   TestBigTrunc/integer
+=== RUN   TestBigTrunc/zero
+=== RUN   TestBigTrunc/near_integer_below
+=== RUN   TestBigTrunc/near_integer_above
+=== RUN   TestBigTrunc/negative_near_integer
+=== RUN   TestBigTrunc/exact_negative_integer
+=== RUN   TestBigTrunc/positive_infinity
+=== RUN   TestBigTrunc/negative_infinity
+=== RUN   TestBigTrunc/very_large_positive
+=== RUN   TestBigTrunc/very_large_negative
+--- PASS: TestBigTrunc (0.00s)
+    --- PASS: TestBigTrunc/positive (0.00s)
+    --- PASS: TestBigTrunc/negative (0.00s)
+    --- PASS: TestBigTrunc/integer (0.00s)
+    --- PASS: TestBigTrunc/zero (0.00s)
+    --- PASS: TestBigTrunc/near_integer_below (0.00s)
+    --- PASS: TestBigTrunc/near_integer_above (0.00s)
+    --- PASS: TestBigTrunc/negative_near_integer (0.00s)
+    --- PASS: TestBigTrunc/exact_negative_integer (0.00s)
+    --- PASS: TestBigTrunc/positive_infinity (0.00s)
+    --- PASS: TestBigTrunc/negative_infinity (0.00s)
+    --- PASS: TestBigTrunc/very_large_positive (0.00s)
+    --- PASS: TestBigTrunc/very_large_negative (0.00s)
+=== RUN   TestBigMod
+=== RUN   TestBigMod/basic
+=== RUN   TestBigMod/negative_x
+=== RUN   TestBigMod/x_equals_y
+=== RUN   TestBigMod/x_equals_neg_y
+=== RUN   TestBigMod/x_less_than_y
+=== RUN   TestBigMod/x_zero
+=== RUN   TestBigMod/negative_x_positive_y
+=== RUN   TestBigMod/positive_x_negative_y
+=== RUN   TestBigMod/both_negative
+=== RUN   TestBigMod/zero_y
+=== RUN   TestBigMod/very_large
+=== RUN   TestBigMod/property_verification
+--- PASS: TestBigMod (0.00s)
+    --- PASS: TestBigMod/basic (0.00s)
+    --- PASS: TestBigMod/negative_x (0.00s)
+    --- PASS: TestBigMod/x_equals_y (0.00s)
+    --- PASS: TestBigMod/x_equals_neg_y (0.00s)
+    --- PASS: TestBigMod/x_less_than_y (0.00s)
+    --- PASS: TestBigMod/x_zero (0.00s)
+    --- PASS: TestBigMod/negative_x_positive_y (0.00s)
+    --- PASS: TestBigMod/positive_x_negative_y (0.00s)
+    --- PASS: TestBigMod/both_negative (0.00s)
+    --- PASS: TestBigMod/zero_y (0.00s)
+    --- PASS: TestBigMod/very_large (0.00s)
+    --- PASS: TestBigMod/property_verification (0.00s)
+=== RUN   TestBigRem
+=== RUN   TestBigRem/basic
+=== RUN   TestBigRem/negative_x
+=== RUN   TestBigRem/x_equals_y
+=== RUN   TestBigRem/x_zero
+=== RUN   TestBigRem/x_less_than_y
+=== RUN   TestBigRem/negative_x_positive_y
+=== RUN   TestBigRem/positive_x_negative_y
+=== RUN   TestBigRem/both_negative
+=== RUN   TestBigRem/compare_with_math_remainder
+--- PASS: TestBigRem (0.00s)
+    --- PASS: TestBigRem/basic (0.00s)
+    --- PASS: TestBigRem/negative_x (0.00s)
+    --- PASS: TestBigRem/x_equals_y (0.00s)
+    --- PASS: TestBigRem/x_zero (0.00s)
+    --- PASS: TestBigRem/x_less_than_y (0.00s)
+    --- PASS: TestBigRem/negative_x_positive_y (0.00s)
+    --- PASS: TestBigRem/positive_x_negative_y (0.00s)
+    --- PASS: TestBigRem/both_negative (0.00s)
+    --- PASS: TestBigRem/compare_with_math_remainder (0.00s)
+=== RUN   TestBigFactorial
+=== RUN   TestBigFactorial/zero
+=== RUN   TestBigFactorial/one
+=== RUN   TestBigFactorial/two
+=== RUN   TestBigFactorial/three
+=== RUN   TestBigFactorial/four
+=== RUN   TestBigFactorial/five
+=== RUN   TestBigFactorial/six
+=== RUN   TestBigFactorial/seven
+=== RUN   TestBigFactorial/eight
+=== RUN   TestBigFactorial/nine
+=== RUN   TestBigFactorial/ten
+=== RUN   TestBigFactorial/fifteen
+=== RUN   TestBigFactorial/twenty
+=== RUN   TestBigFactorial/negative
+=== RUN   TestBigFactorial/negative_large
+=== RUN   TestBigFactorial/factorial_equals_gamma
+=== RUN   TestBigFactorial/recurrence_property
+=== RUN   TestBigFactorial/precision_levels
+--- PASS: TestBigFactorial (0.00s)
+    --- PASS: TestBigFactorial/zero (0.00s)
+    --- PASS: TestBigFactorial/one (0.00s)
+    --- PASS: TestBigFactorial/two (0.00s)
+    --- PASS: TestBigFactorial/three (0.00s)
+    --- PASS: TestBigFactorial/four (0.00s)
+    --- PASS: TestBigFactorial/five (0.00s)
+    --- PASS: TestBigFactorial/six (0.00s)
+    --- PASS: TestBigFactorial/seven (0.00s)
+    --- PASS: TestBigFactorial/eight (0.00s)
+    --- PASS: TestBigFactorial/nine (0.00s)
+    --- PASS: TestBigFactorial/ten (0.00s)
+    --- PASS: TestBigFactorial/fifteen (0.00s)
+    --- PASS: TestBigFactorial/twenty (0.00s)
+    --- PASS: TestBigFactorial/negative (0.00s)
+    --- PASS: TestBigFactorial/negative_large (0.00s)
+    --- PASS: TestBigFactorial/factorial_equals_gamma (0.00s)
+    --- PASS: TestBigFactorial/recurrence_property (0.00s)
+    --- PASS: TestBigFactorial/precision_levels (0.00s)
+=== RUN   TestBigBinomial
+=== RUN   TestBigBinomial/C(5,2)
+=== RUN   TestBigBinomial/C(10,3)
+=== RUN   TestBigBinomial/C(6,0)
+=== RUN   TestBigBinomial/C(6,6)
+=== RUN   TestBigBinomial/C(7,3)
+=== RUN   TestBigBinomial/C(8,4)
+=== RUN   TestBigBinomial/C(12,5)
+=== RUN   TestBigBinomial/C(20,10)
+=== RUN   TestBigBinomial/C(15,0)
+=== RUN   TestBigBinomial/C(15,15)
+=== RUN   TestBigBinomial/C(15,1)
+=== RUN   TestBigBinomial/C(15,14)
+=== RUN   TestBigBinomial/k_equals_n_minus_1
+=== RUN   TestBigBinomial/k_greater_than_n
+=== RUN   TestBigBinomial/negative_n
+=== RUN   TestBigBinomial/negative_k
+=== RUN   TestBigBinomial/both_negative
+=== RUN   TestBigBinomial/n_zero
+=== RUN   TestBigBinomial/n_zero_k_one
+=== RUN   TestBigBinomial/symmetry_property
+=== RUN   TestBigBinomial/pascal_triangle_property
+=== RUN   TestBigBinomial/sum_property
+=== RUN   TestBigBinomial/precision_levels
+--- PASS: TestBigBinomial (0.00s)
+    --- PASS: TestBigBinomial/C(5,2) (0.00s)
+    --- PASS: TestBigBinomial/C(10,3) (0.00s)
+    --- PASS: TestBigBinomial/C(6,0) (0.00s)
+    --- PASS: TestBigBinomial/C(6,6) (0.00s)
+    --- PASS: TestBigBinomial/C(7,3) (0.00s)
+    --- PASS: TestBigBinomial/C(8,4) (0.00s)
+    --- PASS: TestBigBinomial/C(12,5) (0.00s)
+    --- PASS: TestBigBinomial/C(20,10) (0.00s)
+    --- PASS: TestBigBinomial/C(15,0) (0.00s)
+    --- PASS: TestBigBinomial/C(15,15) (0.00s)
+    --- PASS: TestBigBinomial/C(15,1) (0.00s)
+    --- PASS: TestBigBinomial/C(15,14) (0.00s)
+    --- PASS: TestBigBinomial/k_equals_n_minus_1 (0.00s)
+    --- PASS: TestBigBinomial/k_greater_than_n (0.00s)
+    --- PASS: TestBigBinomial/negative_n (0.00s)
+    --- PASS: TestBigBinomial/negative_k (0.00s)
+    --- PASS: TestBigBinomial/both_negative (0.00s)
+    --- PASS: TestBigBinomial/n_zero (0.00s)
+    --- PASS: TestBigBinomial/n_zero_k_one (0.00s)
+    --- PASS: TestBigBinomial/symmetry_property (0.00s)
+    --- PASS: TestBigBinomial/pascal_triangle_property (0.00s)
+    --- PASS: TestBigBinomial/sum_property (0.00s)
+    --- PASS: TestBigBinomial/precision_levels (0.00s)
+=== RUN   TestBigPhi
+=== RUN   TestBigPhi/low_precision
+=== RUN   TestBigPhi/medium_precision
+=== RUN   TestBigPhi/high_precision
+=== RUN   TestBigPhi/very_high_precision
+=== RUN   TestBigPhi/ultra_high_precision
+--- PASS: TestBigPhi (0.00s)
+    --- PASS: TestBigPhi/low_precision (0.00s)
+    --- PASS: TestBigPhi/medium_precision (0.00s)
+    --- PASS: TestBigPhi/high_precision (0.00s)
+    --- PASS: TestBigPhi/very_high_precision (0.00s)
+    --- PASS: TestBigPhi/ultra_high_precision (0.00s)
+=== RUN   TestBigSqrt2
+=== RUN   TestBigSqrt2/low_precision
+=== RUN   TestBigSqrt2/medium_precision
+=== RUN   TestBigSqrt2/high_precision
+=== RUN   TestBigSqrt2/very_high_precision
+=== RUN   TestBigSqrt2/ultra_high_precision
+--- PASS: TestBigSqrt2 (0.00s)
+    --- PASS: TestBigSqrt2/low_precision (0.00s)
+    --- PASS: TestBigSqrt2/medium_precision (0.00s)
+    --- PASS: TestBigSqrt2/high_precision (0.00s)
+    --- PASS: TestBigSqrt2/very_high_precision (0.00s)
+    --- PASS: TestBigSqrt2/ultra_high_precision (0.00s)
+=== RUN   TestBigSqrt3
+=== RUN   TestBigSqrt3/low_precision
+=== RUN   TestBigSqrt3/medium_precision
+=== RUN   TestBigSqrt3/high_precision
+=== RUN   TestBigSqrt3/very_high_precision
+=== RUN   TestBigSqrt3/ultra_high_precision
+--- PASS: TestBigSqrt3 (0.00s)
+    --- PASS: TestBigSqrt3/low_precision (0.00s)
+    --- PASS: TestBigSqrt3/medium_precision (0.00s)
+    --- PASS: TestBigSqrt3/high_precision (0.00s)
+    --- PASS: TestBigSqrt3/very_high_precision (0.00s)
+    --- PASS: TestBigSqrt3/ultra_high_precision (0.00s)
+=== RUN   TestBigLn10
+=== RUN   TestBigLn10/low_precision
+=== RUN   TestBigLn10/medium_precision
+=== RUN   TestBigLn10/high_precision
+=== RUN   TestBigLn10/very_high_precision
+=== RUN   TestBigLn10/ultra_high_precision
+--- PASS: TestBigLn10 (0.00s)
+    --- PASS: TestBigLn10/low_precision (0.00s)
+    --- PASS: TestBigLn10/medium_precision (0.00s)
+    --- PASS: TestBigLn10/high_precision (0.00s)
+    --- PASS: TestBigLn10/very_high_precision (0.00s)
+    --- PASS: TestBigLn10/ultra_high_precision (0.00s)
+=== RUN   TestBigLog2
+--- PASS: TestBigLog2 (0.00s)
+=== RUN   TestBigJ2000
+--- PASS: TestBigJ2000 (0.00s)
+=== RUN   TestBigLightSpeedAUperDay
+--- PASS: TestBigLightSpeedAUperDay (0.00s)
+=== RUN   TestBigJulianCentury
+--- PASS: TestBigJulianCentury (0.00s)
+=== RUN   TestBigJulianMillennium
+--- PASS: TestBigJulianMillennium (0.00s)
+=== RUN   TestBigE
+--- PASS: TestBigE (0.00s)
+=== RUN   TestBigEulerGamma
+--- PASS: TestBigEulerGamma (0.00s)
+=== RUN   TestBigCatalan
+--- PASS: TestBigCatalan (0.00s)
+=== RUN   TestBigLog10
+=== RUN   TestBigLog10/one
+=== RUN   TestBigLog10/ten
+=== RUN   TestBigLog10/hundred
+=== RUN   TestBigLog10/thousand
+=== RUN   TestBigLog10/two
+=== RUN   TestBigLog10/half
+=== RUN   TestBigLog10/e
+--- PASS: TestBigLog10 (0.00s)
+    --- PASS: TestBigLog10/one (0.00s)
+    --- PASS: TestBigLog10/ten (0.00s)
+    --- PASS: TestBigLog10/hundred (0.00s)
+    --- PASS: TestBigLog10/thousand (0.00s)
+    --- PASS: TestBigLog10/two (0.00s)
+    --- PASS: TestBigLog10/half (0.00s)
+    --- PASS: TestBigLog10/e (0.00s)
+=== RUN   TestConstantsPrecision
+=== RUN   TestConstantsPrecision/precision_@
+=== RUN   TestConstantsPrecision/precision_\u0080
+=== RUN   TestConstantsPrecision/precision_Ā
+=== RUN   TestConstantsPrecision/precision_Ȁ
+=== RUN   TestConstantsPrecision/precision_Ѐ
+--- PASS: TestConstantsPrecision (0.00s)
+    --- PASS: TestConstantsPrecision/precision_@ (0.00s)
+    --- PASS: TestConstantsPrecision/precision_\u0080 (0.00s)
+    --- PASS: TestConstantsPrecision/precision_Ā (0.00s)
+    --- PASS: TestConstantsPrecision/precision_Ȁ (0.00s)
+    --- PASS: TestConstantsPrecision/precision_Ѐ (0.00s)
+=== RUN   TestConstantsRelationships
+=== RUN   TestConstantsRelationships/e^ln(2)_approx_2
+=== RUN   TestConstantsRelationships/ln(e)_equals_1
+=== RUN   TestConstantsRelationships/julian_millennium_10x_century
+--- PASS: TestConstantsRelationships (0.00s)
+    --- PASS: TestConstantsRelationships/e^ln(2)_approx_2 (0.00s)
+    --- PASS: TestConstantsRelationships/ln(e)_equals_1 (0.00s)
+    --- PASS: TestConstantsRelationships/julian_millennium_10x_century (0.00s)
+=== RUN   TestBigSinh
+=== RUN   TestBigSinh/zero
+=== RUN   TestBigSinh/one
+=== RUN   TestBigSinh/negative_one
+=== RUN   TestBigSinh/small
+=== RUN   TestBigSinh/two
+=== RUN   TestBigSinh/negative
+=== RUN   TestBigSinh/large
+--- PASS: TestBigSinh (0.00s)
+    --- PASS: TestBigSinh/zero (0.00s)
+    --- PASS: TestBigSinh/one (0.00s)
+    --- PASS: TestBigSinh/negative_one (0.00s)
+    --- PASS: TestBigSinh/small (0.00s)
+    --- PASS: TestBigSinh/two (0.00s)
+    --- PASS: TestBigSinh/negative (0.00s)
+    --- PASS: TestBigSinh/large (0.00s)
+=== RUN   TestBigCosh
+=== RUN   TestBigCosh/zero
+=== RUN   TestBigCosh/one
+=== RUN   TestBigCosh/negative_one
+=== RUN   TestBigCosh/small
+=== RUN   TestBigCosh/two
+=== RUN   TestBigCosh/negative
+=== RUN   TestBigCosh/large
+--- PASS: TestBigCosh (0.00s)
+    --- PASS: TestBigCosh/zero (0.00s)
+    --- PASS: TestBigCosh/one (0.00s)
+    --- PASS: TestBigCosh/negative_one (0.00s)
+    --- PASS: TestBigCosh/small (0.00s)
+    --- PASS: TestBigCosh/two (0.00s)
+    --- PASS: TestBigCosh/negative (0.00s)
+    --- PASS: TestBigCosh/large (0.00s)
+=== RUN   TestBigTanh
+=== RUN   TestBigTanh/zero
+=== RUN   TestBigTanh/one
+=== RUN   TestBigTanh/negative_one
+=== RUN   TestBigTanh/small
+=== RUN   TestBigTanh/two
+=== RUN   TestBigTanh/negative
+=== RUN   TestBigTanh/large
+=== RUN   TestBigTanh/very_large
+--- PASS: TestBigTanh (0.00s)
+    --- PASS: TestBigTanh/zero (0.00s)
+    --- PASS: TestBigTanh/one (0.00s)
+    --- PASS: TestBigTanh/negative_one (0.00s)
+    --- PASS: TestBigTanh/small (0.00s)
+    --- PASS: TestBigTanh/two (0.00s)
+    --- PASS: TestBigTanh/negative (0.00s)
+    --- PASS: TestBigTanh/large (0.00s)
+    --- PASS: TestBigTanh/very_large (0.00s)
+=== RUN   TestBigAsinh
+=== RUN   TestBigAsinh/zero
+=== RUN   TestBigAsinh/one
+=== RUN   TestBigAsinh/negative_one
+=== RUN   TestBigAsinh/small
+=== RUN   TestBigAsinh/two
+=== RUN   TestBigAsinh/negative
+=== RUN   TestBigAsinh/large
+--- PASS: TestBigAsinh (0.00s)
+    --- PASS: TestBigAsinh/zero (0.00s)
+    --- PASS: TestBigAsinh/one (0.00s)
+    --- PASS: TestBigAsinh/negative_one (0.00s)
+    --- PASS: TestBigAsinh/small (0.00s)
+    --- PASS: TestBigAsinh/two (0.00s)
+    --- PASS: TestBigAsinh/negative (0.00s)
+    --- PASS: TestBigAsinh/large (0.00s)
+=== RUN   TestBigAcosh
+=== RUN   TestBigAcosh/one
+=== RUN   TestBigAcosh/two
+=== RUN   TestBigAcosh/three
+=== RUN   TestBigAcosh/large
+--- PASS: TestBigAcosh (0.00s)
+    --- PASS: TestBigAcosh/one (0.00s)
+    --- PASS: TestBigAcosh/two (0.00s)
+    --- PASS: TestBigAcosh/three (0.00s)
+    --- PASS: TestBigAcosh/large (0.00s)
+=== RUN   TestBigAtanh
+=== RUN   TestBigAtanh/zero
+=== RUN   TestBigAtanh/half
+=== RUN   TestBigAtanh/negative_half
+=== RUN   TestBigAtanh/small
+=== RUN   TestBigAtanh/near_one
+--- PASS: TestBigAtanh (0.00s)
+    --- PASS: TestBigAtanh/zero (0.00s)
+    --- PASS: TestBigAtanh/half (0.00s)
+    --- PASS: TestBigAtanh/negative_half (0.00s)
+    --- PASS: TestBigAtanh/small (0.00s)
+    --- PASS: TestBigAtanh/near_one (0.00s)
+=== RUN   TestHyperbolicIdentities
+=== RUN   TestHyperbolicIdentities/cosh^2_-_sinh^2_=_1
+=== RUN   TestHyperbolicIdentities/tanh_=_sinh/cosh
+=== RUN   TestHyperbolicIdentities/asinh(sinh(x))_=_x
+=== RUN   TestHyperbolicIdentities/acosh(cosh(x))_=_|x|
+=== RUN   TestHyperbolicIdentities/atanh(tanh(x))_=_x
+--- PASS: TestHyperbolicIdentities (0.00s)
+    --- PASS: TestHyperbolicIdentities/cosh^2_-_sinh^2_=_1 (0.00s)
+    --- PASS: TestHyperbolicIdentities/tanh_=_sinh/cosh (0.00s)
+    --- PASS: TestHyperbolicIdentities/asinh(sinh(x))_=_x (0.00s)
+    --- PASS: TestHyperbolicIdentities/acosh(cosh(x))_=_|x| (0.00s)
+    --- PASS: TestHyperbolicIdentities/atanh(tanh(x))_=_x (0.00s)
+=== RUN   TestHyperbolicPrecisionLevels
+=== RUN   TestHyperbolicPrecisionLevels/precision_@
+=== RUN   TestHyperbolicPrecisionLevels/precision_\u0080
+=== RUN   TestHyperbolicPrecisionLevels/precision_Ā
+=== RUN   TestHyperbolicPrecisionLevels/precision_Ȁ
+--- PASS: TestHyperbolicPrecisionLevels (0.00s)
+    --- PASS: TestHyperbolicPrecisionLevels/precision_@ (0.00s)
+    --- PASS: TestHyperbolicPrecisionLevels/precision_\u0080 (0.00s)
+    --- PASS: TestHyperbolicPrecisionLevels/precision_Ā (0.00s)
+    --- PASS: TestHyperbolicPrecisionLevels/precision_Ȁ (0.00s)
+=== RUN   TestBigLog1p
+=== RUN   TestBigLog1p/zero
+=== RUN   TestBigLog1p/small_positive
+=== RUN   TestBigLog1p/small_negative
+=== RUN   TestBigLog1p/one
+=== RUN   TestBigLog1p/negative_one
+=== RUN   TestBigLog1p/less_than_neg_one
+=== RUN   TestBigLog1p/large_positive
+=== RUN   TestBigLog1p/very_small
+=== RUN   TestBigLog1p/very_small_negative
+=== RUN   TestBigLog1p/near_neg_one
+=== RUN   TestBigLog1p/accuracy_improvement
+=== RUN   TestBigLog1p/infinity
+--- PASS: TestBigLog1p (0.00s)
+    --- PASS: TestBigLog1p/zero (0.00s)
+    --- PASS: TestBigLog1p/small_positive (0.00s)
+    --- PASS: TestBigLog1p/small_negative (0.00s)
+    --- PASS: TestBigLog1p/one (0.00s)
+    --- PASS: TestBigLog1p/negative_one (0.00s)
+    --- PASS: TestBigLog1p/less_than_neg_one (0.00s)
+    --- PASS: TestBigLog1p/large_positive (0.00s)
+    --- PASS: TestBigLog1p/very_small (0.00s)
+    --- PASS: TestBigLog1p/very_small_negative (0.00s)
+    --- PASS: TestBigLog1p/near_neg_one (0.00s)
+    --- PASS: TestBigLog1p/accuracy_improvement (0.00s)
+    --- PASS: TestBigLog1p/infinity (0.00s)
+=== RUN   TestBigExp1m
+=== RUN   TestBigExp1m/zero
+=== RUN   TestBigExp1m/small_positive
+=== RUN   TestBigExp1m/small_negative
+=== RUN   TestBigExp1m/one
+=== RUN   TestBigExp1m/negative_one
+=== RUN   TestBigExp1m/very_small
+=== RUN   TestBigExp1m/very_small_negative
+=== RUN   TestBigExp1m/large_positive
+=== RUN   TestBigExp1m/large_negative
+=== RUN   TestBigExp1m/accuracy_improvement
+=== RUN   TestBigExp1m/infinity
+--- PASS: TestBigExp1m (0.00s)
+    --- PASS: TestBigExp1m/zero (0.00s)
+    --- PASS: TestBigExp1m/small_positive (0.00s)
+    --- PASS: TestBigExp1m/small_negative (0.00s)
+    --- PASS: TestBigExp1m/one (0.00s)
+    --- PASS: TestBigExp1m/negative_one (0.00s)
+    --- PASS: TestBigExp1m/very_small (0.00s)
+    --- PASS: TestBigExp1m/very_small_negative (0.00s)
+    --- PASS: TestBigExp1m/large_positive (0.00s)
+    --- PASS: TestBigExp1m/large_negative (0.00s)
+    --- PASS: TestBigExp1m/accuracy_improvement (0.00s)
+    --- PASS: TestBigExp1m/infinity (0.00s)
+=== RUN   TestBigLogb
+=== RUN   TestBigLogb/base_2_x_8
+=== RUN   TestBigLogb/base_2_x_4
+=== RUN   TestBigLogb/base_10_x_100
+=== RUN   TestBigLogb/base_e_x_e
+=== RUN   TestBigLogb/x_equals_one
+=== RUN   TestBigLogb/x_equals_base
+=== RUN   TestBigLogb/base_equals_one
+=== RUN   TestBigLogb/base_zero
+=== RUN   TestBigLogb/base_negative
+=== RUN   TestBigLogb/x_zero
+=== RUN   TestBigLogb/x_negative
+=== RUN   TestBigLogb/base_3_x_27
+=== RUN   TestBigLogb/base_5_x_125
+=== RUN   TestBigLogb/various_bases
+=== RUN   TestBigLogb/precision_levels
+--- PASS: TestBigLogb (0.00s)
+    --- PASS: TestBigLogb/base_2_x_8 (0.00s)
+    --- PASS: TestBigLogb/base_2_x_4 (0.00s)
+    --- PASS: TestBigLogb/base_10_x_100 (0.00s)
+    --- PASS: TestBigLogb/base_e_x_e (0.00s)
+    --- PASS: TestBigLogb/x_equals_one (0.00s)
+    --- PASS: TestBigLogb/x_equals_base (0.00s)
+    --- PASS: TestBigLogb/base_equals_one (0.00s)
+    --- PASS: TestBigLogb/base_zero (0.00s)
+    --- PASS: TestBigLogb/base_negative (0.00s)
+    --- PASS: TestBigLogb/x_zero (0.00s)
+    --- PASS: TestBigLogb/x_negative (0.00s)
+    --- PASS: TestBigLogb/base_3_x_27 (0.00s)
+    --- PASS: TestBigLogb/base_5_x_125 (0.00s)
+    --- PASS: TestBigLogb/various_bases (0.00s)
+    --- PASS: TestBigLogb/precision_levels (0.00s)
+=== RUN   TestBigMatTranspose
+=== RUN   TestBigMatTranspose/general_matrix
+=== RUN   TestBigMatTranspose/identity_matrix
+=== RUN   TestBigMatTranspose/zero_matrix
+=== RUN   TestBigMatTranspose/symmetric_matrix
+=== RUN   TestBigMatTranspose/very_large_values
+=== RUN   TestBigMatTranspose/very_small_values
+=== RUN   TestBigMatTranspose/precision_levels
+--- PASS: TestBigMatTranspose (0.00s)
+    --- PASS: TestBigMatTranspose/general_matrix (0.00s)
+    --- PASS: TestBigMatTranspose/identity_matrix (0.00s)
+    --- PASS: TestBigMatTranspose/zero_matrix (0.00s)
+    --- PASS: TestBigMatTranspose/symmetric_matrix (0.00s)
+    --- PASS: TestBigMatTranspose/very_large_values (0.00s)
+    --- PASS: TestBigMatTranspose/very_small_values (0.00s)
+    --- PASS: TestBigMatTranspose/precision_levels (0.00s)
+=== RUN   TestBigMatMulMat
+=== RUN   TestBigMatMulMat/identity_identity
+=== RUN   TestBigMatMulMat/identity_general
+=== RUN   TestBigMatMulMat/zero_matrix
+=== RUN   TestBigMatMulMat/general_multiplication
+=== RUN   TestBigMatMulMat/associativity
+=== RUN   TestBigMatMulMat/precision_levels
+--- PASS: TestBigMatMulMat (0.00s)
+    --- PASS: TestBigMatMulMat/identity_identity (0.00s)
+    --- PASS: TestBigMatMulMat/identity_general (0.00s)
+    --- PASS: TestBigMatMulMat/zero_matrix (0.00s)
+    --- PASS: TestBigMatMulMat/general_multiplication (0.00s)
+    --- PASS: TestBigMatMulMat/associativity (0.00s)
+    --- PASS: TestBigMatMulMat/precision_levels (0.00s)
+=== RUN   TestBigMatDet
+=== RUN   TestBigMatDet/identity
+=== RUN   TestBigMatDet/zero_matrix
+=== RUN   TestBigMatDet/singular_matrix
+=== RUN   TestBigMatDet/diagonal_matrix
+=== RUN   TestBigMatDet/general_matrix
+=== RUN   TestBigMatDet/non_singular
+=== RUN   TestBigMatDet/multiplicative_property
+=== RUN   TestBigMatDet/transpose_property
+=== RUN   TestBigMatDet/precision_levels
+--- PASS: TestBigMatDet (0.00s)
+    --- PASS: TestBigMatDet/identity (0.00s)
+    --- PASS: TestBigMatDet/zero_matrix (0.00s)
+    --- PASS: TestBigMatDet/singular_matrix (0.00s)
+    --- PASS: TestBigMatDet/diagonal_matrix (0.00s)
+    --- PASS: TestBigMatDet/general_matrix (0.00s)
+    --- PASS: TestBigMatDet/non_singular (0.00s)
+    --- PASS: TestBigMatDet/multiplicative_property (0.00s)
+    --- PASS: TestBigMatDet/transpose_property (0.00s)
+    --- PASS: TestBigMatDet/precision_levels (0.00s)
+=== RUN   TestBigMatInverse
+=== RUN   TestBigMatInverse/identity
+=== RUN   TestBigMatInverse/diagonal
+=== RUN   TestBigMatInverse/singular_matrix
+=== RUN   TestBigMatInverse/zero_matrix
+=== RUN   TestBigMatInverse/non_singular
+=== RUN   TestBigMatInverse/precision_levels
+--- PASS: TestBigMatInverse (0.00s)
+    --- PASS: TestBigMatInverse/identity (0.00s)
+    --- PASS: TestBigMatInverse/diagonal (0.00s)
+    --- PASS: TestBigMatInverse/singular_matrix (0.00s)
+    --- PASS: TestBigMatInverse/zero_matrix (0.00s)
+    --- PASS: TestBigMatInverse/non_singular (0.00s)
+    --- PASS: TestBigMatInverse/precision_levels (0.00s)
+=== RUN   TestBigPowBasic
+=== RUN   TestBigPowBasic/2^3
+=== RUN   TestBigPowBasic/3^2
+=== RUN   TestBigPowBasic/10^2
+=== RUN   TestBigPowBasic/2^10
+=== RUN   TestBigPowBasic/5^3
+=== RUN   TestBigPowBasic/2^-1
+=== RUN   TestBigPowBasic/4^0.5
+=== RUN   TestBigPowBasic/8^(1/3)
+=== RUN   TestBigPowBasic/e^1
+=== RUN   TestBigPowBasic/10^-2
+--- PASS: TestBigPowBasic (0.00s)
+    --- PASS: TestBigPowBasic/2^3 (0.00s)
+    --- PASS: TestBigPowBasic/3^2 (0.00s)
+    --- PASS: TestBigPowBasic/10^2 (0.00s)
+    --- PASS: TestBigPowBasic/2^10 (0.00s)
+    --- PASS: TestBigPowBasic/5^3 (0.00s)
+    --- PASS: TestBigPowBasic/2^-1 (0.00s)
+    --- PASS: TestBigPowBasic/4^0.5 (0.00s)
+    --- PASS: TestBigPowBasic/8^(1/3) (0.00s)
+    --- PASS: TestBigPowBasic/e^1 (0.00s)
+    --- PASS: TestBigPowBasic/10^-2 (0.00s)
+=== RUN   TestBigPowSpecialCases
+=== RUN   TestBigPowSpecialCases/x^0_equals_1
+=== RUN   TestBigPowSpecialCases/1^y_equals_1
+=== RUN   TestBigPowSpecialCases/x^1_equals_x
+=== RUN   TestBigPowSpecialCases/0^positive_equals_0
+=== RUN   TestBigPowSpecialCases/0^negative_equals_inf
+=== RUN   TestBigPowSpecialCases/negative_base_integer_exponent
+=== RUN   TestBigPowSpecialCases/negative_base_even_exponent
+--- PASS: TestBigPowSpecialCases (0.00s)
+    --- PASS: TestBigPowSpecialCases/x^0_equals_1 (0.00s)
+    --- PASS: TestBigPowSpecialCases/1^y_equals_1 (0.00s)
+    --- PASS: TestBigPowSpecialCases/x^1_equals_x (0.00s)
+    --- PASS: TestBigPowSpecialCases/0^positive_equals_0 (0.00s)
+    --- PASS: TestBigPowSpecialCases/0^negative_equals_inf (0.00s)
+    --- PASS: TestBigPowSpecialCases/negative_base_integer_exponent (0.00s)
+    --- PASS: TestBigPowSpecialCases/negative_base_even_exponent (0.00s)
+=== RUN   TestBigPowNegativeExponents
+=== RUN   TestBigPowNegativeExponents/2^-1
+=== RUN   TestBigPowNegativeExponents/2^-2
+=== RUN   TestBigPowNegativeExponents/10^-1
+=== RUN   TestBigPowNegativeExponents/3^-3
+=== RUN   TestBigPowNegativeExponents/5^-2
+--- PASS: TestBigPowNegativeExponents (0.00s)
+    --- PASS: TestBigPowNegativeExponents/2^-1 (0.00s)
+    --- PASS: TestBigPowNegativeExponents/2^-2 (0.00s)
+    --- PASS: TestBigPowNegativeExponents/10^-1 (0.00s)
+    --- PASS: TestBigPowNegativeExponents/3^-3 (0.00s)
+    --- PASS: TestBigPowNegativeExponents/5^-2 (0.00s)
+=== RUN   TestBigPowFractionalExponents
+=== RUN   TestBigPowFractionalExponents/4^0.5
+=== RUN   TestBigPowFractionalExponents/9^0.5
+=== RUN   TestBigPowFractionalExponents/8^(1/3)
+=== RUN   TestBigPowFractionalExponents/27^(1/3)
+=== RUN   TestBigPowFractionalExponents/16^0.25
+=== RUN   TestBigPowFractionalExponents/2^1.5
+=== RUN   TestBigPowFractionalExponents/3^2.5
+--- PASS: TestBigPowFractionalExponents (0.00s)
+    --- PASS: TestBigPowFractionalExponents/4^0.5 (0.00s)
+    --- PASS: TestBigPowFractionalExponents/9^0.5 (0.00s)
+    --- PASS: TestBigPowFractionalExponents/8^(1/3) (0.00s)
+    --- PASS: TestBigPowFractionalExponents/27^(1/3) (0.00s)
+    --- PASS: TestBigPowFractionalExponents/16^0.25 (0.00s)
+    --- PASS: TestBigPowFractionalExponents/2^1.5 (0.00s)
+    --- PASS: TestBigPowFractionalExponents/3^2.5 (0.00s)
+=== RUN   TestBigPowLargeExponents
+=== RUN   TestBigPowLargeExponents/2^20
+=== RUN   TestBigPowLargeExponents/2^30
+=== RUN   TestBigPowLargeExponents/10^10
+--- PASS: TestBigPowLargeExponents (0.00s)
+    --- PASS: TestBigPowLargeExponents/2^20 (0.00s)
+    --- PASS: TestBigPowLargeExponents/2^30 (0.00s)
+    --- PASS: TestBigPowLargeExponents/10^10 (0.00s)
+=== RUN   TestBigPowPrecisionLevels
+=== RUN   TestBigPowPrecisionLevels/precision_@
+=== RUN   TestBigPowPrecisionLevels/precision_\u0080
+=== RUN   TestBigPowPrecisionLevels/precision_Ā
+=== RUN   TestBigPowPrecisionLevels/precision_Ȁ
+--- PASS: TestBigPowPrecisionLevels (0.00s)
+    --- PASS: TestBigPowPrecisionLevels/precision_@ (0.00s)
+    --- PASS: TestBigPowPrecisionLevels/precision_\u0080 (0.00s)
+    --- PASS: TestBigPowPrecisionLevels/precision_Ā (0.00s)
+    --- PASS: TestBigPowPrecisionLevels/precision_Ȁ (0.00s)
+=== RUN   TestBigPowIdentities
+=== RUN   TestBigPowIdentities/x^(a+b)_equals_x^a_times_x^b
+=== RUN   TestBigPowIdentities/(x^a)^b_equals_x^(ab)
+=== RUN   TestBigPowIdentities/(xy)^a_equals_x^a_times_y^a
+--- PASS: TestBigPowIdentities (0.00s)
+    --- PASS: TestBigPowIdentities/x^(a+b)_equals_x^a_times_x^b (0.00s)
+    --- PASS: TestBigPowIdentities/(x^a)^b_equals_x^(ab) (0.00s)
+    --- PASS: TestBigPowIdentities/(xy)^a_equals_x^a_times_y^a (0.00s)
+=== RUN   TestBigSqrtRounded
+=== RUN   TestBigSqrtRounded/sqrt_rounded
+--- PASS: TestBigSqrtRounded (0.00s)
+    --- PASS: TestBigSqrtRounded/sqrt_rounded (0.00s)
+=== RUN   TestBigCbrt
+=== RUN   TestBigCbrt/positive
+=== RUN   TestBigCbrt/one
+=== RUN   TestBigCbrt/zero
+=== RUN   TestBigCbrt/negative
+=== RUN   TestBigCbrt/perfect_cube_27
+=== RUN   TestBigCbrt/perfect_cube_64
+=== RUN   TestBigCbrt/perfect_cube_neg_27
+=== RUN   TestBigCbrt/non_perfect_cube
+=== RUN   TestBigCbrt/very_small
+=== RUN   TestBigCbrt/very_large
+=== RUN   TestBigCbrt/fraction
+=== RUN   TestBigCbrt/negative_fraction
+=== RUN   TestBigCbrt/precision_levels
+=== RUN   TestBigCbrt/compare_with_math_cbrt
+--- PASS: TestBigCbrt (0.00s)
+    --- PASS: TestBigCbrt/positive (0.00s)
+    --- PASS: TestBigCbrt/one (0.00s)
+    --- PASS: TestBigCbrt/zero (0.00s)
+    --- PASS: TestBigCbrt/negative (0.00s)
+    --- PASS: TestBigCbrt/perfect_cube_27 (0.00s)
+    --- PASS: TestBigCbrt/perfect_cube_64 (0.00s)
+    --- PASS: TestBigCbrt/perfect_cube_neg_27 (0.00s)
+    --- PASS: TestBigCbrt/non_perfect_cube (0.00s)
+    --- PASS: TestBigCbrt/very_small (0.00s)
+    --- PASS: TestBigCbrt/very_large (0.00s)
+    --- PASS: TestBigCbrt/fraction (0.00s)
+    --- PASS: TestBigCbrt/negative_fraction (0.00s)
+    --- PASS: TestBigCbrt/precision_levels (0.00s)
+    --- PASS: TestBigCbrt/compare_with_math_cbrt (0.00s)
+=== RUN   TestBigRoot
+=== RUN   TestBigRoot/square_root
+=== RUN   TestBigRoot/fourth_root
+=== RUN   TestBigRoot/one
+=== RUN   TestBigRoot/n_equals_one
+=== RUN   TestBigRoot/x_equals_zero
+=== RUN   TestBigRoot/n_equals_zero
+=== RUN   TestBigRoot/n_negative
+=== RUN   TestBigRoot/negative_x_even_n
+=== RUN   TestBigRoot/negative_x_odd_n
+=== RUN   TestBigRoot/eighth_root
+=== RUN   TestBigRoot/very_large_n
+=== RUN   TestBigRoot/precision_levels
+--- PASS: TestBigRoot (0.00s)
+    --- PASS: TestBigRoot/square_root (0.00s)
+    --- PASS: TestBigRoot/fourth_root (0.00s)
+    --- PASS: TestBigRoot/one (0.00s)
+    --- PASS: TestBigRoot/n_equals_one (0.00s)
+    --- PASS: TestBigRoot/x_equals_zero (0.00s)
+    --- PASS: TestBigRoot/n_equals_zero (0.00s)
+    --- PASS: TestBigRoot/n_negative (0.00s)
+    --- PASS: TestBigRoot/negative_x_even_n (0.00s)
+    --- PASS: TestBigRoot/negative_x_odd_n (0.00s)
+    --- PASS: TestBigRoot/eighth_root (0.00s)
+    --- PASS: TestBigRoot/very_large_n (0.00s)
+    --- PASS: TestBigRoot/precision_levels (0.00s)
+=== RUN   TestRoundAllModes
+=== RUN   TestRoundAllModes/positive_to_nearest
+=== RUN   TestRoundAllModes/negative_to_nearest
+=== RUN   TestRoundAllModes/positive_to_zero
+=== RUN   TestRoundAllModes/negative_to_zero
+=== RUN   TestRoundAllModes/positive_to_pos_inf
+=== RUN   TestRoundAllModes/negative_to_pos_inf
+=== RUN   TestRoundAllModes/positive_to_neg_inf
+=== RUN   TestRoundAllModes/negative_to_neg_inf
+=== RUN   TestRoundAllModes/positive_away_from_zero
+=== RUN   TestRoundAllModes/negative_away_from_zero
+=== RUN   TestRoundAllModes/exact_value
+--- PASS: TestRoundAllModes (0.00s)
+    --- PASS: TestRoundAllModes/positive_to_nearest (0.00s)
+    --- PASS: TestRoundAllModes/negative_to_nearest (0.00s)
+    --- PASS: TestRoundAllModes/positive_to_zero (0.00s)
+    --- PASS: TestRoundAllModes/negative_to_zero (0.00s)
+    --- PASS: TestRoundAllModes/positive_to_pos_inf (0.00s)
+    --- PASS: TestRoundAllModes/negative_to_pos_inf (0.00s)
+    --- PASS: TestRoundAllModes/positive_to_neg_inf (0.00s)
+    --- PASS: TestRoundAllModes/negative_to_neg_inf (0.00s)
+    --- PASS: TestRoundAllModes/positive_away_from_zero (0.00s)
+    --- PASS: TestRoundAllModes/negative_away_from_zero (0.00s)
+    --- PASS: TestRoundAllModes/exact_value (0.00s)
+=== RUN   TestRoundToNearest
+=== RUN   TestRoundToNearest/small_positive
+=== RUN   TestRoundToNearest/small_negative
+=== RUN   TestRoundToNearest/near_one
+=== RUN   TestRoundToNearest/near_neg_one
+=== RUN   TestRoundToNearest/pi
+=== RUN   TestRoundToNearest/e
+--- PASS: TestRoundToNearest (0.00s)
+    --- PASS: TestRoundToNearest/small_positive (0.00s)
+    --- PASS: TestRoundToNearest/small_negative (0.00s)
+    --- PASS: TestRoundToNearest/near_one (0.00s)
+    --- PASS: TestRoundToNearest/near_neg_one (0.00s)
+    --- PASS: TestRoundToNearest/pi (0.00s)
+    --- PASS: TestRoundToNearest/e (0.00s)
+=== RUN   TestRoundWithZeroPrecision
+--- PASS: TestRoundWithZeroPrecision (0.00s)
+=== RUN   TestSqrtRounded
+=== RUN   TestSqrtRounded/sqrt_2
+=== RUN   TestSqrtRounded/sqrt_3
+=== RUN   TestSqrtRounded/sqrt_10
+=== RUN   TestSqrtRounded/sqrt_100
+=== RUN   TestSqrtRounded/sqrt_0.25
+=== RUN   TestSqrtRounded/sqrt_to_zero
+=== RUN   TestSqrtRounded/sqrt_to_pos_inf
+=== RUN   TestSqrtRounded/default_precision
+--- PASS: TestSqrtRounded (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_2 (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_3 (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_10 (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_100 (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_0.25 (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_to_zero (0.00s)
+    --- PASS: TestSqrtRounded/sqrt_to_pos_inf (0.00s)
+    --- PASS: TestSqrtRounded/default_precision (0.00s)
+=== RUN   TestAddRounded
+=== RUN   TestAddRounded/simple_add
+=== RUN   TestAddRounded/negative_add
+=== RUN   TestAddRounded/mixed_sign
+=== RUN   TestAddRounded/small_values
+=== RUN   TestAddRounded/large_values
+=== RUN   TestAddRounded/to_zero
+=== RUN   TestAddRounded/default_precision
+--- PASS: TestAddRounded (0.00s)
+    --- PASS: TestAddRounded/simple_add (0.00s)
+    --- PASS: TestAddRounded/negative_add (0.00s)
+    --- PASS: TestAddRounded/mixed_sign (0.00s)
+    --- PASS: TestAddRounded/small_values (0.00s)
+    --- PASS: TestAddRounded/large_values (0.00s)
+    --- PASS: TestAddRounded/to_zero (0.00s)
+    --- PASS: TestAddRounded/default_precision (0.00s)
+=== RUN   TestQuoRounded
+=== RUN   TestQuoRounded/simple_div
+=== RUN   TestQuoRounded/non_exact
+=== RUN   TestQuoRounded/negative_div
+=== RUN   TestQuoRounded/both_negative
+=== RUN   TestQuoRounded/fraction
+=== RUN   TestQuoRounded/to_zero
+=== RUN   TestQuoRounded/default_precision
+--- PASS: TestQuoRounded (0.00s)
+    --- PASS: TestQuoRounded/simple_div (0.00s)
+    --- PASS: TestQuoRounded/non_exact (0.00s)
+    --- PASS: TestQuoRounded/negative_div (0.00s)
+    --- PASS: TestQuoRounded/both_negative (0.00s)
+    --- PASS: TestQuoRounded/fraction (0.00s)
+    --- PASS: TestQuoRounded/to_zero (0.00s)
+    --- PASS: TestQuoRounded/default_precision (0.00s)
+=== RUN   TestRoundingModeConstants
+=== RUN   TestRoundingModeConstants/ToNearest
+=== RUN   TestRoundingModeConstants/ToNearestAway
+=== RUN   TestRoundingModeConstants/ToZero
+=== RUN   TestRoundingModeConstants/ToPositiveInf
+=== RUN   TestRoundingModeConstants/ToNegativeInf
+=== RUN   TestRoundingModeConstants/AwayFromZero
+--- PASS: TestRoundingModeConstants (0.00s)
+    --- PASS: TestRoundingModeConstants/ToNearest (0.00s)
+    --- PASS: TestRoundingModeConstants/ToNearestAway (0.00s)
+    --- PASS: TestRoundingModeConstants/ToZero (0.00s)
+    --- PASS: TestRoundingModeConstants/ToPositiveInf (0.00s)
+    --- PASS: TestRoundingModeConstants/ToNegativeInf (0.00s)
+    --- PASS: TestRoundingModeConstants/AwayFromZero (0.00s)
+=== RUN   TestRoundingTernary
+=== RUN   TestRoundingTernary/exact_value
+=== RUN   TestRoundingTernary/rounded_value
+--- PASS: TestRoundingTernary (0.00s)
+    --- PASS: TestRoundingTernary/exact_value (0.00s)
+    --- PASS: TestRoundingTernary/rounded_value (0.00s)
+=== RUN   TestEvaluateChebyshevBig
+=== RUN   TestEvaluateChebyshevBig/constant_polynomial
+=== RUN   TestEvaluateChebyshevBig/linear_polynomial
+=== RUN   TestEvaluateChebyshevBig/at_endpoints
+--- PASS: TestEvaluateChebyshevBig (0.00s)
+    --- PASS: TestEvaluateChebyshevBig/constant_polynomial (0.00s)
+    --- PASS: TestEvaluateChebyshevBig/linear_polynomial (0.00s)
+    --- PASS: TestEvaluateChebyshevBig/at_endpoints (0.00s)
+=== RUN   TestEvaluateChebyshevDerivativeBig
+=== RUN   TestEvaluateChebyshevDerivativeBig/constant_derivative_is_zero
+=== RUN   TestEvaluateChebyshevDerivativeBig/linear_derivative_is_constant
+=== RUN   TestEvaluateChebyshevDerivativeBig/derivative_at_endpoints
+--- PASS: TestEvaluateChebyshevDerivativeBig (0.00s)
+    --- PASS: TestEvaluateChebyshevDerivativeBig/constant_derivative_is_zero (0.00s)
+    --- PASS: TestEvaluateChebyshevDerivativeBig/linear_derivative_is_constant (0.00s)
+    --- PASS: TestEvaluateChebyshevDerivativeBig/derivative_at_endpoints (0.00s)
+=== RUN   TestEvaluateSegmentBig
+[EVAL-SEG] tjd=5.000000 segStart=0.000000 segEnd=10.000000 segSize=10.000000
+[EVAL-SEG] t_normalized=0.000000000000000e+00 (should be in [-1,1])
+[SEGMENT] segSize=10.000000 scale=2.000000e-01 raw_vx=1.000000e-01
+--- PASS: TestEvaluateSegmentBig (0.00s)
+=== RUN   TestConvertToBigFloatCoeffs
+--- PASS: TestConvertToBigFloatCoeffs (0.00s)
+=== RUN   TestDebugPrintBigVec6
+[test] pos=[1.000000000000000e+00, 2.000000000000000e+00, 3.000000000000000e+00] vel=[1.000000000000000e-01, 2.000000000000000e-01, 3.000000000000000e-01]
+--- PASS: TestDebugPrintBigVec6 (0.00s)
+=== RUN   TestChebyshevConsistency
+--- PASS: TestChebyshevConsistency (0.00s)
+=== RUN   TestChebyshevPrecisionLevels
+=== RUN   TestChebyshevPrecisionLevels/precision_@
+=== RUN   TestChebyshevPrecisionLevels/precision_\u0080
+=== RUN   TestChebyshevPrecisionLevels/precision_Ā
+=== RUN   TestChebyshevPrecisionLevels/precision_Ȁ
+--- PASS: TestChebyshevPrecisionLevels (0.00s)
+    --- PASS: TestChebyshevPrecisionLevels/precision_@ (0.00s)
+    --- PASS: TestChebyshevPrecisionLevels/precision_\u0080 (0.00s)
+    --- PASS: TestChebyshevPrecisionLevels/precision_Ā (0.00s)
+    --- PASS: TestChebyshevPrecisionLevels/precision_Ȁ (0.00s)
+=== RUN   TestSegmentEdgeCases
+=== RUN   TestSegmentEdgeCases/segment_start
+[EVAL-SEG] tjd=0.000000 segStart=0.000000 segEnd=10.000000 segSize=10.000000
+[EVAL-SEG] t_normalized=-1.000000000000000e+00 (should be in [-1,1])
+[SEGMENT] segSize=10.000000 scale=2.000000e-01 raw_vx=0.000000e+00
+=== RUN   TestSegmentEdgeCases/segment_end
+[EVAL-SEG] tjd=10.000000 segStart=0.000000 segEnd=10.000000 segSize=10.000000
+[EVAL-SEG] t_normalized=1.000000000000000e+00 (should be in [-1,1])
+[SEGMENT] segSize=10.000000 scale=2.000000e-01 raw_vx=0.000000e+00
+=== RUN   TestSegmentEdgeCases/segment_middle
+[EVAL-SEG] tjd=5.000000 segStart=0.000000 segEnd=10.000000 segSize=10.000000
+[EVAL-SEG] t_normalized=0.000000000000000e+00 (should be in [-1,1])
+[SEGMENT] segSize=10.000000 scale=2.000000e-01 raw_vx=0.000000e+00
+--- PASS: TestSegmentEdgeCases (0.00s)
+    --- PASS: TestSegmentEdgeCases/segment_start (0.00s)
+    --- PASS: TestSegmentEdgeCases/segment_end (0.00s)
+    --- PASS: TestSegmentEdgeCases/segment_middle (0.00s)
+=== RUN   TestBigVec3JSON
+=== RUN   TestBigVec3JSON/normal_values
+=== RUN   TestBigVec3JSON/zero_vector
+=== RUN   TestBigVec3JSON/negative_values
+=== RUN   TestBigVec3JSON/very_large
+=== RUN   TestBigVec3JSON/very_small
+=== RUN   TestBigVec3JSON/mixed_signs
+=== RUN   TestBigVec3JSON/invalid_json
+=== RUN   TestBigVec3JSON/precision_preservation
+--- PASS: TestBigVec3JSON (0.00s)
+    --- PASS: TestBigVec3JSON/normal_values (0.00s)
+    --- PASS: TestBigVec3JSON/zero_vector (0.00s)
+    --- PASS: TestBigVec3JSON/negative_values (0.00s)
+    --- PASS: TestBigVec3JSON/very_large (0.00s)
+    --- PASS: TestBigVec3JSON/very_small (0.00s)
+    --- PASS: TestBigVec3JSON/mixed_signs (0.00s)
+    --- PASS: TestBigVec3JSON/invalid_json (0.00s)
+    --- PASS: TestBigVec3JSON/precision_preservation (0.00s)
+=== RUN   TestBigVec6JSON
+=== RUN   TestBigVec6JSON/normal_values
+=== RUN   TestBigVec6JSON/zero_vector
+=== RUN   TestBigVec6JSON/negative_values
+=== RUN   TestBigVec6JSON/very_large
+=== RUN   TestBigVec6JSON/very_small
+=== RUN   TestBigVec6JSON/invalid_json
+--- PASS: TestBigVec6JSON (0.00s)
+    --- PASS: TestBigVec6JSON/normal_values (0.00s)
+    --- PASS: TestBigVec6JSON/zero_vector (0.00s)
+    --- PASS: TestBigVec6JSON/negative_values (0.00s)
+    --- PASS: TestBigVec6JSON/very_large (0.00s)
+    --- PASS: TestBigVec6JSON/very_small (0.00s)
+    --- PASS: TestBigVec6JSON/invalid_json (0.00s)
+=== RUN   TestBigMatrix3x3JSON
+=== RUN   TestBigMatrix3x3JSON/identity
+=== RUN   TestBigMatrix3x3JSON/zero_matrix
+=== RUN   TestBigMatrix3x3JSON/general_matrix
+=== RUN   TestBigMatrix3x3JSON/very_large
+=== RUN   TestBigMatrix3x3JSON/very_small
+=== RUN   TestBigMatrix3x3JSON/invalid_json
+=== RUN   TestBigMatrix3x3JSON/precision_preservation
+--- PASS: TestBigMatrix3x3JSON (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/identity (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/zero_matrix (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/general_matrix (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/very_large (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/very_small (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/invalid_json (0.00s)
+    --- PASS: TestBigMatrix3x3JSON/precision_preservation (0.00s)
+=== RUN   TestBigFloatMarshalJSON
+=== RUN   TestBigFloatMarshalJSON/zero
+=== RUN   TestBigFloatMarshalJSON/one
+=== RUN   TestBigFloatMarshalJSON/negative
+=== RUN   TestBigFloatMarshalJSON/large
+=== RUN   TestBigFloatMarshalJSON/small
+=== RUN   TestBigFloatMarshalJSON/pi
+--- PASS: TestBigFloatMarshalJSON (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/zero (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/one (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/negative (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/large (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/small (0.00s)
+    --- PASS: TestBigFloatMarshalJSON/pi (0.00s)
+=== RUN   TestBigFloatUnmarshalJSON
+=== RUN   TestBigFloatUnmarshalJSON/zero
+=== RUN   TestBigFloatUnmarshalJSON/one
+=== RUN   TestBigFloatUnmarshalJSON/negative
+=== RUN   TestBigFloatUnmarshalJSON/scientific
+=== RUN   TestBigFloatUnmarshalJSON/invalid
+=== RUN   TestBigFloatUnmarshalJSON/empty
+--- PASS: TestBigFloatUnmarshalJSON (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/zero (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/one (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/negative (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/scientific (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/invalid (0.00s)
+    --- PASS: TestBigFloatUnmarshalJSON/empty (0.00s)
+=== RUN   TestBigFloatJSONRoundTrip
+=== RUN   TestBigFloatJSONRoundTrip/value_\x00
+=== RUN   TestBigFloatJSONRoundTrip/value_d
+=== RUN   TestBigFloatJSONRoundTrip/value_�
+=== RUN   TestBigFloatJSONRoundTrip/value_ĺ
+=== RUN   TestBigFloatJSONRoundTrip/value_�#01
+=== RUN   TestBigFloatJSONRoundTrip/value_\x00#01
+=== RUN   TestBigFloatJSONRoundTrip/value_�#02
+--- PASS: TestBigFloatJSONRoundTrip (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_\x00 (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_d (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_� (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_ĺ (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_�#01 (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_\x00#01 (0.00s)
+    --- PASS: TestBigFloatJSONRoundTrip/value_�#02 (0.00s)
+=== RUN   TestBigGamma
+=== RUN   TestBigGamma/x_equals_one
+=== RUN   TestBigGamma/x_equals_two
+=== RUN   TestBigGamma/x_equals_three
+=== RUN   TestBigGamma/x_equals_half
+=== RUN   TestBigGamma/x_equals_zero
+=== RUN   TestBigGamma/x_equals_negative_one
+=== RUN   TestBigGamma/x_equals_negative_two
+=== RUN   TestBigGamma/x_equals_four
+=== RUN   TestBigGamma/x_equals_five
+=== RUN   TestBigGamma/x_equals_ten
+=== RUN   TestBigGamma/x_equals_0.25
+=== RUN   TestBigGamma/x_equals_1.5
+=== RUN   TestBigGamma/x_equals_2.5
+=== RUN   TestBigGamma/x_equals_negative_half
+=== RUN   TestBigGamma/x_equals_negative_1.5
+=== RUN   TestBigGamma/very_large_x
+=== RUN   TestBigGamma/very_small_x
+=== RUN   TestBigGamma/recurrence_property
+=== RUN   TestBigGamma/compare_with_factorial
+=== RUN   TestBigGamma/precision_levels
+--- PASS: TestBigGamma (0.00s)
+    --- PASS: TestBigGamma/x_equals_one (0.00s)
+    --- PASS: TestBigGamma/x_equals_two (0.00s)
+    --- PASS: TestBigGamma/x_equals_three (0.00s)
+    --- PASS: TestBigGamma/x_equals_half (0.00s)
+    --- PASS: TestBigGamma/x_equals_zero (0.00s)
+    --- PASS: TestBigGamma/x_equals_negative_one (0.00s)
+    --- PASS: TestBigGamma/x_equals_negative_two (0.00s)
+    --- PASS: TestBigGamma/x_equals_four (0.00s)
+    --- PASS: TestBigGamma/x_equals_five (0.00s)
+    --- PASS: TestBigGamma/x_equals_ten (0.00s)
+    --- PASS: TestBigGamma/x_equals_0.25 (0.00s)
+    --- PASS: TestBigGamma/x_equals_1.5 (0.00s)
+    --- PASS: TestBigGamma/x_equals_2.5 (0.00s)
+    --- PASS: TestBigGamma/x_equals_negative_half (0.00s)
+    --- PASS: TestBigGamma/x_equals_negative_1.5 (0.00s)
+    --- PASS: TestBigGamma/very_large_x (0.00s)
+    --- PASS: TestBigGamma/very_small_x (0.00s)
+    --- PASS: TestBigGamma/recurrence_property (0.00s)
+    --- PASS: TestBigGamma/compare_with_factorial (0.00s)
+    --- PASS: TestBigGamma/precision_levels (0.00s)
+=== RUN   TestBigErf
+=== RUN   TestBigErf/x_equals_zero
+=== RUN   TestBigErf/x_equals_one
+=== RUN   TestBigErf/x_equals_negative_one
+=== RUN   TestBigErf/x_equals_two
+=== RUN   TestBigErf/x_equals_negative_two
+=== RUN   TestBigErf/x_equals_half
+=== RUN   TestBigErf/x_equals_negative_half
+=== RUN   TestBigErf/x_equals_0.1
+=== RUN   TestBigErf/x_equals_0.25
+=== RUN   TestBigErf/x_equals_3
+=== RUN   TestBigErf/very_small_x
+=== RUN   TestBigErf/very_large_x
+=== RUN   TestBigErf/very_large_negative_x
+=== RUN   TestBigErf/odd_function_property
+=== RUN   TestBigErf/erf_plus_erfc_equals_one
+=== RUN   TestBigErf/precision_levels
+--- PASS: TestBigErf (0.00s)
+    --- PASS: TestBigErf/x_equals_zero (0.00s)
+    --- PASS: TestBigErf/x_equals_one (0.00s)
+    --- PASS: TestBigErf/x_equals_negative_one (0.00s)
+    --- PASS: TestBigErf/x_equals_two (0.00s)
+    --- PASS: TestBigErf/x_equals_negative_two (0.00s)
+    --- PASS: TestBigErf/x_equals_half (0.00s)
+    --- PASS: TestBigErf/x_equals_negative_half (0.00s)
+    --- PASS: TestBigErf/x_equals_0.1 (0.00s)
+    --- PASS: TestBigErf/x_equals_0.25 (0.00s)
+    --- PASS: TestBigErf/x_equals_3 (0.00s)
+    --- PASS: TestBigErf/very_small_x (0.00s)
+    --- PASS: TestBigErf/very_large_x (0.00s)
+    --- PASS: TestBigErf/very_large_negative_x (0.00s)
+    --- PASS: TestBigErf/odd_function_property (0.00s)
+    --- PASS: TestBigErf/erf_plus_erfc_equals_one (0.00s)
+    --- PASS: TestBigErf/precision_levels (0.00s)
+=== RUN   TestBigErfc
+=== RUN   TestBigErfc/x_equals_zero
+=== RUN   TestBigErfc/x_equals_one
+=== RUN   TestBigErfc/x_equals_negative_one
+=== RUN   TestBigErfc/x_equals_two
+=== RUN   TestBigErfc/x_equals_negative_two
+=== RUN   TestBigErfc/x_equals_half
+=== RUN   TestBigErfc/x_equals_negative_half
+=== RUN   TestBigErfc/x_equals_0.1
+=== RUN   TestBigErfc/x_equals_3
+=== RUN   TestBigErfc/very_small_x
+=== RUN   TestBigErfc/very_large_x
+=== RUN   TestBigErfc/very_large_negative_x
+=== RUN   TestBigErfc/reflection_property
+=== RUN   TestBigErfc/precision_levels
+--- PASS: TestBigErfc (0.00s)
+    --- PASS: TestBigErfc/x_equals_zero (0.00s)
+    --- PASS: TestBigErfc/x_equals_one (0.00s)
+    --- PASS: TestBigErfc/x_equals_negative_one (0.00s)
+    --- PASS: TestBigErfc/x_equals_two (0.00s)
+    --- PASS: TestBigErfc/x_equals_negative_two (0.00s)
+    --- PASS: TestBigErfc/x_equals_half (0.00s)
+    --- PASS: TestBigErfc/x_equals_negative_half (0.00s)
+    --- PASS: TestBigErfc/x_equals_0.1 (0.00s)
+    --- PASS: TestBigErfc/x_equals_3 (0.00s)
+    --- PASS: TestBigErfc/very_small_x (0.00s)
+    --- PASS: TestBigErfc/very_large_x (0.00s)
+    --- PASS: TestBigErfc/very_large_negative_x (0.00s)
+    --- PASS: TestBigErfc/reflection_property (0.00s)
+    --- PASS: TestBigErfc/precision_levels (0.00s)
+=== RUN   TestBigBesselJ
+=== RUN   TestBigBesselJ/n0_x0
+=== RUN   TestBigBesselJ/n1_x0
+=== RUN   TestBigBesselJ/n2_x0
+=== RUN   TestBigBesselJ/n0_x1
+=== RUN   TestBigBesselJ/n1_x1
+=== RUN   TestBigBesselJ/n0_x2
+=== RUN   TestBigBesselJ/n1_x2
+=== RUN   TestBigBesselJ/n2_x2
+=== RUN   TestBigBesselJ/n0_x5
+=== RUN   TestBigBesselJ/n1_x5
+=== RUN   TestBigBesselJ/n5_x5
+=== RUN   TestBigBesselJ/n0_x10
+=== RUN   TestBigBesselJ/n1_x10
+=== RUN   TestBigBesselJ/n0_x0.5
+=== RUN   TestBigBesselJ/n1_x0.5
+=== RUN   TestBigBesselJ/negative_n
+=== RUN   TestBigBesselJ/negative_n_even
+=== RUN   TestBigBesselJ/negative_order_property
+=== RUN   TestBigBesselJ/precision_levels
+--- PASS: TestBigBesselJ (0.00s)
+    --- PASS: TestBigBesselJ/n0_x0 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x0 (0.00s)
+    --- PASS: TestBigBesselJ/n2_x0 (0.00s)
+    --- PASS: TestBigBesselJ/n0_x1 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x1 (0.00s)
+    --- PASS: TestBigBesselJ/n0_x2 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x2 (0.00s)
+    --- PASS: TestBigBesselJ/n2_x2 (0.00s)
+    --- PASS: TestBigBesselJ/n0_x5 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x5 (0.00s)
+    --- PASS: TestBigBesselJ/n5_x5 (0.00s)
+    --- PASS: TestBigBesselJ/n0_x10 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x10 (0.00s)
+    --- PASS: TestBigBesselJ/n0_x0.5 (0.00s)
+    --- PASS: TestBigBesselJ/n1_x0.5 (0.00s)
+    --- PASS: TestBigBesselJ/negative_n (0.00s)
+    --- PASS: TestBigBesselJ/negative_n_even (0.00s)
+    --- PASS: TestBigBesselJ/negative_order_property (0.00s)
+    --- PASS: TestBigBesselJ/precision_levels (0.00s)
+=== RUN   TestBigBesselY
+=== RUN   TestBigBesselY/n0_x1
+=== RUN   TestBigBesselY/n1_x1
+=== RUN   TestBigBesselY/n0_x2
+=== RUN   TestBigBesselY/n1_x2
+=== RUN   TestBigBesselY/n2_x2
+=== RUN   TestBigBesselY/n0_x5
+=== RUN   TestBigBesselY/n1_x5
+=== RUN   TestBigBesselY/n0_x0.5
+=== RUN   TestBigBesselY/n1_x0.5
+=== RUN   TestBigBesselY/n0_x0
+=== RUN   TestBigBesselY/n1_x0
+=== RUN   TestBigBesselY/negative_n
+=== RUN   TestBigBesselY/negative_order_property
+=== RUN   TestBigBesselY/precision_levels
+--- PASS: TestBigBesselY (0.00s)
+    --- PASS: TestBigBesselY/n0_x1 (0.00s)
+    --- PASS: TestBigBesselY/n1_x1 (0.00s)
+    --- PASS: TestBigBesselY/n0_x2 (0.00s)
+    --- PASS: TestBigBesselY/n1_x2 (0.00s)
+    --- PASS: TestBigBesselY/n2_x2 (0.00s)
+    --- PASS: TestBigBesselY/n0_x5 (0.00s)
+    --- PASS: TestBigBesselY/n1_x5 (0.00s)
+    --- PASS: TestBigBesselY/n0_x0.5 (0.00s)
+    --- PASS: TestBigBesselY/n1_x0.5 (0.00s)
+    --- PASS: TestBigBesselY/n0_x0 (0.00s)
+    --- PASS: TestBigBesselY/n1_x0 (0.00s)
+    --- PASS: TestBigBesselY/negative_n (0.00s)
+    --- PASS: TestBigBesselY/negative_order_property (0.00s)
+    --- PASS: TestBigBesselY/precision_levels (0.00s)
+=== RUN   TestBigCos
+=== RUN   TestBigCos/zero
+=== RUN   TestBigCos/pi/2
+=== RUN   TestBigCos/pi
+=== RUN   TestBigCos/3pi/2
+=== RUN   TestBigCos/2pi
+=== RUN   TestBigCos/pi/4
+=== RUN   TestBigCos/pi/6
+=== RUN   TestBigCos/pi/3
+=== RUN   TestBigCos/negative
+=== RUN   TestBigCos/small
+=== RUN   TestBigCos/large
+--- PASS: TestBigCos (0.00s)
+    --- PASS: TestBigCos/zero (0.00s)
+    --- PASS: TestBigCos/pi/2 (0.00s)
+    --- PASS: TestBigCos/pi (0.00s)
+    --- PASS: TestBigCos/3pi/2 (0.00s)
+    --- PASS: TestBigCos/2pi (0.00s)
+    --- PASS: TestBigCos/pi/4 (0.00s)
+    --- PASS: TestBigCos/pi/6 (0.00s)
+    --- PASS: TestBigCos/pi/3 (0.00s)
+    --- PASS: TestBigCos/negative (0.00s)
+    --- PASS: TestBigCos/small (0.00s)
+    --- PASS: TestBigCos/large (0.00s)
+=== RUN   TestBigTan
+=== RUN   TestBigTan/zero
+=== RUN   TestBigTan/pi/4
+=== RUN   TestBigTan/pi/6
+=== RUN   TestBigTan/pi/3
+=== RUN   TestBigTan/negative
+=== RUN   TestBigTan/small
+--- PASS: TestBigTan (0.00s)
+    --- PASS: TestBigTan/zero (0.00s)
+    --- PASS: TestBigTan/pi/4 (0.00s)
+    --- PASS: TestBigTan/pi/6 (0.00s)
+    --- PASS: TestBigTan/pi/3 (0.00s)
+    --- PASS: TestBigTan/negative (0.00s)
+    --- PASS: TestBigTan/small (0.00s)
+=== RUN   TestBigAtan
+=== RUN   TestBigAtan/zero
+=== RUN   TestBigAtan/one
+=== RUN   TestBigAtan/negative_one
+=== RUN   TestBigAtan/small
+=== RUN   TestBigAtan/large
+=== RUN   TestBigAtan/sqrt3
+=== RUN   TestBigAtan/1/sqrt3
+=== RUN   TestBigAtan/negative
+--- PASS: TestBigAtan (0.00s)
+    --- PASS: TestBigAtan/zero (0.00s)
+    --- PASS: TestBigAtan/one (0.00s)
+    --- PASS: TestBigAtan/negative_one (0.00s)
+    --- PASS: TestBigAtan/small (0.00s)
+    --- PASS: TestBigAtan/large (0.00s)
+    --- PASS: TestBigAtan/sqrt3 (0.00s)
+    --- PASS: TestBigAtan/1/sqrt3 (0.00s)
+    --- PASS: TestBigAtan/negative (0.00s)
+=== RUN   TestBigAtan2
+=== RUN   TestBigAtan2/quadrant_1
+=== RUN   TestBigAtan2/quadrant_2
+=== RUN   TestBigAtan2/quadrant_3
+=== RUN   TestBigAtan2/quadrant_4
+=== RUN   TestBigAtan2/positive_x_axis
+=== RUN   TestBigAtan2/negative_x_axis
+=== RUN   TestBigAtan2/positive_y_axis
+=== RUN   TestBigAtan2/negative_y_axis
+=== RUN   TestBigAtan2/both_zero
+=== RUN   TestBigAtan2/general
+--- PASS: TestBigAtan2 (0.00s)
+    --- PASS: TestBigAtan2/quadrant_1 (0.00s)
+    --- PASS: TestBigAtan2/quadrant_2 (0.00s)
+    --- PASS: TestBigAtan2/quadrant_3 (0.00s)
+    --- PASS: TestBigAtan2/quadrant_4 (0.00s)
+    --- PASS: TestBigAtan2/positive_x_axis (0.00s)
+    --- PASS: TestBigAtan2/negative_x_axis (0.00s)
+    --- PASS: TestBigAtan2/positive_y_axis (0.00s)
+    --- PASS: TestBigAtan2/negative_y_axis (0.00s)
+    --- PASS: TestBigAtan2/both_zero (0.00s)
+    --- PASS: TestBigAtan2/general (0.00s)
+=== RUN   TestBigAsin
+=== RUN   TestBigAsin/zero
+=== RUN   TestBigAsin/one
+=== RUN   TestBigAsin/negative_one
+=== RUN   TestBigAsin/half
+=== RUN   TestBigAsin/sqrt2/2
+=== RUN   TestBigAsin/sqrt3/2
+=== RUN   TestBigAsin/negative_half
+=== RUN   TestBigAsin/small
+--- PASS: TestBigAsin (0.00s)
+    --- PASS: TestBigAsin/zero (0.00s)
+    --- PASS: TestBigAsin/one (0.00s)
+    --- PASS: TestBigAsin/negative_one (0.00s)
+    --- PASS: TestBigAsin/half (0.00s)
+    --- PASS: TestBigAsin/sqrt2/2 (0.00s)
+    --- PASS: TestBigAsin/sqrt3/2 (0.00s)
+    --- PASS: TestBigAsin/negative_half (0.00s)
+    --- PASS: TestBigAsin/small (0.00s)
+=== RUN   TestTrigRounded
+=== RUN   TestTrigRounded/BigSinRounded
+=== RUN   TestTrigRounded/BigCosRounded
+=== RUN   TestTrigRounded/BigTanRounded
+=== RUN   TestTrigRounded/BigAtanRounded
+=== RUN   TestTrigRounded/BigAtan2Rounded
+=== RUN   TestTrigRounded/BigAsinRounded
+=== RUN   TestTrigRounded/BigAcosRounded
+--- PASS: TestTrigRounded (0.00s)
+    --- PASS: TestTrigRounded/BigSinRounded (0.00s)
+    --- PASS: TestTrigRounded/BigCosRounded (0.00s)
+    --- PASS: TestTrigRounded/BigTanRounded (0.00s)
+    --- PASS: TestTrigRounded/BigAtanRounded (0.00s)
+    --- PASS: TestTrigRounded/BigAtan2Rounded (0.00s)
+    --- PASS: TestTrigRounded/BigAsinRounded (0.00s)
+    --- PASS: TestTrigRounded/BigAcosRounded (0.00s)
+=== RUN   TestTrigIdentities
+=== RUN   TestTrigIdentities/sin^2_+_cos^2_=_1
+=== RUN   TestTrigIdentities/tan_=_sin/cos
+=== RUN   TestTrigIdentities/atan(tan(x))_=_x
+=== RUN   TestTrigIdentities/asin(sin(x))_=_x
+--- PASS: TestTrigIdentities (0.00s)
+    --- PASS: TestTrigIdentities/sin^2_+_cos^2_=_1 (0.00s)
+    --- PASS: TestTrigIdentities/tan_=_sin/cos (0.00s)
+    --- PASS: TestTrigIdentities/atan(tan(x))_=_x (0.00s)
+    --- PASS: TestTrigIdentities/asin(sin(x))_=_x (0.00s)
+=== RUN   TestTrigPrecisionLevels
+=== RUN   TestTrigPrecisionLevels/precision_@
+=== RUN   TestTrigPrecisionLevels/precision_\u0080
+=== RUN   TestTrigPrecisionLevels/precision_Ā
+=== RUN   TestTrigPrecisionLevels/precision_Ȁ
+--- PASS: TestTrigPrecisionLevels (0.00s)
+    --- PASS: TestTrigPrecisionLevels/precision_@ (0.00s)
+    --- PASS: TestTrigPrecisionLevels/precision_\u0080 (0.00s)
+    --- PASS: TestTrigPrecisionLevels/precision_Ā (0.00s)
+    --- PASS: TestTrigPrecisionLevels/precision_Ȁ (0.00s)
+=== RUN   TestUlp
+=== RUN   TestUlp/ulp_of_one
+=== RUN   TestUlp/ulp_of_zero
+=== RUN   TestUlp/ulp_of_large_number
+=== RUN   TestUlp/ulp_of_small_number
+=== RUN   TestUlp/ulp_scales_with_number
+--- PASS: TestUlp (0.00s)
+    --- PASS: TestUlp/ulp_of_one (0.00s)
+    --- PASS: TestUlp/ulp_of_zero (0.00s)
+    --- PASS: TestUlp/ulp_of_large_number (0.00s)
+    --- PASS: TestUlp/ulp_of_small_number (0.00s)
+    --- PASS: TestUlp/ulp_scales_with_number (0.00s)
+=== RUN   TestNewUlpError
+--- PASS: TestNewUlpError (0.00s)
+=== RUN   TestNewAbsError
+--- PASS: TestNewAbsError (0.00s)
+=== RUN   TestToAbs
+=== RUN   TestToAbs/absolute_error_unchanged
+=== RUN   TestToAbs/ulp_error_converted
+--- PASS: TestToAbs (0.00s)
+    --- PASS: TestToAbs/absolute_error_unchanged (0.00s)
+    --- PASS: TestToAbs/ulp_error_converted (0.00s)
+=== RUN   TestAddErrorBounds
+=== RUN   TestAddErrorBounds/add_ulp_errors
+=== RUN   TestAddErrorBounds/add_absolute_errors
+=== RUN   TestAddErrorBounds/add_mixed_errors
+--- PASS: TestAddErrorBounds (0.00s)
+    --- PASS: TestAddErrorBounds/add_ulp_errors (0.00s)
+    --- PASS: TestAddErrorBounds/add_absolute_errors (0.00s)
+    --- PASS: TestAddErrorBounds/add_mixed_errors (0.00s)
+=== RUN   TestPropagateErrorAdd
+--- PASS: TestPropagateErrorAdd (0.00s)
+=== RUN   TestPropagateErrorMul
+--- PASS: TestPropagateErrorMul (0.00s)
+=== RUN   TestCalculateRequiredPrecision
+=== RUN   TestCalculateRequiredPrecision/small_error
+=== RUN   TestCalculateRequiredPrecision/moderate_error
+=== RUN   TestCalculateRequiredPrecision/large_error
+=== RUN   TestCalculateRequiredPrecision/zero_error
+--- PASS: TestCalculateRequiredPrecision (0.00s)
+    --- PASS: TestCalculateRequiredPrecision/small_error (0.00s)
+    --- PASS: TestCalculateRequiredPrecision/moderate_error (0.00s)
+    --- PASS: TestCalculateRequiredPrecision/large_error (0.00s)
+    --- PASS: TestCalculateRequiredPrecision/zero_error (0.00s)
+=== RUN   TestErrorPropagationWithDifferentModes
+=== RUN   TestErrorPropagationWithDifferentModes/mode_\x00
+=== RUN   TestErrorPropagationWithDifferentModes/mode_\x02
+=== RUN   TestErrorPropagationWithDifferentModes/mode_\x05
+=== RUN   TestErrorPropagationWithDifferentModes/mode_\x04
+--- PASS: TestErrorPropagationWithDifferentModes (0.00s)
+    --- PASS: TestErrorPropagationWithDifferentModes/mode_\x00 (0.00s)
+    --- PASS: TestErrorPropagationWithDifferentModes/mode_\x02 (0.00s)
+    --- PASS: TestErrorPropagationWithDifferentModes/mode_\x05 (0.00s)
+    --- PASS: TestErrorPropagationWithDifferentModes/mode_\x04 (0.00s)
+=== RUN   TestErrorBoundConsistency
+--- PASS: TestErrorBoundConsistency (0.00s)
+=== RUN   TestErrorPropagationChain
+--- PASS: TestErrorPropagationChain (0.00s)
+=== RUN   TestBigVec3Cross
+=== RUN   TestBigVec3Cross/unit_x_unit_y
+=== RUN   TestBigVec3Cross/unit_y_unit_z
+=== RUN   TestBigVec3Cross/unit_z_unit_x
+=== RUN   TestBigVec3Cross/parallel_vectors
+=== RUN   TestBigVec3Cross/zero_vector
+=== RUN   TestBigVec3Cross/both_zero
+=== RUN   TestBigVec3Cross/general_case
+=== RUN   TestBigVec3Cross/negative_components
+=== RUN   TestBigVec3Cross/very_large
+=== RUN   TestBigVec3Cross/very_small
+=== RUN   TestBigVec3Cross/precision_levels
+--- PASS: TestBigVec3Cross (0.00s)
+    --- PASS: TestBigVec3Cross/unit_x_unit_y (0.00s)
+    --- PASS: TestBigVec3Cross/unit_y_unit_z (0.00s)
+    --- PASS: TestBigVec3Cross/unit_z_unit_x (0.00s)
+    --- PASS: TestBigVec3Cross/parallel_vectors (0.00s)
+    --- PASS: TestBigVec3Cross/zero_vector (0.00s)
+    --- PASS: TestBigVec3Cross/both_zero (0.00s)
+    --- PASS: TestBigVec3Cross/general_case (0.00s)
+    --- PASS: TestBigVec3Cross/negative_components (0.00s)
+    --- PASS: TestBigVec3Cross/very_large (0.00s)
+    --- PASS: TestBigVec3Cross/very_small (0.00s)
+    --- PASS: TestBigVec3Cross/precision_levels (0.00s)
+=== RUN   TestBigVec3Normalize
+=== RUN   TestBigVec3Normalize/unit_vector
+=== RUN   TestBigVec3Normalize/pythagorean_triple
+=== RUN   TestBigVec3Normalize/general_case
+=== RUN   TestBigVec3Normalize/negative_components
+=== RUN   TestBigVec3Normalize/very_large
+=== RUN   TestBigVec3Normalize/very_small
+=== RUN   TestBigVec3Normalize/zero_vector
+=== RUN   TestBigVec3Normalize/precision_levels
+--- PASS: TestBigVec3Normalize (0.00s)
+    --- PASS: TestBigVec3Normalize/unit_vector (0.00s)
+    --- PASS: TestBigVec3Normalize/pythagorean_triple (0.00s)
+    --- PASS: TestBigVec3Normalize/general_case (0.00s)
+    --- PASS: TestBigVec3Normalize/negative_components (0.00s)
+    --- PASS: TestBigVec3Normalize/very_large (0.00s)
+    --- PASS: TestBigVec3Normalize/very_small (0.00s)
+    --- PASS: TestBigVec3Normalize/zero_vector (0.00s)
+    --- PASS: TestBigVec3Normalize/precision_levels (0.00s)
+=== RUN   TestBigVec3Angle
+=== RUN   TestBigVec3Angle/perpendicular
+=== RUN   TestBigVec3Angle/parallel
+=== RUN   TestBigVec3Angle/anti_parallel
+=== RUN   TestBigVec3Angle/forty_five_degrees
+=== RUN   TestBigVec3Angle/zero_vector
+=== RUN   TestBigVec3Angle/both_zero
+=== RUN   TestBigVec3Angle/general_case
+=== RUN   TestBigVec3Angle/precision_levels
+--- PASS: TestBigVec3Angle (0.00s)
+    --- PASS: TestBigVec3Angle/perpendicular (0.00s)
+    --- PASS: TestBigVec3Angle/parallel (0.00s)
+    --- PASS: TestBigVec3Angle/anti_parallel (0.00s)
+    --- PASS: TestBigVec3Angle/forty_five_degrees (0.00s)
+    --- PASS: TestBigVec3Angle/zero_vector (0.00s)
+    --- PASS: TestBigVec3Angle/both_zero (0.00s)
+    --- PASS: TestBigVec3Angle/general_case (0.00s)
+    --- PASS: TestBigVec3Angle/precision_levels (0.00s)
+=== RUN   TestBigVec3Project
+=== RUN   TestBigVec3Project/onto_x_axis
+=== RUN   TestBigVec3Project/parallel_vectors
+=== RUN   TestBigVec3Project/perpendicular_vectors
+=== RUN   TestBigVec3Project/general_case
+=== RUN   TestBigVec3Project/zero_v1
+=== RUN   TestBigVec3Project/zero_v2
+=== RUN   TestBigVec3Project/very_large
+=== RUN   TestBigVec3Project/precision_levels
+--- PASS: TestBigVec3Project (0.00s)
+    --- PASS: TestBigVec3Project/onto_x_axis (0.00s)
+    --- PASS: TestBigVec3Project/parallel_vectors (0.00s)
+    --- PASS: TestBigVec3Project/perpendicular_vectors (0.00s)
+    --- PASS: TestBigVec3Project/general_case (0.00s)
+    --- PASS: TestBigVec3Project/zero_v1 (0.00s)
+    --- PASS: TestBigVec3Project/zero_v2 (0.00s)
+    --- PASS: TestBigVec3Project/very_large (0.00s)
+    --- PASS: TestBigVec3Project/precision_levels (0.00s)
+=== RUN   TestBigVec3Add
+--- PASS: TestBigVec3Add (0.00s)
+=== RUN   TestBigVec3Sub
+--- PASS: TestBigVec3Sub (0.00s)
+=== RUN   TestBigVec3Mul
+--- PASS: TestBigVec3Mul (0.00s)
+=== RUN   TestBigVec3Copy
+--- PASS: TestBigVec3Copy (0.00s)
+=== RUN   TestBigVec6Add
+--- PASS: TestBigVec6Add (0.00s)
+=== RUN   TestBigVec6Sub
+--- PASS: TestBigVec6Sub (0.00s)
+=== RUN   TestBigVec6Negate
+--- PASS: TestBigVec6Negate (0.00s)
+=== RUN   TestBigVec6Magnitude
+--- PASS: TestBigVec6Magnitude (0.00s)
+=== RUN   TestBigVec6Copy
+--- PASS: TestBigVec6Copy (0.00s)
+=== RUN   TestBigMatMul
+--- PASS: TestBigMatMul (0.00s)
+=== RUN   TestNewIdentityMatrix
+--- PASS: TestNewIdentityMatrix (0.00s)
+=== RUN   TestApplyRotationMatrixToBigVec6
+--- PASS: TestApplyRotationMatrixToBigVec6 (0.00s)
+=== RUN   TestCreateRotationMatrix
+--- PASS: TestCreateRotationMatrix (0.00s)
+=== RUN   TestBigMaxMin
+=== RUN   TestBigMaxMin/BigMax
+=== RUN   TestBigMaxMin/BigMin
+--- PASS: TestBigMaxMin (0.00s)
+    --- PASS: TestBigMaxMin/BigMax (0.00s)
+    --- PASS: TestBigMaxMin/BigMin (0.00s)
+=== RUN   TestBigFloatFMA
+--- PASS: TestBigFloatFMA (0.00s)
+=== RUN   TestBigFloatDotProduct
+--- PASS: TestBigFloatDotProduct (0.00s)
+PASS
+ok  	github.com/mshafiee/bigmath	(cached)
+?   	github.com/mshafiee/bigmath/examples	[no test files]

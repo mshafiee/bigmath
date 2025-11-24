@@ -259,3 +259,137 @@ func TestBigMatrix3x3JSON(t *testing.T) {
 		}
 	})
 }
+
+// TestBigFloatMarshalJSON tests BigFloat JSON marshaling
+func TestBigFloatMarshalJSON(t *testing.T) {
+	prec := uint(256)
+
+	tests := []struct {
+		name      string
+		value     float64
+		tolerance float64
+	}{
+		{"zero", 0.0, 1e-10},
+		{"one", 1.0, 1e-10},
+		{"negative", -3.14, 1e-10},
+		{"large", 1e10, 1e5},
+		{"small", 1e-10, 1e-20},
+		{"pi", 3.141592653589793, 1e-10},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := NewBigFloat(tt.value, prec)
+			data, err := BigFloatMarshalJSON(x)
+			if err != nil {
+				t.Fatalf("BigFloatMarshalJSON failed: %v", err)
+			}
+
+			if len(data) == 0 {
+				t.Error("BigFloatMarshalJSON returned empty data")
+			}
+
+			// Should be valid JSON string
+			var s string
+			if err := json.Unmarshal(data, &s); err != nil {
+				t.Errorf("BigFloatMarshalJSON didn't produce valid JSON: %v", err)
+			}
+		})
+	}
+}
+
+// TestBigFloatUnmarshalJSON tests BigFloat JSON unmarshaling
+func TestBigFloatUnmarshalJSON(t *testing.T) {
+	prec := uint(256)
+
+	tests := []struct {
+		name      string
+		jsonStr   string
+		expected  float64
+		shouldErr bool
+	}{
+		{"zero", `"0"`, 0.0, false},
+		{"one", `"1.0"`, 1.0, false},
+		{"negative", `"-3.14"`, -3.14, false},
+		{"scientific", `"1.23e10"`, 1.23e10, false},
+		{"invalid", `"not a number"`, 0.0, true},
+		{"empty", `""`, 0.0, true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x, err := BigFloatUnmarshalJSON([]byte(tt.jsonStr), prec)
+
+			if tt.shouldErr {
+				if err == nil {
+					t.Error("BigFloatUnmarshalJSON should have failed")
+				}
+			} else {
+				if err != nil {
+					t.Fatalf("BigFloatUnmarshalJSON failed: %v", err)
+				}
+
+				if x == nil {
+					t.Error("BigFloatUnmarshalJSON returned nil result")
+					return
+				}
+
+				xFloat, _ := x.Float64()
+				diff := xFloat - tt.expected
+				if diff < 0 {
+					diff = -diff
+				}
+				if diff > 1e-10 && tt.expected != 0 && diff/tt.expected > 1e-10 {
+					t.Errorf("BigFloatUnmarshalJSON = %v, want %v", xFloat, tt.expected)
+				}
+			}
+		})
+	}
+}
+
+// TestBigFloatJSONRoundTrip tests BigFloat JSON round-trip
+func TestBigFloatJSONRoundTrip(t *testing.T) {
+	prec := uint(256)
+
+	values := []float64{0.0, 1.0, -1.0, 3.14159, 1e10, 1e-10, -2.71828}
+
+	for _, val := range values {
+		t.Run("value_"+string(rune(int(val*100))), func(t *testing.T) {
+			x := NewBigFloat(val, prec)
+
+			// Marshal
+			data, err := BigFloatMarshalJSON(x)
+			if err != nil {
+				t.Fatalf("Marshal failed: %v", err)
+			}
+
+			// Unmarshal
+			y, err := BigFloatUnmarshalJSON(data, prec)
+			if err != nil {
+				t.Fatalf("Unmarshal failed: %v", err)
+			}
+
+			if y == nil {
+				t.Fatal("Unmarshal returned nil")
+			}
+
+			// Compare
+			xFloat, _ := x.Float64()
+			yFloat, _ := y.Float64()
+
+			if xFloat == 0.0 {
+				if yFloat != 0.0 {
+					t.Errorf("Round-trip failed: %v != %v", yFloat, xFloat)
+				}
+			} else {
+				relErr := (yFloat - xFloat) / xFloat
+				if relErr < 0 {
+					relErr = -relErr
+				}
+				if relErr > 1e-10 {
+					t.Errorf("Round-trip failed: %v != %v (rel err %e)", yFloat, xFloat, relErr)
+				}
+			}
+		})
+	}
+}
