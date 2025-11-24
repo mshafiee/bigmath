@@ -1,0 +1,45 @@
+name: Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.21'
+        
+    - name: Install golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+        
+    - name: Check formatting
+      run: |
+        echo "Checking if code is properly formatted..."
+        if [ -n "$(go fmt -d ./...)" ]; then
+          echo "Code is not properly formatted. Run 'go fmt ./...' to fix."
+          go fmt -d ./...
+          exit 1
+        fi
+        echo "Code is properly formatted!"
+        
+    - name: Run go vet
+      run: go vet ./...
+      
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+        args: --timeout=5m
+

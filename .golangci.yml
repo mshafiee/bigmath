@@ -1,0 +1,72 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  gosimple:
+    checks: ["all"]
+  govet:
+    enable-all: true
+  shadow:
+    enabled: true
+  ineffassign:
+    check-return-statements: true
+  staticcheck:
+    checks: ["all"]
+  unused:
+    check-exported: false
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - dupImport
+      - ifElseChain
+      - octalLiteral
+      - whyNoLint
+      - wrapperFunc
+
+linters:
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gocritic
+    - gofmt
+    - goimports
+    - misspell
+    - unconvert
+    - unparam
+    - whitespace
+  disable:
+    - typecheck  # Already done by go build
+
+issues:
+  exclude-dirs:
+    - vendor
+  exclude-files:
+    - ".*\\.s$"  # Exclude assembly files
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+        - gocritic
+    - path: ".*\\.s$"  # Exclude assembly files from all linters
+      linters:
+        - all
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+output:
+  formats:
+    - format: colored-line-number
+
