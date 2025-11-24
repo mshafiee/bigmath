@@ -52,18 +52,22 @@ func bigVec3DotAVX2(v1, v2 *BigVec3, prec uint) *BigFloat {
 // Assembly wrappers replaced with Go implementations to avoid GC stackmap issues
 // The real implementation is in the generic functions
 
+//nolint:unused // Used by AVX2 dispatch
 func bigVec3AddAsm(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3AddGeneric(v1, v2, prec)
 }
 
+//nolint:unused // Used by AVX2 dispatch
 func bigVec3SubAsm(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3SubGeneric(v1, v2, prec)
 }
 
+//nolint:unused // Used by AVX2 dispatch
 func bigVec3MulAsm(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3 {
 	return bigVec3MulGeneric(v, scalar, prec)
 }
 
+//nolint:unused // Used by AVX2 dispatch
 func bigVec3DotAsm(v1, v2 *BigVec3, prec uint) *BigFloat {
 	return bigVec3DotGeneric(v1, v2, prec)
 }
@@ -80,6 +84,7 @@ func bigMatMulAVX2(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 	return bigMatMulAsm(m, v, prec)
 }
 
+//nolint:unused // Used by AVX2 dispatch
 func bigMatMulAsm(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 	return bigMatMulGeneric(m, v, prec)
 }
