@@ -1,10 +1,14 @@
 // Copyright (c) 2025 Mohammad Shafiee
 // SPDX-License-Identifier: BSD-3-Clause
 
+//go:build amd64 || arm64
+
 package bigmath
 
 // Multi-precision integer operations
 // These are low-level building blocks for arbitrary precision arithmetic
+// Assembly implementations are in mpn_*_amd64.s and mpn_*_arm64.s files
+// Generic fallback implementations are in mpn_fallback_generic_ops.go
 
 // mpnAddN adds two n-limb numbers: dst = src1 + src2
 // Returns carry (0 or 1)

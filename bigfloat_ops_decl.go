@@ -1,12 +1,12 @@
 // Copyright (c) 2025 Mohammad Shafiee
 // SPDX-License-Identifier: BSD-3-Clause
 
-//go:build !arm64
+//go:build amd64
 
 package bigmath
 
 // Assembly function declarations
-// These will be implemented in architecture-specific .s files (e.g., AMD64).
+// These will be implemented in architecture-specific .s files (AMD64).
 
 //go:noescape
 //nolint:unused // Declared for assembly implementation

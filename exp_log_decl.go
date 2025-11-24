@@ -5,8 +5,14 @@
 
 package bigmath
 
-//go:noescape
-func bigExpAsm(x *BigFloat, prec uint) *BigFloat
+// Generic fallback implementations for platforms without assembly support
 
-//go:noescape
-func bigLogAsm(x *BigFloat, prec uint) *BigFloat
+//nolint:unused // Declared for consistency with amd64/arm64 versions
+func bigExpAsm(x *BigFloat, prec uint) *BigFloat {
+	return bigExpGeneric(x, prec)
+}
+
+//nolint:unused // Declared for consistency with amd64/arm64 versions
+func bigLogAsm(x *BigFloat, prec uint) *BigFloat {
+	return bigLogGeneric(x, prec)
+}

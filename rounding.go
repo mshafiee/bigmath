@@ -50,22 +50,8 @@ func roundTowardNegInfGeneric(x *BigFloat, prec uint) *BigFloat {
 }
 
 // Assembly function declarations
-
-//go:noescape
-//nolint:unused // Implemented in assembly (rounding_amd64.s)
-func roundToNearestEvenAsm(x *BigFloat, prec uint) *BigFloat
-
-//go:noescape
-//nolint:unused // Implemented in assembly (rounding_amd64.s)
-func roundTowardZeroAsm(x *BigFloat, prec uint) *BigFloat
-
-//go:noescape
-//nolint:unused // Implemented in assembly (rounding_amd64.s)
-func roundTowardInfAsm(x *BigFloat, prec uint) *BigFloat
-
-//go:noescape
-//nolint:unused // Implemented in assembly (rounding_amd64.s)
-func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
+// These are only included for amd64 where assembly implementations exist
+// Generic platforms use the generic implementations directly
 
 // Round rounds x to prec bits using the specified rounding mode
 // Returns the rounded value and a ternary value:
