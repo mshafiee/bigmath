@@ -8,6 +8,68 @@ import "fmt"
 // Generic pure-Go implementations of Chebyshev polynomial evaluation
 // These serve as reference implementations and fallbacks
 
+// shouldEnableDebug checks if debug logging should be enabled for Body=10
+func shouldEnableDebug(c []*BigFloat, neval int) bool {
+	if len(c) < 26 || neval != 25 {
+		return false
+	}
+	c0, _ := c[0].Float64()
+	return c0 > -0.13 && c0 < -0.12 // Body=10 first coeff is around -0.1257
+}
+
+// printDebugStart prints debug information at the start of Chebyshev evaluation
+func printDebugStart(t *BigFloat, c []*BigFloat, neval int) {
+	tF, _ := t.Float64()
+	fmt.Printf("\n[CHEB-DEBUG] Starting Chebyshev evaluation for Body=10\n")
+	fmt.Printf("[CHEB-DEBUG] t=%.15e (normalized time in [-1,1])\n", tF)
+	fmt.Printf("[CHEB-DEBUG] neval=%d (using first %d coefficients)\n", neval, neval)
+	fmt.Printf("[CHEB-DEBUG] First 5 coeffs:")
+	for i := 0; i < 5 && i < len(c); i++ {
+		cf, _ := c[i].Float64()
+		fmt.Printf(" c[%d]=%.15e", i, cf)
+	}
+	fmt.Printf("\n")
+}
+
+// printDebugIteration prints debug information for a Clenshaw iteration
+func printDebugIteration(i, neval int, b0, b1, b2, c *BigFloat) {
+	if i >= 3 && i < neval-3 {
+		return
+	}
+	b0F, _ := b0.Float64()
+	b1F, _ := b1.Float64()
+	b2F, _ := b2.Float64()
+	cF, _ := c.Float64()
+	fmt.Printf("[CHEB-DEBUG]   i=%2d: c[%d]=%.15e, b1=%.15e, b2=%.15e → b0=%.15e\n",
+		i, i, cF, b1F, b2F, b0F)
+}
+
+// printDebugEnd prints debug information at the end of Chebyshev evaluation
+func printDebugEnd(b0, b2, result *BigFloat) {
+	b0F, _ := b0.Float64()
+	b2F, _ := b2.Float64()
+	resultF, _ := result.Float64()
+	fmt.Printf("\n[CHEB-DEBUG] Final: b0=%.15e, b2=%.15e\n", b0F, b2F)
+	fmt.Printf("[CHEB-DEBUG] Result = (b0 - b2) / 2 = %.15e\n", resultF)
+	fmt.Printf("[CHEB-DEBUG] === End Chebyshev evaluation ===\n\n")
+}
+
+// computeChebyshevResult computes the final result from Clenshaw algorithm values
+func computeChebyshevResult(b0, b2 *BigFloat, c []*BigFloat, prec uint) *BigFloat {
+	two := NewBigFloat(2.0, prec)
+	result := new(BigFloat).SetPrec(prec)
+	result.Sub(b0, b2)
+	result.Quo(result, two)
+
+	if len(c) > 0 {
+		// Add c[0]/2 term
+		c0Half := new(BigFloat).SetPrec(prec).Quo(c[0], two)
+		result.Add(result, c0Half)
+	}
+
+	return result
+}
+
 // evaluateChebyshevBigGeneric evaluates Chebyshev polynomial with arbitrary precision (pure-Go)
 // This is the BigFloat version of swi_echeb()
 func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat {
@@ -20,23 +82,9 @@ func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uin
 	}
 
 	// DEBUG: Enable detailed logging for Body=10 only
-	debug := false
-	if len(c) >= 26 && neval == 25 {
-		// Check if this might be Body=10 by looking at first coefficient
-		c0, _ := c[0].Float64()
-		if c0 > -0.13 && c0 < -0.12 { // Body=10 first coeff is around -0.1257
-			debug = true
-			tF, _ := t.Float64()
-			fmt.Printf("\n[CHEB-DEBUG] Starting Chebyshev evaluation for Body=10\n")
-			fmt.Printf("[CHEB-DEBUG] t=%.15e (normalized time in [-1,1])\n", tF)
-			fmt.Printf("[CHEB-DEBUG] neval=%d (using first %d coefficients)\n", neval, neval)
-			fmt.Printf("[CHEB-DEBUG] First 5 coeffs:")
-			for i := 0; i < 5 && i < len(c); i++ {
-				cf, _ := c[i].Float64()
-				fmt.Printf(" c[%d]=%.15e", i, cf)
-			}
-			fmt.Printf("\n")
-		}
+	debug := shouldEnableDebug(c, neval)
+	if debug {
+		printDebugStart(t, c, neval)
 	}
 
 	// Clenshaw's algorithm for Chebyshev polynomial evaluation
@@ -67,13 +115,8 @@ func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uin
 		b0.Sub(b0, b2)
 		b0.Add(b0, c[i])
 
-		if debug && (i < 3 || i >= neval-3) {
-			b0F, _ := b0.Float64()
-			b1F, _ := b1.Float64()
-			b2F, _ := b2.Float64()
-			cF, _ := c[i].Float64()
-			fmt.Printf("[CHEB-DEBUG]   i=%2d: c[%d]=%.15e, b1=%.15e, b2=%.15e → b0=%.15e\n",
-				i, i, cF, b1F, b2F, b0F)
+		if debug {
+			printDebugIteration(i, neval, b0, b1, b2, c[i])
 		}
 	}
 
@@ -82,25 +125,10 @@ func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uin
 	// However, for Chebyshev polynomials Σ c[i]*T_i(t), the standard Clenshaw formula
 	// requires: result = c[0]/2 + (b0 - b2)/2
 	// This matches the mathematical formulation where T_0(t) = 1 needs special handling
-	result := new(BigFloat).SetPrec(prec)
-	if len(c) > 0 {
-		// Add c[0]/2 term
-		c0Half := new(BigFloat).SetPrec(prec).Quo(c[0], two)
-		result.Sub(b0, b2)
-		result.Quo(result, two)
-		result.Add(result, c0Half)
-	} else {
-		result.Sub(b0, b2)
-		result.Quo(result, two)
-	}
+	result := computeChebyshevResult(b0, b2, c, prec)
 
 	if debug {
-		b0F, _ := b0.Float64()
-		b2F, _ := b2.Float64()
-		resultF, _ := result.Float64()
-		fmt.Printf("\n[CHEB-DEBUG] Final: b0=%.15e, b2=%.15e\n", b0F, b2F)
-		fmt.Printf("[CHEB-DEBUG] Result = (b0 - b2) / 2 = %.15e\n", resultF)
-		fmt.Printf("[CHEB-DEBUG] === End Chebyshev evaluation ===\n\n")
+		printDebugEnd(b0, b2, result)
 	}
 
 	return result

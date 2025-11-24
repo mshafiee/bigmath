@@ -31,6 +31,8 @@ linters-settings:
       - octalLiteral
       - whyNoLint
       - wrapperFunc
+  gocyclo:
+    min-complexity: 15
 
 linters:
   enable:
@@ -41,6 +43,7 @@ linters:
     - staticcheck
     - unused
     - gocritic
+    - gocyclo
     - gofmt
     - goimports
     - misspell
