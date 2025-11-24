@@ -27,9 +27,11 @@ jobs:
     - name: Check formatting
       run: |
         echo "Checking if code is properly formatted..."
-        if [ -n "$(go fmt -d ./...)" ]; then
+        unformatted=$(gofmt -l .)
+        if [ -n "$unformatted" ]; then
           echo "Code is not properly formatted. Run 'go fmt ./...' to fix."
-          go fmt -d ./...
+          echo "Unformatted files:"
+          echo "$unformatted"
           exit 1
         fi
         echo "Code is properly formatted!"

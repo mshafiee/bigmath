@@ -167,4 +167,3 @@ func mpnRShift(dst, src *uint64, n int, count uint) uint64 {
 	}
 	return carry >> (64 - count)
 }
-
