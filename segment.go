@@ -66,10 +66,6 @@ func calculateOrbitalParametersPlanet(tdiff *BigFloat, segInfo *SegmentInfoBig, 
 	pav.Mul(tdiff, segInfo.DProt)
 	pav.Add(segInfo.Prot, pav)
 
-	qavF, _ := qav.Float64()
-	pavF, _ := pav.Float64()
-	tdiffF, _ := tdiff.Float64()
-	fmt.Printf("[BIGFLOAT-QP] Body=%d qav=%.15e pav=%.15e tdiff=%.15e\n", segInfo.Body, qavF, pavF, tdiffF)
 	return qav, pav
 }
 
@@ -77,14 +73,8 @@ func calculateOrbitalParametersPlanet(tdiff *BigFloat, segInfo *SegmentInfoBig, 
 func addReferenceEllipse(x [][3]*BigFloat, segInfo *SegmentInfoBig, tdiff *BigFloat, numCoeffs int, prec uint) {
 	const SegFlagEllipse = 0x2
 	if (segInfo.Flags & SegFlagEllipse) == 0 {
-		fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d does NOT have SegFlagEllipse (Flags=0x%x)\n",
-			segInfo.Body, segInfo.Flags)
 		return
 	}
-
-	omtildF, _ := segInfo.Peri.Float64()
-	fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d has SegFlagEllipse set, Peri=%.15e\n", segInfo.Body, omtildF)
-	fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d, need=%d\n", len(segInfo.RefEllipse), 2*numCoeffs)
 
 	omtild := new(BigFloat).SetPrec(prec)
 	omtild.Mul(tdiff, segInfo.DPeri)
@@ -95,19 +85,9 @@ func addReferenceEllipse(x [][3]*BigFloat, segInfo *SegmentInfoBig, tdiff *BigFl
 	som := BigSin(omtild, prec)
 
 	if len(segInfo.RefEllipse) < 2*numCoeffs {
-		fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d insufficient (need %d)\n",
-			len(segInfo.RefEllipse), 2*numCoeffs)
 		return
 	}
 
-	refepxF, _ := segInfo.RefEllipse[0].Float64()
-	refepyF, _ := segInfo.RefEllipse[numCoeffs].Float64()
-	comF, _ := com.Float64()
-	somF, _ := som.Float64()
-	fmt.Printf("[BIGFLOAT-ELLIPSE] Applying reference ellipse, refepx[0]=%.15e refepy[0]=%.15e\n", refepxF, refepyF)
-	fmt.Printf("[BIGFLOAT-ELLIPSE] com=%.15e som=%.15e\n", comF, somF)
-
-	x0BeforeF, _ := x[0][0].Float64()
 	for i := 0; i < numCoeffs; i++ {
 		refepx := segInfo.RefEllipse[i]
 		refepy := segInfo.RefEllipse[i+numCoeffs]
@@ -122,20 +102,10 @@ func addReferenceEllipse(x [][3]*BigFloat, segInfo *SegmentInfoBig, tdiff *BigFl
 		x[i][1].Add(x[i][1], temp1)
 		x[i][1].Add(x[i][1], temp2)
 	}
-	x0AfterF, _ := x[0][0].Float64()
-	fmt.Printf("[BIGFLOAT-ELLIPSE] x[0][0]: before=%.15e after=%.15e (delta=%.15e)\n",
-		x0BeforeF, x0AfterF, x0AfterF-x0BeforeF)
-
-	fmt.Printf("[BIGFLOAT-ELLIPSE] First 10 X coeffs after ref ellipse:")
-	for i := 0; i < 10 && i < numCoeffs; i++ {
-		coeffF, _ := x[i][0].Float64()
-		fmt.Printf(" %.15e", coeffF)
-	}
-	fmt.Printf("\n")
 }
 
 // constructRotationMatrix constructs the rotation matrix basis vectors uix, uiy, uiz
-func constructRotationMatrix(qav, pav *BigFloat, segInfo *SegmentInfoBig, prec uint) (uix, uiy, uiz [3]*BigFloat) {
+func constructRotationMatrix(qav, pav *BigFloat, prec uint) (uix, uiy, uiz [3]*BigFloat) {
 	one := NewBigFloat(1.0, prec)
 	qavSq := new(BigFloat).SetPrec(prec).Mul(qav, qav)
 	pavSq := new(BigFloat).SetPrec(prec).Mul(pav, pav)
@@ -143,9 +113,6 @@ func constructRotationMatrix(qav, pav *BigFloat, segInfo *SegmentInfoBig, prec u
 	denom.Add(denom, pavSq)
 	cosih2 := new(BigFloat).SetPrec(prec)
 	cosih2.Quo(one, denom)
-
-	cosih2F, _ := cosih2.Float64()
-	fmt.Printf("[BIGFLOAT-COSIH2] Body=%d cosih2=%.15e\n", segInfo.Body, cosih2F)
 
 	two := NewBigFloat(2.0, prec)
 	temp := new(BigFloat).SetPrec(prec)
@@ -205,11 +172,6 @@ func constructRotationMatrix(qav, pav *BigFloat, segInfo *SegmentInfoBig, prec u
 	temp.Sub(one, qavSq)
 	temp.Sub(temp, pavSq)
 	uiz[2].Mul(temp, cosih2)
-
-	uix0F, _ := uix[0].Float64()
-	uix1F, _ := uix[1].Float64()
-	uix2F, _ := uix[2].Float64()
-	fmt.Printf("[BIGFLOAT-UIX] Body=%d uix=[%.15e, %.15e, %.15e]\n", segInfo.Body, uix0F, uix1F, uix2F)
 
 	return uix, uiy, uiz
 }
@@ -303,13 +265,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	tdiff.Sub(t, segInfo.ElemEpoch)
 	tdiff.Quo(tdiff, BigJulianMillennium(prec))
 
-	if segInfo.Body == 9 { // Pluto
-		tF, _ := t.Float64()
-		telemF, _ := segInfo.ElemEpoch.Float64()
-		tdiffF, _ := tdiff.Float64()
-		fmt.Printf("[DEBUG-PLUTO] t=%.6f telem=%.6f tdiff=%.9e\n", tF, telemF, tdiffF)
-	}
-
 	// Calculate orbital parameters
 	var qav, pav *BigFloat
 	if isMoon {
@@ -330,7 +285,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	addReferenceEllipse(x, segInfo, tdiff, numCoeffs, prec)
 
 	// Construct rotation matrix basis vectors
-	uix, uiy, uiz := constructRotationMatrix(qav, pav, segInfo, prec)
+	uix, uiy, uiz := constructRotationMatrix(qav, pav, prec)
 
 	// Rotate coefficients to actual orientation in space
 	neval = rotateCoefficients(x, uix, uiy, uiz, segInfo, isMoon, numCoeffs, prec)
@@ -343,15 +298,8 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		result[i+2*numCoeffs] = x[i][2]
 	}
 
-	// Debug: Print first 10 coefficients after rotation
-	fmt.Printf("[BIGFLOAT-ROTATED] Body=%d First 10 X coeffs after rotation:", segInfo.Body)
-	for i := 0; i < 10 && i < numCoeffs; i++ {
-		coeffF, _ := result[i].Float64()
-		fmt.Printf(" %.15e", coeffF)
-	}
-	fmt.Printf("\n")
+	// neval is incremented to convert from last significant index to count
 	neval++
-	fmt.Printf("[BIGFLOAT-ROTATED] Body=%d neval=%d\n", segInfo.Body, neval)
 
 	return
 }
@@ -385,15 +333,6 @@ func EvaluateSegmentBig(tjd *BigFloat, coeffs []*BigFloat, segStart, segEnd *Big
 	t.Mul(t, NewBigFloat(2.0, prec))
 	t.Sub(t, NewBigFloat(1.0, prec))
 
-	// DEBUG: Log segment evaluation details
-	tjdF, _ := tjd.Float64()
-	segStartF, _ := segStart.Float64()
-	segEndF, _ := segEnd.Float64()
-	segSizeF, _ := segSize.Float64()
-	tF, _ := t.Float64()
-	fmt.Printf("[EVAL-SEG] tjd=%.6f segStart=%.6f segEnd=%.6f segSize=%.6f\n", tjdF, segStartF, segEndF, segSizeF)
-	fmt.Printf("[EVAL-SEG] t_normalized=%.15e (should be in [-1,1])\n", tF)
-
 	// Evaluate position for X, Y, Z
 	xCoeffs := coeffs[:numCoeffs]
 	yCoeffs := coeffs[numCoeffs : 2*numCoeffs]
@@ -412,12 +351,6 @@ func EvaluateSegmentBig(tjd *BigFloat, coeffs []*BigFloat, segStart, segEnd *Big
 	// Scale velocity: v = dpos/dt * (2/segSize)
 	two := NewBigFloat(2.0, prec)
 	velocityScale := new(BigFloat).SetPrec(prec).Quo(two, segSize)
-
-	// DEBUG
-	ssFloat, _ := segSize.Float64()
-	vsFloat, _ := velocityScale.Float64()
-	vxFloat, _ := vx.Float64()
-	fmt.Printf("[SEGMENT] segSize=%.6f scale=%.6e raw_vx=%.6e\n", ssFloat, vsFloat, vxFloat)
 
 	vx.Mul(vx, velocityScale)
 	vy.Mul(vy, velocityScale)

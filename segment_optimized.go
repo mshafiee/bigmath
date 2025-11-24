@@ -65,17 +65,11 @@ func evaluateChebyshevBigOptimized(t *BigFloat, c []*BigFloat, neval int, prec u
 		ws.b0.Add(ws.b0, c[i])
 	}
 
+	// Result = (b0 - b2) / 2 (matches C code swi_echeb exactly)
+	// The Clenshaw algorithm already incorporates c[0] during iteration i=0
 	result := new(BigFloat).SetPrec(prec)
-	if len(c) > 0 {
-		c0Half := new(BigFloat).SetPrec(prec).Quo(c[0], ws.two)
-		result.Sub(ws.b0, ws.b2)
-		result.Quo(result, ws.two)
-		result.Add(result, c0Half)
-	} else {
-		result.Sub(ws.b0, ws.b2)
-		result.Quo(result, ws.two)
-	}
-
+	result.Sub(ws.b0, ws.b2)
+	result.Quo(result, ws.two)
 	return result
 }
 
