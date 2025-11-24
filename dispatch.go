@@ -51,6 +51,40 @@ type (
 	bigAsinhFunc func(x *BigFloat, prec uint) *BigFloat
 	bigAcoshFunc func(x *BigFloat, prec uint) *BigFloat
 	bigAtanhFunc func(x *BigFloat, prec uint) *BigFloat
+
+	// Special functions
+	bigGammaFunc   func(x *BigFloat, prec uint) *BigFloat
+	bigErfFunc     func(x *BigFloat, prec uint) *BigFloat
+	bigErfcFunc    func(x *BigFloat, prec uint) *BigFloat
+	bigBesselJFunc func(n int, x *BigFloat, prec uint) *BigFloat
+	bigBesselYFunc func(n int, x *BigFloat, prec uint) *BigFloat
+
+	// Root functions
+	bigCbrtFunc func(x *BigFloat, prec uint) *BigFloat
+	bigRootFunc func(n, x *BigFloat, prec uint) *BigFloat
+
+	// Basic operations
+	bigFloorFunc func(x *BigFloat, prec uint) *BigFloat
+	bigCeilFunc  func(x *BigFloat, prec uint) *BigFloat
+	bigTruncFunc func(x *BigFloat, prec uint) *BigFloat
+	bigModFunc   func(x, y *BigFloat, prec uint) *BigFloat
+	bigRemFunc   func(x, y *BigFloat, prec uint) *BigFloat
+
+	// Combinatorics
+	bigFactorialFunc func(n int64, prec uint) *BigFloat
+	bigBinomialFunc  func(n, k int64, prec uint) *BigFloat
+
+	// Advanced vector operations
+	bigVec3CrossFunc     func(v1, v2 *BigVec3, prec uint) *BigVec3
+	bigVec3NormalizeFunc func(v *BigVec3, prec uint) *BigVec3
+	bigVec3AngleFunc     func(v1, v2 *BigVec3, prec uint) *BigFloat
+	bigVec3ProjectFunc   func(v1, v2 *BigVec3, prec uint) *BigVec3
+
+	// Advanced matrix operations
+	bigMatTransposeFunc func(m *BigMatrix3x3, prec uint) *BigMatrix3x3
+	bigMatMulMatFunc    func(m1, m2 *BigMatrix3x3, prec uint) *BigMatrix3x3
+	bigMatDetFunc       func(m *BigMatrix3x3, prec uint) *BigFloat
+	bigMatInverseFunc   func(m *BigMatrix3x3, prec uint) (*BigMatrix3x3, error)
 )
 
 // Dispatcher holds function pointers selected at runtime
@@ -97,6 +131,40 @@ type Dispatcher struct {
 	BigAsinhImpl bigAsinhFunc
 	BigAcoshImpl bigAcoshFunc
 	BigAtanhImpl bigAtanhFunc
+
+	// Special functions
+	BigGammaImpl   bigGammaFunc
+	BigErfImpl     bigErfFunc
+	BigErfcImpl    bigErfcFunc
+	BigBesselJImpl bigBesselJFunc
+	BigBesselYImpl bigBesselYFunc
+
+	// Root functions
+	BigCbrtImpl bigCbrtFunc
+	BigRootImpl bigRootFunc
+
+	// Basic operations
+	BigFloorImpl bigFloorFunc
+	BigCeilImpl  bigCeilFunc
+	BigTruncImpl bigTruncFunc
+	BigModImpl   bigModFunc
+	BigRemImpl   bigRemFunc
+
+	// Combinatorics
+	BigFactorialImpl bigFactorialFunc
+	BigBinomialImpl  bigBinomialFunc
+
+	// Advanced vector operations
+	BigVec3CrossImpl     bigVec3CrossFunc
+	BigVec3NormalizeImpl bigVec3NormalizeFunc
+	BigVec3AngleImpl     bigVec3AngleFunc
+	BigVec3ProjectImpl   bigVec3ProjectFunc
+
+	// Advanced matrix operations
+	BigMatTransposeImpl bigMatTransposeFunc
+	BigMatMulMatImpl    bigMatMulMatFunc
+	BigMatDetImpl       bigMatDetFunc
+	BigMatInverseImpl   bigMatInverseFunc
 
 	// CPU features used
 	Features CPUFeatures

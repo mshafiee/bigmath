@@ -36,4 +36,38 @@ func initDispatcherImpl(d *Dispatcher) {
 	d.BigAsinhImpl = bigAsinhGeneric
 	d.BigAcoshImpl = bigAcoshGeneric
 	d.BigAtanhImpl = bigAtanhGeneric
+
+	// Special functions
+	d.BigGammaImpl = bigGammaGeneric
+	d.BigErfImpl = bigErfGeneric
+	d.BigErfcImpl = bigErfcGeneric
+	d.BigBesselJImpl = bigBesselJGeneric
+	d.BigBesselYImpl = bigBesselYGeneric
+
+	// Root functions
+	d.BigCbrtImpl = bigCbrtGeneric
+	d.BigRootImpl = bigRootGeneric
+
+	// Basic operations
+	d.BigFloorImpl = bigFloorGeneric
+	d.BigCeilImpl = bigCeilGeneric
+	d.BigTruncImpl = bigTruncGeneric
+	d.BigModImpl = bigModGeneric
+	d.BigRemImpl = bigRemGeneric
+
+	// Combinatorics
+	d.BigFactorialImpl = bigFactorialGeneric
+	d.BigBinomialImpl = bigBinomialGeneric
+
+	// Advanced vector operations
+	d.BigVec3CrossImpl = bigVec3CrossGeneric
+	d.BigVec3NormalizeImpl = bigVec3NormalizeGeneric
+	d.BigVec3AngleImpl = bigVec3AngleGeneric
+	d.BigVec3ProjectImpl = bigVec3ProjectGeneric
+
+	// Advanced matrix operations
+	d.BigMatTransposeImpl = bigMatTransposeGeneric
+	d.BigMatMulMatImpl = bigMatMulMatGeneric
+	d.BigMatDetImpl = bigMatDetGeneric
+	d.BigMatInverseImpl = bigMatInverseGeneric
 }

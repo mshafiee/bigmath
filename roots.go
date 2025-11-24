@@ -10,23 +10,7 @@ import (
 // BigCbrt computes the cube root of x using Newton-Raphson method
 // Returns NaN for negative inputs (or could be extended to handle negative)
 func BigCbrt(x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() == 0 {
-		return NewBigFloat(0.0, prec)
-	}
-	if x.Sign() < 0 {
-		// For negative numbers, compute cube root of absolute value and negate
-		absX := BigAbs(x, prec)
-		result := bigCbrtPositive(absX, prec)
-		result.Neg(result)
-		return result
-	}
-
-	return bigCbrtPositive(x, prec)
+	return getDispatcher().BigCbrtImpl(x, prec)
 }
 
 // bigCbrtPositive computes cube root for positive numbers
@@ -77,37 +61,7 @@ func bigCbrtPositive(x *BigFloat, prec uint) *BigFloat {
 // Uses Newton-Raphson method
 // n must be positive
 func BigRoot(n, x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if n.Sign() <= 0 {
-		return NewBigFloat(math.NaN(), prec)
-	}
-
-	if x.Sign() == 0 {
-		return NewBigFloat(0.0, prec)
-	}
-
-	if x.Sign() < 0 {
-		// For even roots of negative numbers, return NaN
-		// For odd roots, we could handle it, but for simplicity return NaN
-		// Check if n is integer and odd
-		if n.IsInt() {
-			nInt, _ := n.Int64()
-			if nInt%2 != 0 {
-				// Odd root of negative number
-				absX := BigAbs(x, prec)
-				result := bigRootPositive(n, absX, prec)
-				result.Neg(result)
-				return result
-			}
-		}
-		return NewBigFloat(math.NaN(), prec)
-	}
-
-	return bigRootPositive(n, x, prec)
+	return getDispatcher().BigRootImpl(n, x, prec)
 }
 
 // bigRootPositive computes nth root for positive numbers

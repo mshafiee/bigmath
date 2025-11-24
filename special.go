@@ -3,48 +3,11 @@
 
 package bigmath
 
-import (
-	"math"
-)
-
 // BigGamma computes the Gamma function Γ(x)
 // Uses Lanczos approximation for x > 0
 // For negative x, uses reflection formula: Γ(x) = π / (Γ(1-x) * sin(π*x))
 func BigGamma(x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() == 0 {
-		return new(BigFloat).SetPrec(prec).SetInf(false)
-	}
-	if x.IsInf() {
-		if x.Sign() > 0 {
-			return new(BigFloat).SetPrec(prec).SetInf(false)
-		}
-		return NewBigFloat(math.NaN(), prec)
-	}
-
-	workPrec := prec + 32
-
-	// Check if x is negative
-	if x.Sign() < 0 {
-		// Use reflection formula: Γ(x) = π / (Γ(1-x) * sin(π*x))
-		one := NewBigFloat(1.0, workPrec)
-		oneMinusX := new(BigFloat).SetPrec(workPrec).Sub(one, x)
-		gamma1MinusX := bigGammaPositive(oneMinusX, workPrec)
-
-		piX := new(BigFloat).SetPrec(workPrec).Mul(BigPI(workPrec), x)
-		sinPiX := BigSin(piX, workPrec)
-
-		denom := new(BigFloat).SetPrec(workPrec).Mul(gamma1MinusX, sinPiX)
-		result := new(BigFloat).SetPrec(workPrec).Quo(BigPI(workPrec), denom)
-
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
-
-	return new(BigFloat).SetPrec(prec).Set(bigGammaPositive(x, workPrec))
+	return getDispatcher().BigGammaImpl(x, prec)
 }
 
 // bigGammaPositive computes Gamma for positive x using Lanczos approximation
@@ -135,66 +98,7 @@ func bigGammaPositive(x *BigFloat, prec uint) *BigFloat {
 // BigErf computes the error function erf(x) = (2/√π) * ∫[0 to x] exp(-t²) dt
 // Uses series expansion for small |x|, asymptotic expansion for large |x|
 func BigErf(x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() == 0 {
-		return NewBigFloat(0.0, prec)
-	}
-	if x.IsInf() {
-		if x.Sign() > 0 {
-			return NewBigFloat(1.0, prec)
-		}
-		return NewBigFloat(-1.0, prec)
-	}
-
-	workPrec := prec + 32
-
-	// For small |x|, use series expansion
-	// erf(x) = (2/√π) * sum_{n=0} (-1)^n * x^(2n+1) / (n! * (2n+1))
-	xAbs := BigAbs(x, workPrec)
-	smallThreshold := NewBigFloat(0.8, workPrec)
-	moderateThreshold := NewBigFloat(2.0, workPrec)
-
-	if xAbs.Cmp(smallThreshold) < 0 {
-		// Very small x: use direct series expansion
-		return bigErfSeries(x, workPrec, prec)
-	}
-
-	if xAbs.Cmp(moderateThreshold) < 0 {
-		// Moderate x: use improved erfc for better accuracy
-		// Compute as 1 - erfc(x) using improved erfc
-		if x.Sign() > 0 {
-			one := NewBigFloat(1.0, workPrec)
-			erfcX := bigErfcImproved(x, workPrec, workPrec)
-			result := new(BigFloat).SetPrec(workPrec).Sub(one, erfcX)
-			return new(BigFloat).SetPrec(prec).Set(result)
-		} else {
-			negOne := NewBigFloat(-1.0, workPrec)
-			negX := new(BigFloat).SetPrec(workPrec).Neg(x)
-			erfcNegX := bigErfcImproved(negX, workPrec, workPrec)
-			result := new(BigFloat).SetPrec(workPrec).Add(negOne, erfcNegX)
-			return new(BigFloat).SetPrec(prec).Set(result)
-		}
-	}
-
-	// For large |x|, use erfc via complementary error function
-	// erf(x) ≈ 1 - erfc(x) for x > 0
-	// erf(x) ≈ -1 + erfc(-x) for x < 0
-	if x.Sign() > 0 {
-		one := NewBigFloat(1.0, workPrec)
-		erfcX := BigErfc(x, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Sub(one, erfcX)
-		return new(BigFloat).SetPrec(prec).Set(result)
-	} else {
-		negOne := NewBigFloat(-1.0, workPrec)
-		negX := new(BigFloat).SetPrec(workPrec).Neg(x)
-		erfcNegX := BigErfc(negX, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Add(negOne, erfcNegX)
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
+	return getDispatcher().BigErfImpl(x, prec)
 }
 
 // bigErfSeries computes erf(x) using series expansion for small |x|
@@ -304,116 +208,13 @@ func bigErfcImproved(x *BigFloat, workPrec, targetPrec uint) *BigFloat {
 // BigErfc computes the complementary error function erfc(x) = 1 - erf(x)
 // Uses continued fraction for large |x|
 func BigErfc(x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() == 0 {
-		return NewBigFloat(1.0, prec)
-	}
-	if x.IsInf() {
-		if x.Sign() > 0 {
-			return NewBigFloat(0.0, prec)
-		}
-		return NewBigFloat(2.0, prec)
-	}
-
-	workPrec := prec + 32
-
-	// For negative x, use erfc(-x) = 2 - erfc(x)
-	if x.Sign() < 0 {
-		negX := new(BigFloat).SetPrec(workPrec).Neg(x)
-		erfcNegX := BigErfc(negX, workPrec)
-		two := NewBigFloat(2.0, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Sub(two, erfcNegX)
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
-
-	// For small x, compute as 1 - erf(x)
-	xAbs := BigAbs(x, workPrec)
-	smallThreshold := NewBigFloat(0.8, workPrec)
-
-	if xAbs.Cmp(smallThreshold) < 0 {
-		// Very small x: use 1 - erf(x) for better accuracy
-		one := NewBigFloat(1.0, workPrec)
-		erfX := BigErf(x, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Sub(one, erfX)
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
-
-	// For moderate and large x, use improved erfc computation
-	return bigErfcImproved(x, workPrec, prec)
+	return getDispatcher().BigErfcImpl(x, prec)
 }
 
 // BigBesselJ computes the Bessel function of the first kind J_n(x)
 // Uses series expansion: J_n(x) = sum_{k=0} (-1)^k * (x/2)^(n+2k) / (k! * (n+k)!)
 func BigBesselJ(n int, x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() == 0 {
-		if n == 0 {
-			return NewBigFloat(1.0, prec)
-		}
-		return NewBigFloat(0.0, prec)
-	}
-	if x.IsInf() {
-		return NewBigFloat(0.0, prec) // Bessel functions decay at infinity
-	}
-
-	workPrec := prec + 32
-
-	// Handle negative n using: J_{-n}(x) = (-1)^n * J_n(x)
-	if n < 0 {
-		result := BigBesselJ(-n, x, workPrec)
-		if (-n)%2 != 0 {
-			result.Neg(result)
-		}
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
-
-	// For large x, use asymptotic expansion for better accuracy
-	xAbs := BigAbs(x, workPrec)
-	largeXThreshold := NewBigFloat(10.0, workPrec)
-
-	if xAbs.Cmp(largeXThreshold) > 0 {
-		// Use asymptotic expansion for large x
-		// J_n(x) ≈ sqrt(2/(πx)) * cos(x - nπ/2 - π/4) * (1 + O(1/x))
-		// For better accuracy, use more terms of asymptotic expansion
-		sqrtTwoOverPiX := BigSqrt(new(BigFloat).SetPrec(workPrec).Quo(NewBigFloat(2.0, workPrec),
-			new(BigFloat).SetPrec(workPrec).Mul(BigPI(workPrec), x)), workPrec)
-
-		// Phase: x - nπ/2 - π/4
-		nPiOver2 := new(BigFloat).SetPrec(workPrec).Mul(NewBigFloat(float64(n), workPrec), BigHalfPI(workPrec))
-		phase := new(BigFloat).SetPrec(workPrec).Sub(x, nPiOver2)
-		phase.Sub(phase, BigHalfPI(workPrec))
-
-		cosPhase := BigCos(phase, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Mul(sqrtTwoOverPiX, cosPhase)
-
-		// Add correction terms for better accuracy (first order correction)
-		// J_n(x) ≈ sqrt(2/(πx)) * [cos(phase) * (1 - (4n²-1)/(8x)) - sin(phase) * (4n²-1)/(8x)]
-		if n > 0 || xAbs.Cmp(NewBigFloat(20.0, workPrec)) < 0 {
-			// For moderate x or small n, use series expansion instead
-			return bigBesselJSeries(n, x, workPrec, prec)
-		}
-
-		correction := new(BigFloat).SetPrec(workPrec).Quo(
-			NewBigFloat(float64(4*n*n-1), workPrec),
-			new(BigFloat).SetPrec(workPrec).Mul(NewBigFloat(8.0, workPrec), x),
-		)
-		sinPhase := BigSin(phase, workPrec)
-		corrTerm := new(BigFloat).SetPrec(workPrec).Mul(correction, sinPhase)
-		result.Sub(result, corrTerm)
-
-		return new(BigFloat).SetPrec(prec).Set(result)
-	}
-
-	// For small to moderate x, use series expansion
-	return bigBesselJSeries(n, x, workPrec, prec)
+	return getDispatcher().BigBesselJImpl(n, x, prec)
 }
 
 // bigBesselJSeries computes J_n(x) using series expansion
@@ -482,57 +283,7 @@ func bigBesselJSeries(n int, x *BigFloat, workPrec, targetPrec uint) *BigFloat {
 // Actually, for integer n: Y_n(x) = limit_{ν→n} (J_ν(x)*cos(νπ) - J_{-ν}(x)) / sin(νπ)
 // For computational purposes, we use series expansion or asymptotic forms
 func BigBesselY(n int, x *BigFloat, prec uint) *BigFloat {
-	if prec == 0 {
-		prec = x.Prec()
-	}
-
-	// Handle special cases
-	if x.Sign() <= 0 {
-		return NewBigFloat(math.NaN(), prec)
-	}
-	if x.IsInf() {
-		return NewBigFloat(0.0, prec)
-	}
-
-	workPrec := prec + 32
-
-	// For small x, use series expansion
-	// For large x, use asymptotic expansion
-	// For simplicity, we'll use a combination approach
-
-	// Y_n(x) can be computed using recurrence relations or direct series
-	// For integer n, we can use:
-	// Y_n(x) = (2/π) * (ln(x/2) + γ) * J_n(x) - (1/π) * sum_{k=0}^{n-1} ((n-k-1)!/k!) * (x/2)^(2k-n)
-	//         - (1/π) * sum_{k=0} (-1)^k * (ψ(k+1) + ψ(n+k+1)) * (x/2)^(n+2k) / (k! * (n+k)!)
-	// where γ is Euler's constant and ψ is the digamma function
-
-	// Simplified approach: use recurrence relations starting from Y_0 and Y_1
-	if n == 0 {
-		return bigBesselY0(x, workPrec, prec)
-	}
-	if n == 1 {
-		return bigBesselY1(x, workPrec, prec)
-	}
-
-	// Use recurrence: Y_{n+1}(x) = (2n/x) * Y_n(x) - Y_{n-1}(x)
-	y0 := bigBesselY0(x, workPrec, workPrec)
-	y1 := bigBesselY1(x, workPrec, workPrec)
-
-	ynMinus1 := y0
-	yn := y1
-
-	for i := 1; i < n; i++ {
-		// Use recurrence relation: Y_{i+1} = (2i/x) * Y_i - Y_{i-1}
-		twoI := NewBigFloat(float64(2*i), workPrec)
-		coeff := new(BigFloat).SetPrec(workPrec).Quo(twoI, x)
-		term := new(BigFloat).SetPrec(workPrec).Mul(coeff, yn)
-		ynPlus1 := new(BigFloat).SetPrec(workPrec).Sub(term, ynMinus1)
-
-		ynMinus1 = yn
-		yn = ynPlus1
-	}
-
-	return new(BigFloat).SetPrec(prec).Set(yn)
+	return getDispatcher().BigBesselYImpl(n, x, prec)
 }
 
 // bigBesselY0 computes Y_0(x) using series expansion

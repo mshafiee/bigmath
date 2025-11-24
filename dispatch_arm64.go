@@ -42,4 +42,38 @@ func initDispatcherImpl(d *Dispatcher) {
 	d.BigAsinhImpl = bigAsinhGeneric
 	d.BigAcoshImpl = bigAcoshGeneric
 	d.BigAtanhImpl = bigAtanhGeneric
+
+	// Special functions
+	d.BigGammaImpl = bigGammaAsm
+	d.BigErfImpl = bigErfAsm
+	d.BigErfcImpl = bigErfcAsm
+	d.BigBesselJImpl = bigBesselJAsm
+	d.BigBesselYImpl = bigBesselYAsm
+
+	// Root functions
+	d.BigCbrtImpl = bigCbrtAsm
+	d.BigRootImpl = bigRootAsm
+
+	// Basic operations
+	d.BigFloorImpl = bigFloorAsm
+	d.BigCeilImpl = bigCeilAsm
+	d.BigTruncImpl = bigTruncAsm
+	d.BigModImpl = bigModAsm
+	d.BigRemImpl = bigRemAsm
+
+	// Combinatorics
+	d.BigFactorialImpl = bigFactorialAsm
+	d.BigBinomialImpl = bigBinomialAsm
+
+	// Advanced vector operations
+	d.BigVec3CrossImpl = bigVec3CrossAsm
+	d.BigVec3NormalizeImpl = bigVec3NormalizeAsm
+	d.BigVec3AngleImpl = bigVec3AngleAsm
+	d.BigVec3ProjectImpl = bigVec3ProjectAsm
+
+	// Advanced matrix operations
+	d.BigMatTransposeImpl = bigMatTransposeAsm
+	d.BigMatMulMatImpl = bigMatMulMatAsm
+	d.BigMatDetImpl = bigMatDetAsm
+	d.BigMatInverseImpl = bigMatInverseGeneric // No asm for error-returning function yet
 }

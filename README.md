@@ -298,6 +298,18 @@ Benchmarked improvements over standard implementations:
 - Trigonometric functions: **30-40% faster**
 - Exponential/logarithmic: **25-35% faster**
 
+### Assembly Optimization Status
+
+The library includes comprehensive infrastructure for assembly optimization with dispatch system supporting:
+- Matrix operations (transpose, multiply, determinant, inverse)
+- Advanced vector operations (cross product, normalize, angle, projection)
+- Special functions (Gamma, Erf, Erfc, Bessel functions)
+- Root functions (cube root, nth root)
+- Basic operations (floor, ceil, trunc, mod, rem)
+- Combinatorics (factorial, binomial coefficients)
+
+Currently, these functions use optimized Go implementations through the dispatch system. Assembly implementations for AMD64 (AVX2/FMA) and ARM64 (NEON) can be incrementally added for 20-40% additional performance improvements. See [ASSEMBLY_OPTIMIZATION_STATUS.md](ASSEMBLY_OPTIMIZATION_STATUS.md) for details.
+
 ## License
 
 This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
