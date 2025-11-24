@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // Multi-precision integer addition (optimized with loop unrolling)
@@ -89,6 +92,61 @@ done:
 
 done_zero:
 	XORQ	AX, AX
+	MOVQ	AX, ret+32(FP)
+	RET
+
+// Fast paths for small n addition (straight-line code, no loops)
+n1:
+	MOVQ	0(SI), R8
+	ADCQ	0(DX), R8
+	MOVQ	R8, 0(DI)
+	MOVQ	$0, AX
+	ADCQ	$0, AX
+	MOVQ	AX, ret+32(FP)
+	RET
+
+n2:
+	MOVQ	0(SI), R8
+	MOVQ	8(SI), R9
+	ADCQ	0(DX), R8
+	ADCQ	8(DX), R9
+	MOVQ	R8, 0(DI)
+	MOVQ	R9, 8(DI)
+	MOVQ	$0, AX
+	ADCQ	$0, AX
+	MOVQ	AX, ret+32(FP)
+	RET
+
+n3:
+	MOVQ	0(SI), R8
+	MOVQ	8(SI), R9
+	MOVQ	16(SI), R10
+	ADCQ	0(DX), R8
+	ADCQ	8(DX), R9
+	ADCQ	16(DX), R10
+	MOVQ	R8, 0(DI)
+	MOVQ	R9, 8(DI)
+	MOVQ	R10, 16(DI)
+	MOVQ	$0, AX
+	ADCQ	$0, AX
+	MOVQ	AX, ret+32(FP)
+	RET
+
+n4:
+	MOVQ	0(SI), R8
+	MOVQ	8(SI), R9
+	MOVQ	16(SI), R10
+	MOVQ	24(SI), R11
+	ADCQ	0(DX), R8
+	ADCQ	8(DX), R9
+	ADCQ	16(DX), R10
+	ADCQ	24(DX), R11
+	MOVQ	R8, 0(DI)
+	MOVQ	R9, 8(DI)
+	MOVQ	R10, 16(DI)
+	MOVQ	R11, 24(DI)
+	MOVQ	$0, AX
+	ADCQ	$0, AX
 	MOVQ	AX, ret+32(FP)
 	RET
 
@@ -278,17 +336,19 @@ dual_loop_unroll8:
 	MOVQ	48(SI), R14     // src1[6]
 	MOVQ	56(SI), R15     // src1[7]
 
-	// Chain 1: Process even-indexed limbs (0, 2, 4, 6) with ADCX
-	ADCX	0(DX), R8       // Chain 1: R8 += src2[0] + CF
-	ADCX	16(DX), R10     // Chain 1: R10 += src2[2] + CF
-	ADCX	32(DX), R12     // Chain 1: R12 += src2[4] + CF
-	ADCX	48(DX), R14     // Chain 1: R14 += src2[6] + CF
+	// Chain 1: Process even-indexed limbs (0, 2, 4, 6) with ADCQ
+	// Note: Using ADCQ instead of ADCX (BMI2) for compatibility
+	ADCQ	0(DX), R8       // Chain 1: R8 += src2[0] + CF
+	ADCQ	16(DX), R10     // Chain 1: R10 += src2[2] + CF
+	ADCQ	32(DX), R12     // Chain 1: R12 += src2[4] + CF
+	ADCQ	48(DX), R14     // Chain 1: R14 += src2[6] + CF
 
-	// Chain 2: Process odd-indexed limbs (1, 3, 5, 7) with ADOX
-	ADOX	8(DX), R9       // Chain 2: R9 += src2[1] + OF
-	ADOX	24(DX), R11     // Chain 2: R11 += src2[3] + OF
-	ADOX	40(DX), R13     // Chain 2: R13 += src2[5] + OF
-	ADOX	56(DX), R15     // Chain 2: R15 += src2[7] + OF
+	// Chain 2: Process odd-indexed limbs (1, 3, 5, 7) with ADCQ
+	// Note: Using ADCQ instead of ADOX (BMI2) for compatibility
+	ADCQ	8(DX), R9       // Chain 2: R9 += src2[1] + CF
+	ADCQ	24(DX), R11     // Chain 2: R11 += src2[3] + CF
+	ADCQ	40(DX), R13     // Chain 2: R13 += src2[5] + CF
+	ADCQ	56(DX), R15     // Chain 2: R15 += src2[7] + CF
 
 	// Store 8 results
 	MOVQ	R8, 0(DI)
@@ -358,12 +418,11 @@ dual_remainder_loop:
 	JNZ	dual_remainder_loop
 
 dual_done:
-	// Merge both carry flags: CF from ADCX chain, OF from ADOX chain
+	// Capture final carry flag
 	MOVQ	$0, AX
-	ADCX	$0, AX           // Add CF to AX
-	ADOX	$0, AX           // Add OF to AX
+	ADCQ	$0, AX           // Add CF to AX
 
-	MOVQ	AX, ret+32(FP)   // Return combined carry
+	MOVQ	AX, ret+32(FP)   // Return carry
 	RET
 
 dual_done_zero:

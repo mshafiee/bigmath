@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // Multi-precision integer shift operations
@@ -23,14 +26,18 @@ TEXT ·mpnLShift(SB), NOSPLIT, $0-32
 	MOVQ	$64, AX
 	SUBQ	DX, AX  // AX = 64 - count
 
+	// Save n (CX) to R12, we'll use CX for shift count
+	MOVQ	CX, R12
+
 	// Process from high to low (right to left)
-	MOVQ	CX, BX
+	MOVQ	R12, BX
 	DECQ	BX      // BX = n - 1
 
 	// Load first limb
 	MOVQ	(SI)(BX*8), R8  // R8 = src[n-1]
 	MOVQ	R8, R9
-	SHLQ	DX, R9   // R9 = high bits shifted out
+	MOVB	DX, CL          // Move shift count to CL (low byte)
+	SHLQ	CL, R9   // R9 = high bits shifted out
 	MOVQ	R9, ret+32(FP)  // Save return value
 
 	// Shift first limb
@@ -48,9 +55,11 @@ lshift_loop:
 	// SHLD shifts R8 left by DX, filling from R9
 	// We need to do: (R8 << DX) | (R9 >> (64-DX))
 	MOVQ	R8, R10
-	SHLQ	DX, R10
+	MOVB	DX, CL          // Move shift count to CL
+	SHLQ	CL, R10
 	MOVQ	R9, R11
-	SHRQ	AX, R11
+	MOVB	AX, CL          // Move complement shift to CL
+	SHRQ	CL, R11
 	ORQ	R11, R10
 
 	MOVQ	R10, (DI)(BX*8)
@@ -68,6 +77,7 @@ lshift_copy:
 	SHLQ	$3, AX  // AX = n * 8
 	MOVQ	SI, BX
 	MOVQ	DI, DX
+	MOVQ	CX, CX  // Set up REP counter
 	REP; MOVSQ
 	XORQ	AX, AX
 	MOVQ	AX, ret+32(FP)
@@ -100,20 +110,24 @@ TEXT ·mpnRShift(SB), NOSPLIT, $0-32
 	MOVQ	$64, AX
 	SUBQ	DX, AX  // AX = 64 - count
 
+	// Save n (CX) to R12, we'll use CX for shift count
+	MOVQ	CX, R12
+
 	// Process from low to high (left to right)
 	XORQ	BX, BX  // BX = index
 
 	// Load first limb
 	MOVQ	(SI)(BX*8), R8  // R8 = src[0]
 	MOVQ	R8, R9
-	SHRQ	DX, R9   // R9 = low bits shifted out
+	MOVB	DX, CL          // Move shift count to CL (low byte)
+	SHRQ	CL, R9   // R9 = low bits shifted out
 	MOVQ	R9, ret+32(FP)  // Save return value
 
 	// Shift first limb
 	MOVQ	R8, (DI)(BX*8)
 
 	INCQ	BX
-	CMPQ	BX, CX
+	CMPQ	BX, R12
 	JGE	rshift_done
 
 rshift_loop:
@@ -125,15 +139,17 @@ rshift_loop:
 	// SHRD shifts R9 right by DX, filling from R8
 	// We need to do: (R9 >> DX) | (R8 << (64-DX))
 	MOVQ	R9, R10
-	SHRQ	DX, R10
+	MOVB	DX, CL          // Move shift count to CL
+	SHRQ	CL, R10
 	MOVQ	R8, R11
-	SHLQ	AX, R11
+	MOVB	AX, CL          // Move complement shift to CL
+	SHLQ	CL, R11
 	ORQ	R11, R10
 
 	MOVQ	R10, (DI)(BX*8)
 
 	INCQ	BX
-	CMPQ	BX, CX
+	CMPQ	BX, R12
 	JL	rshift_loop
 
 rshift_done:
@@ -146,6 +162,7 @@ rshift_copy:
 	SHLQ	$3, AX  // AX = n * 8
 	MOVQ	SI, BX
 	MOVQ	DI, DX
+	MOVQ	CX, CX  // Set up REP counter
 	REP; MOVSQ
 	XORQ	AX, AX
 	MOVQ	AX, ret+32(FP)
