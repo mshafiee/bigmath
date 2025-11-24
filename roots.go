@@ -47,16 +47,16 @@ func bigCbrtPositive(x *BigFloat, prec uint) *BigFloat {
 	threshold := new(BigFloat).SetPrec(prec).SetFloat64(1e-77) // Convergence threshold
 
 	for i := 0; i < 100; i++ { // Max 100 iterations
-		// temp2 = guess^2
+		// Compute guess squared
 		temp2.Mul(guess, guess)
-		// temp = x / (guess^2)
+		// Compute x divided by guess squared
 		temp.Quo(x, temp2)
 
-		// temp = 2*guess + x/(guess^2)
+		// Compute 2*guess + x/(guess^2)
 		temp2.Mul(two, guess)
 		temp.Add(temp2, temp)
 
-		// guess_new = (2*guess + x/(guess^2)) / 3
+		// Update guess using Newton-Raphson formula: (2*guess + x/(guess^2)) / 3
 		temp.Quo(temp, three)
 
 		// Check convergence: |guess_new - guess|
@@ -76,7 +76,7 @@ func bigCbrtPositive(x *BigFloat, prec uint) *BigFloat {
 // BigRoot computes the nth root of x: x^(1/n)
 // Uses Newton-Raphson method
 // n must be positive
-func BigRoot(n *BigFloat, x *BigFloat, prec uint) *BigFloat {
+func BigRoot(n, x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
 	}
@@ -130,7 +130,7 @@ func bigRootPositive(n, x *BigFloat, prec uint) *BigFloat {
 	threshold := new(BigFloat).SetPrec(prec).SetFloat64(1e-77)
 
 	for i := 0; i < 100; i++ { // Max 100 iterations
-		// temp2 = guess^(n-1)
+		// Compute guess raised to power (n-1)
 		temp2.Set(guess)
 		if nMinusOne.Cmp(one) == 0 {
 			// n-1 = 1, so guess^(n-1) = guess
@@ -139,14 +139,14 @@ func bigRootPositive(n, x *BigFloat, prec uint) *BigFloat {
 			temp2 = BigPow(guess, nMinusOne, prec)
 		}
 
-		// temp = x / (guess^(n-1))
+		// Compute x divided by guess^(n-1)
 		temp.Quo(x, temp2)
 
-		// temp = (n-1)*guess + x/(guess^(n-1))
+		// Compute (n-1)*guess + x/(guess^(n-1))
 		temp2.Mul(nMinusOne, guess)
 		temp.Add(temp2, temp)
 
-		// guess_new = ((n-1)*guess + x/(guess^(n-1))) / n
+		// Update guess using Newton-Raphson formula: ((n-1)*guess + x/(guess^(n-1))) / n
 		temp.Quo(temp, n)
 
 		// Check convergence: |guess_new - guess|

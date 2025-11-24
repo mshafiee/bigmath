@@ -69,7 +69,7 @@ func bigGammaPositive(x *BigFloat, prec uint) *BigFloat {
 	// Check if x is small (< 0.5), use reflection and recursion
 	half := NewBigFloat(0.5, prec)
 	if x.Cmp(half) < 0 {
-		// Γ(x) = π / (Γ(1-x) * sin(π*x))
+		// Use reflection formula: Γ(x) = π / (Γ(1-x) * sin(π*x))
 		one := NewBigFloat(1.0, prec)
 		oneMinusX := new(BigFloat).SetPrec(prec).Sub(one, x)
 		gamma1MinusX := bigGammaPositive(oneMinusX, prec)
@@ -247,23 +247,6 @@ func bigErfSeries(x *BigFloat, workPrec, targetPrec uint) *BigFloat {
 	return new(BigFloat).SetPrec(targetPrec).Set(result)
 }
 
-// bigErfRational computes erf(x) using rational approximation for moderate |x| (0.5 <= |x| < 2.0)
-func bigErfRational(x *BigFloat, workPrec, targetPrec uint) *BigFloat {
-	// For moderate x, compute as 1 - erfc(x) using improved erfc
-	if x.Sign() > 0 {
-		one := NewBigFloat(1.0, workPrec)
-		erfcX := bigErfcImproved(x, workPrec, workPrec)
-		result := new(BigFloat).SetPrec(workPrec).Sub(one, erfcX)
-		return new(BigFloat).SetPrec(targetPrec).Set(result)
-	} else {
-		// For negative x, use erf(-x) = -erf(x)
-		negX := new(BigFloat).SetPrec(workPrec).Neg(x)
-		result := bigErfRational(negX, workPrec, workPrec)
-		result.Neg(result)
-		return new(BigFloat).SetPrec(targetPrec).Set(result)
-	}
-}
-
 // bigErfcImproved computes erfc(x) with improved accuracy for moderate x
 func bigErfcImproved(x *BigFloat, workPrec, targetPrec uint) *BigFloat {
 	// For moderate x (0.5 <= x < 4.0), use improved asymptotic expansion
@@ -361,96 +344,6 @@ func BigErfc(x *BigFloat, prec uint) *BigFloat {
 
 	// For moderate and large x, use improved erfc computation
 	return bigErfcImproved(x, workPrec, prec)
-
-	// For larger x, use asymptotic expansion
-	// erfc(x) ≈ (exp(-x²) / (x*√π)) * (1 - 1/(2x²) + 3/(4x⁴) - 15/(8x⁶) + 105/(16x⁸) - ...)
-	x2 := new(BigFloat).SetPrec(workPrec).Mul(x, x)
-	expNegX2 := BigExp(new(BigFloat).SetPrec(workPrec).Neg(x2), workPrec)
-
-	sqrtPi := BigSqrt(BigPI(workPrec), workPrec)
-	xSqrtPi := new(BigFloat).SetPrec(workPrec).Mul(x, sqrtPi)
-	base := new(BigFloat).SetPrec(workPrec).Quo(expNegX2, xSqrtPi)
-
-	// Asymptotic series: 1 - 1/(2x²) + 3/(4x⁴) - 15/(8x⁶) + 105/(16x⁸) - ...
-	series := NewBigFloat(1.0, workPrec)
-	x2Inv := new(BigFloat).SetPrec(workPrec).Quo(NewBigFloat(1.0, workPrec), x2)
-
-	// First term: -1/(2x²)
-	term := new(BigFloat).SetPrec(workPrec).Set(x2Inv)
-	term.Mul(term, NewBigFloat(-0.5, workPrec))
-
-	convThreshold := new(BigFloat).SetPrec(workPrec).SetMantExp(NewBigFloat(1.0, workPrec), -int(workPrec+15))
-
-	for n := 1; n < 300; n++ {
-		series.Add(series, term)
-
-		// Next term: a_{n+1} = a_n * (2n+1)/(2n+2) * (-1) / x²
-		// Actually: a_n = (-1)^n * (2n-1)!! / (2^n * x^(2n))
-		// So: a_{n+1} = a_n * (2n+1) / (2(n+1)) * (-1) / x²
-		coeff := new(BigFloat).SetPrec(workPrec).Quo(
-			NewBigFloat(float64(2*n+1), workPrec),
-			NewBigFloat(float64(2*n+2), workPrec),
-		)
-		term.Mul(term, coeff)
-		term.Mul(term, x2Inv)
-		term.Neg(term) // Alternating sign
-
-		termAbs := new(BigFloat).SetPrec(workPrec).Abs(term)
-		if termAbs.Cmp(convThreshold) < 0 {
-			// Also check relative convergence
-			seriesAbs := new(BigFloat).SetPrec(workPrec).Abs(series)
-			if seriesAbs.Sign() > 0 {
-				relErr := new(BigFloat).SetPrec(workPrec).Quo(termAbs, seriesAbs)
-				if relErr.Cmp(convThreshold) < 0 {
-					break
-				}
-			} else {
-				break
-			}
-		}
-	}
-
-	result := new(BigFloat).SetPrec(workPrec).Mul(base, series)
-	return new(BigFloat).SetPrec(prec).Set(result)
-}
-
-// bigErfcContinuedFraction computes erfc(x) using continued fraction for moderate x
-// More accurate than asymptotic expansion for moderate x values
-func bigErfcContinuedFraction(x *BigFloat, workPrec, targetPrec uint) *BigFloat {
-	// erfc(x) = (exp(-x²) / (x*√π)) * CF(x)
-	// where CF(x) = 1 / (x + 1/(2x + 2/(2x + 3/(2x + ...))))
-	x2 := new(BigFloat).SetPrec(workPrec).Mul(x, x)
-	expNegX2 := BigExp(new(BigFloat).SetPrec(workPrec).Neg(x2), workPrec)
-
-	sqrtPi := BigSqrt(BigPI(workPrec), workPrec)
-	xSqrtPi := new(BigFloat).SetPrec(workPrec).Mul(x, sqrtPi)
-	base := new(BigFloat).SetPrec(workPrec).Quo(expNegX2, xSqrtPi)
-
-	// Compute continued fraction backwards for stability
-	// Start from a sufficiently deep level and work backwards
-	depth := 50
-	if workPrec > 256 {
-		depth = 100
-	}
-
-	// Initialize: a_n = 0 (at depth)
-	cf := NewBigFloat(0.0, workPrec)
-	twoX := new(BigFloat).SetPrec(workPrec).Mul(NewBigFloat(2.0, workPrec), x)
-
-	// Work backwards: CF = 1 / (x + 1/(2x + 2/(2x + 3/(2x + ...))))
-	for i := depth; i >= 1; i-- {
-		// CF = i / (2x + CF)
-		numerator := NewBigFloat(float64(i), workPrec)
-		denom := new(BigFloat).SetPrec(workPrec).Add(twoX, cf)
-		cf = new(BigFloat).SetPrec(workPrec).Quo(numerator, denom)
-	}
-
-	// Final step: CF = 1 / (x + CF)
-	one := NewBigFloat(1.0, workPrec)
-	cf = new(BigFloat).SetPrec(workPrec).Quo(one, new(BigFloat).SetPrec(workPrec).Add(x, cf))
-
-	result := new(BigFloat).SetPrec(workPrec).Mul(base, cf)
-	return new(BigFloat).SetPrec(targetPrec).Set(result)
 }
 
 // BigBesselJ computes the Bessel function of the first kind J_n(x)
@@ -629,7 +522,7 @@ func BigBesselY(n int, x *BigFloat, prec uint) *BigFloat {
 	yn := y1
 
 	for i := 1; i < n; i++ {
-		// Y_{i+1} = (2i/x) * Y_i - Y_{i-1}
+		// Use recurrence relation: Y_{i+1} = (2i/x) * Y_i - Y_{i-1}
 		twoI := NewBigFloat(float64(2*i), workPrec)
 		coeff := new(BigFloat).SetPrec(workPrec).Quo(twoI, x)
 		term := new(BigFloat).SetPrec(workPrec).Mul(coeff, yn)

@@ -19,20 +19,20 @@ func BigLog1p(x *BigFloat, prec uint) *BigFloat {
 	if x.Sign() == 0 {
 		return NewBigFloat(0.0, prec)
 	}
-	
+
 	// Check if x < -1
 	negOne := NewBigFloat(-1.0, prec)
 	if x.Cmp(negOne) < 0 {
 		// x < -1, log(1+x) is undefined
 		return NewBigFloat(math.NaN(), prec)
 	}
-	
+
 	// Check if x == -1
 	if x.Cmp(negOne) == 0 {
 		// log(0) = -Inf
 		return new(BigFloat).SetPrec(prec).SetInf(true)
 	}
-	
+
 	if x.IsInf() {
 		if x.Sign() > 0 {
 			return new(BigFloat).SetPrec(prec).SetInf(false)
@@ -57,7 +57,7 @@ func BigLog1p(x *BigFloat, prec uint) *BigFloat {
 		threshold := new(BigFloat).SetPrec(workPrec).SetMantExp(NewBigFloat(1.0, workPrec), -int(workPrec))
 
 		for n := 2; n < 1000; n++ {
-			// term = (-1)^(n+1) * x^n / n
+			// Compute next term: (-1)^(n+1) * x^n / n
 			xPower.Mul(xPower, x)
 			term.Set(xPower)
 			denom := NewBigFloat(float64(n), workPrec)
@@ -160,7 +160,7 @@ func BigLogb(x, base *BigFloat, prec uint) *BigFloat {
 
 	workPrec := prec + 32
 
-	// log_b(x) = ln(x) / ln(b)
+	// Compute logarithm with arbitrary base using change of base formula
 	lnX := BigLog(x, workPrec)
 	lnB := BigLog(base, workPrec)
 
