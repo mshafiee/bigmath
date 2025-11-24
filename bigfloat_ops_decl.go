@@ -9,16 +9,21 @@ package bigmath
 // These will be implemented in architecture-specific .s files (e.g., AMD64).
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigfloatAddAsm(a, b *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigfloatSubAsm(a, b *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigfloatMulAsm(a, b *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigfloatDivAsm(a, b *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigfloatSqrtAsm(x *BigFloat, prec uint) *BigFloat

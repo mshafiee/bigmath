@@ -21,6 +21,7 @@ func BigExp(x *BigFloat, prec uint) *BigFloat {
 }
 
 // bigExpGeneric is the generic implementation (called by dispatcher)
+//nolint:unused // Used in dispatch system
 func bigExpGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()

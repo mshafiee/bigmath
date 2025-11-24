@@ -19,12 +19,12 @@ func bigVec3AddAVX2(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3AddAsm(v1, v2, prec)
 }
 
-// bigVec3SubAMD64 is the basic AMD64 implementation
+//nolint:unused // May be used in dispatch system
 func bigVec3SubAMD64(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3SubGeneric(v1, v2, prec)
 }
 
-// bigVec3SubAVX2 is the AVX2-optimized implementation
+//nolint:unused // May be used in dispatch system
 func bigVec3SubAVX2(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3SubAsm(v1, v2, prec)
 }
@@ -56,6 +56,7 @@ func bigVec3DotAVX2(v1, v2 *BigVec3, prec uint) *BigFloat {
 func bigVec3AddAsm(v1, v2 *BigVec3, prec uint) *BigVec3
 
 //go:noescape
+//nolint:unused // Declared for assembly implementation
 func bigVec3SubAsm(v1, v2 *BigVec3, prec uint) *BigVec3
 
 //go:noescape
