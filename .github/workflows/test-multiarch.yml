@@ -27,9 +27,6 @@ jobs:
             goarch: amd64
             runner: windows-latest
           - goos: darwin
-            goarch: amd64
-            runner: macos-12
-          - goos: darwin
             goarch: arm64
             runner: macos-14
           # Optional architectures for comprehensive testing
@@ -81,7 +78,6 @@ jobs:
         # Cross-compiled binaries cannot be executed on the build host
         # ubuntu-latest runs linux/amd64 natively
         # windows-latest runs windows/amd64 natively
-        # macos-12 runs darwin/amd64 natively
         # macos-14 runs darwin/arm64 natively
         if [ "${{ matrix.runner }}" = "ubuntu-latest" ] && [ "${{ matrix.goos }}" = "linux" ] && [ "${{ matrix.goarch }}" = "amd64" ]; then
           echo "Running tests on native architecture (linux/amd64)..."
@@ -89,10 +85,6 @@ jobs:
           echo "Tests completed!"
         elif [ "${{ matrix.runner }}" = "macos-14" ] && [ "${{ matrix.goos }}" = "darwin" ] && [ "${{ matrix.goarch }}" = "arm64" ]; then
           echo "Running tests on native architecture (darwin/arm64)..."
-          go test -v ./...
-          echo "Tests completed!"
-        elif [ "${{ matrix.runner }}" = "macos-12" ] && [ "${{ matrix.goos }}" = "darwin" ] && [ "${{ matrix.goarch }}" = "amd64" ]; then
-          echo "Running tests on native architecture (darwin/amd64)..."
           go test -v ./...
           echo "Tests completed!"
         elif [ "${{ matrix.runner }}" = "windows-latest" ] && [ "${{ matrix.goos }}" = "windows" ] && [ "${{ matrix.goarch }}" = "amd64" ]; then
