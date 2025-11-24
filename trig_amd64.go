@@ -28,7 +28,9 @@ func bigCosAVX2(x *BigFloat, prec uint) *BigFloat {
 }
 
 //go:noescape
+//nolint:unused // Implemented in assembly (trig_amd64.s)
 func bigSinAsm(x *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (trig_amd64.s)
 func bigCosAsm(x *BigFloat, prec uint) *BigFloat

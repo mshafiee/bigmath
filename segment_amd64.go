@@ -30,7 +30,9 @@ func evaluateChebyshevDerivativeBigAVX2(t *BigFloat, c []*BigFloat, neval int, p
 }
 
 //go:noescape
+//nolint:unused // Implemented in assembly (segment_amd64.s)
 func evaluateChebyshevBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (segment_amd64.s)
 func evaluateChebyshevDerivativeBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat

@@ -11,6 +11,8 @@ import (
 // These serve as reference implementations and fallbacks
 
 // bigSinGeneric computes sin(x) using Taylor series with arbitrary precision (pure-Go)
+//
+//nolint:unused // Used in dispatch system and called from assembly
 func bigSinGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -56,6 +58,8 @@ func bigSinGeneric(x *BigFloat, prec uint) *BigFloat {
 }
 
 // bigCosGeneric computes cos(x) using Taylor series with arbitrary precision (pure-Go)
+//
+//nolint:unused // Used in dispatch system and called from assembly
 func bigCosGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()

@@ -24,6 +24,8 @@ func BigLog(x *BigFloat, prec uint) *BigFloat {
 }
 
 // bigLogGeneric is the generic implementation (called by dispatcher)
+//
+//nolint:unused // Used in dispatch system and called from assembly
 func bigLogGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()

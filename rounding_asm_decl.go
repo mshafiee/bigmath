@@ -23,4 +23,3 @@ func roundTowardInfAsm(x *BigFloat, prec uint) *BigFloat
 //go:noescape
 //nolint:unused // Implemented in assembly (rounding_amd64.s)
 func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
-
