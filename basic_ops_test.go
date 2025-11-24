@@ -40,19 +40,19 @@ func TestBigFloor(t *testing.T) {
 				x = NewBigFloat(tt.input, prec)
 			}
 			result := BigFloor(x, prec)
-			
+
 			if tt.useInf {
 				if !result.IsInf() {
 					t.Errorf("BigFloor(Inf) should return Inf, got %v", result)
 				}
 				return
 			}
-			
+
 			got, _ := result.Float64()
 			if math.Abs(got-tt.expected) > 1e-10 {
 				t.Errorf("BigFloor(%g) = %g, want %g", tt.input, got, tt.expected)
 			}
-			
+
 			// Property: floor(x) <= x < floor(x) + 1
 			xVal, _ := x.Float64()
 			if got > xVal {
@@ -63,7 +63,7 @@ func TestBigFloor(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test very large numbers
 	t.Run("very_large_positive", func(t *testing.T) {
 		x := NewBigFloat(1e100, prec)
@@ -73,7 +73,7 @@ func TestBigFloor(t *testing.T) {
 			t.Errorf("BigFloor(1e100) = %g, expected approximately 1e100", got)
 		}
 	})
-	
+
 	t.Run("very_large_negative", func(t *testing.T) {
 		x := NewBigFloat(-1e100, prec)
 		result := BigFloor(x, prec)
@@ -82,7 +82,7 @@ func TestBigFloor(t *testing.T) {
 			t.Errorf("BigFloor(-1e100) = %g, expected approximately -1e100", got)
 		}
 	})
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -128,19 +128,19 @@ func TestBigCeil(t *testing.T) {
 				x = NewBigFloat(tt.input, prec)
 			}
 			result := BigCeil(x, prec)
-			
+
 			if tt.useInf {
 				if !result.IsInf() {
 					t.Errorf("BigCeil(Inf) should return Inf, got %v", result)
 				}
 				return
 			}
-			
+
 			got, _ := result.Float64()
 			if math.Abs(got-tt.expected) > 1e-10 {
 				t.Errorf("BigCeil(%g) = %g, want %g", tt.input, got, tt.expected)
 			}
-			
+
 			// Property: ceil(x) >= x > ceil(x) - 1
 			xVal, _ := x.Float64()
 			if got < xVal {
@@ -151,7 +151,7 @@ func TestBigCeil(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test very large numbers
 	t.Run("very_large_positive", func(t *testing.T) {
 		x := NewBigFloat(1e100, prec)
@@ -161,7 +161,7 @@ func TestBigCeil(t *testing.T) {
 			t.Errorf("BigCeil(1e100) = %g, expected approximately 1e100", got)
 		}
 	})
-	
+
 	t.Run("very_large_negative", func(t *testing.T) {
 		x := NewBigFloat(-1e100, prec)
 		result := BigCeil(x, prec)
@@ -203,19 +203,19 @@ func TestBigTrunc(t *testing.T) {
 				x = NewBigFloat(tt.input, prec)
 			}
 			result := BigTrunc(x, prec)
-			
+
 			if tt.useInf {
 				if !result.IsInf() {
 					t.Errorf("BigTrunc(Inf) should return Inf, got %v", result)
 				}
 				return
 			}
-			
+
 			got, _ := result.Float64()
 			if math.Abs(got-tt.expected) > 1e-10 {
 				t.Errorf("BigTrunc(%g) = %g, want %g", tt.input, got, tt.expected)
 			}
-			
+
 			// Property: trunc(x) = floor(x) for x >= 0, trunc(x) = ceil(x) for x < 0
 			xVal, _ := x.Float64()
 			if xVal >= 0 {
@@ -233,7 +233,7 @@ func TestBigTrunc(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test very large numbers
 	t.Run("very_large_positive", func(t *testing.T) {
 		x := NewBigFloat(1e100, prec)
@@ -243,7 +243,7 @@ func TestBigTrunc(t *testing.T) {
 			t.Errorf("BigTrunc(1e100) = %g, expected approximately 1e100", got)
 		}
 	})
-	
+
 	t.Run("very_large_negative", func(t *testing.T) {
 		x := NewBigFloat(-1e100, prec)
 		result := BigTrunc(x, prec)
@@ -271,8 +271,8 @@ func TestBigMod(t *testing.T) {
 		{"x_zero", 0.0, 5.0, 0.0, false},
 		{"negative_x_positive_y", -7.0, 3.0, 2.0, false},
 		{"positive_x_negative_y", 7.0, -3.0, -2.0, false},
-		{"both_negative", -7.0, -3.0, -1.0, false}, // mod(-7, -3) = -1 (same sign as y)
-		{"zero_y", 10.0, 0.0, 0.0, true}, // big.Float doesn't support NaN, returns 0
+		{"both_negative", -7.0, -3.0, -1.0, false},               // mod(-7, -3) = -1 (same sign as y)
+		{"zero_y", 10.0, 0.0, 0.0, true},                         // big.Float doesn't support NaN, returns 0
 		{"very_large", 1e50, 1e30, 3.0735722628689113e29, false}, // 1e50 mod 1e30 is not 0
 	}
 
@@ -291,7 +291,7 @@ func TestBigMod(t *testing.T) {
 			} else if math.Abs(got-tt.expected) > 1e-10 {
 				t.Errorf("BigMod(%g, %g) = %g, want %g", tt.x, tt.y, got, tt.expected)
 			}
-			
+
 			// Property: mod(x, y) should have same sign as y (when y != 0)
 			if tt.y != 0 && !tt.checkNaN {
 				if (got > 0 && tt.y < 0) || (got < 0 && tt.y > 0) {
@@ -300,7 +300,7 @@ func TestBigMod(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test property: mod(x, y) = x - y*floor(x/y)
 	t.Run("property_verification", func(t *testing.T) {
 		testCases := [][]float64{
@@ -313,11 +313,11 @@ func TestBigMod(t *testing.T) {
 			x := NewBigFloat(tc[0], prec)
 			y := NewBigFloat(tc[1], prec)
 			mod := BigMod(x, y, prec)
-			
-			quo := new(BigFloat).SetPrec(prec + 32).Quo(x, y)
+
+			quo := new(BigFloat).SetPrec(prec+32).Quo(x, y)
 			floorQuo := BigFloor(quo, prec)
 			expected := new(BigFloat).SetPrec(prec).Sub(x, new(BigFloat).SetPrec(prec).Mul(y, floorQuo))
-			
+
 			if mod.Cmp(expected) != 0 {
 				modVal, _ := mod.Float64()
 				expVal, _ := expected.Float64()
@@ -354,7 +354,7 @@ func TestBigRem(t *testing.T) {
 			if math.Abs(got-tt.expected) > 1e-10 {
 				t.Errorf("BigRem(%g, %g) = %g, want %g", tt.x, tt.y, got, tt.expected)
 			}
-			
+
 			// Property: rem(x, y) should have same sign as x (when y != 0)
 			if tt.y != 0 {
 				if (got > 0 && tt.x < 0) || (got < 0 && tt.x > 0) {
@@ -363,7 +363,7 @@ func TestBigRem(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Compare with standard library math.Remainder
 	t.Run("compare_with_math_remainder", func(t *testing.T) {
 		testCases := [][]float64{
@@ -377,7 +377,7 @@ func TestBigRem(t *testing.T) {
 			y := NewBigFloat(tc[1], prec)
 			rem := BigRem(x, y, prec)
 			remVal, _ := rem.Float64()
-			
+
 			expected := math.Remainder(tc[0], tc[1])
 			if math.Abs(remVal-expected) > 1e-8 {
 				t.Errorf("BigRem(%g, %g) = %g, math.Remainder = %g", tc[0], tc[1], remVal, expected)

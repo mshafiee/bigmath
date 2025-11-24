@@ -56,7 +56,7 @@ func TestBigMatTranspose(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			transposed := BigMatTranspose(tt.m, prec)
-			
+
 			// Property: transpose(transpose(M)) = M
 			transposedTwice := BigMatTranspose(transposed, prec)
 			for i := 0; i < 3; i++ {
@@ -66,7 +66,7 @@ func TestBigMatTranspose(t *testing.T) {
 					}
 				}
 			}
-			
+
 			// Property: transpose(M)[i][j] = M[j][i]
 			for i := 0; i < 3; i++ {
 				for j := 0; j < 3; j++ {
@@ -77,7 +77,7 @@ func TestBigMatTranspose(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -101,9 +101,9 @@ func TestBigMatMulMat(t *testing.T) {
 	prec := uint(256)
 
 	tests := []struct {
-		name     string
-		m1, m2   *BigMatrix3x3
-		expected *BigMatrix3x3
+		name      string
+		m1, m2    *BigMatrix3x3
+		expected  *BigMatrix3x3
 		tolerance float64
 	}{
 		{"identity_identity", NewIdentityMatrix(prec), NewIdentityMatrix(prec), NewIdentityMatrix(prec), 1e-10},
@@ -138,7 +138,7 @@ func TestBigMatMulMat(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			result := BigMatMulMat(tt.m1, tt.m2, prec)
-			
+
 			for i := 0; i < 3; i++ {
 				for j := 0; j < 3; j++ {
 					got, _ := result.M[i][j].Float64()
@@ -150,7 +150,7 @@ func TestBigMatMulMat(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test general matrix multiplication
 	t.Run("general_multiplication", func(t *testing.T) {
 		m1 := &BigMatrix3x3{
@@ -168,14 +168,14 @@ func TestBigMatMulMat(t *testing.T) {
 			},
 		}
 		result := BigMatMulMat(m1, m2, prec)
-		
+
 		// Expected result: [30, 24, 18; 84, 69, 54; 138, 114, 90]
 		expected := [3][3]float64{
 			{30.0, 24.0, 18.0},
 			{84.0, 69.0, 54.0},
 			{138.0, 114.0, 90.0},
 		}
-		
+
 		for i := 0; i < 3; i++ {
 			for j := 0; j < 3; j++ {
 				got, _ := result.M[i][j].Float64()
@@ -185,7 +185,7 @@ func TestBigMatMulMat(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Test associativity: (A*B)*C = A*(B*C)
 	t.Run("associativity", func(t *testing.T) {
 		m1 := &BigMatrix3x3{
@@ -203,10 +203,10 @@ func TestBigMatMulMat(t *testing.T) {
 				{NewBigFloat(0.0, prec), NewBigFloat(0.0, prec), NewBigFloat(2.0, prec)},
 			},
 		}
-		
+
 		left := BigMatMulMat(BigMatMulMat(m1, m2, prec), m3, prec)
 		right := BigMatMulMat(m1, BigMatMulMat(m2, m3, prec), prec)
-		
+
 		for i := 0; i < 3; i++ {
 			for j := 0; j < 3; j++ {
 				if left.M[i][j].Cmp(right.M[i][j]) != 0 {
@@ -217,7 +217,7 @@ func TestBigMatMulMat(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -297,7 +297,7 @@ func TestBigMatDet(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Property: det(A*B) = det(A) * det(B)
 	t.Run("multiplicative_property", func(t *testing.T) {
 		m1 := &BigMatrix3x3{
@@ -314,12 +314,12 @@ func TestBigMatDet(t *testing.T) {
 				{NewBigFloat(0.0, prec), NewBigFloat(0.0, prec), NewBigFloat(4.0, prec)},
 			},
 		}
-		
+
 		det1 := BigMatDet(m1, prec)
 		det2 := BigMatDet(m2, prec)
 		product := BigMatMulMat(m1, m2, prec)
 		detProduct := BigMatDet(product, prec)
-		
+
 		expected := new(BigFloat).SetPrec(prec).Mul(det1, det2)
 		if detProduct.Cmp(expected) != 0 {
 			det1Val, _ := det1.Float64()
@@ -329,7 +329,7 @@ func TestBigMatDet(t *testing.T) {
 			t.Errorf("Property violated: det(A*B) = %g != det(A)*det(B) = %g * %g = %g", detProductVal, det1Val, det2Val, expectedVal)
 		}
 	})
-	
+
 	// Property: det(transpose(A)) = det(A)
 	t.Run("transpose_property", func(t *testing.T) {
 		m := &BigMatrix3x3{
@@ -342,14 +342,14 @@ func TestBigMatDet(t *testing.T) {
 		det := BigMatDet(m, prec)
 		transposed := BigMatTranspose(m, prec)
 		detTransposed := BigMatDet(transposed, prec)
-		
+
 		if det.Cmp(detTransposed) != 0 {
 			detVal, _ := det.Float64()
 			detTransposedVal, _ := detTransposed.Float64()
 			t.Errorf("Property violated: det(transpose(A)) = %g != det(A) = %g", detTransposedVal, detVal)
 		}
 	})
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -407,18 +407,18 @@ func TestBigMatInverse(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			inv, err := BigMatInverse(tt.m, prec)
-			
+
 			if tt.shouldErr {
 				if err == nil {
 					t.Errorf("BigMatInverse should have failed for singular matrix")
 				}
 				return
 			}
-			
+
 			if err != nil {
 				t.Fatalf("BigMatInverse failed: %v", err)
 			}
-			
+
 			// Property: M * M^-1 = I
 			product := BigMatMulMat(tt.m, inv, prec)
 			identity := NewIdentityMatrix(prec)
@@ -431,7 +431,7 @@ func TestBigMatInverse(t *testing.T) {
 					}
 				}
 			}
-			
+
 			// Property: M^-1 * M = I
 			product2 := BigMatMulMat(inv, tt.m, prec)
 			for i := 0; i < 3; i++ {
@@ -445,7 +445,7 @@ func TestBigMatInverse(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}

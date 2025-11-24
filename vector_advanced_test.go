@@ -12,9 +12,9 @@ func TestBigVec3Cross(t *testing.T) {
 	prec := uint(256)
 
 	tests := []struct {
-		name     string
-		v1, v2   [3]float64
-		expected [3]float64
+		name      string
+		v1, v2    [3]float64
+		expected  [3]float64
 		tolerance float64
 	}{
 		{"unit_x_unit_y", [3]float64{1.0, 0.0, 0.0}, [3]float64{0.0, 1.0, 0.0}, [3]float64{0.0, 0.0, 1.0}, 1e-10},
@@ -41,7 +41,7 @@ func TestBigVec3Cross(t *testing.T) {
 					t.Errorf("BigVec3Cross component[%d] = %g, want %g (tolerance %g)", i, got[i], tt.expected[i], tt.tolerance)
 				}
 			}
-			
+
 			// Property: cross(v1, v2) = -cross(v2, v1)
 			result2 := BigVec3Cross(v2, v1, prec)
 			got2 := result2.ToFloat64()
@@ -50,7 +50,7 @@ func TestBigVec3Cross(t *testing.T) {
 					t.Errorf("Property violated: cross(v1,v2)[%d] = %g, but -cross(v2,v1)[%d] = %g", i, got[i], i, -got2[i])
 				}
 			}
-			
+
 			// Property: cross(v1, v2) is perpendicular to both v1 and v2
 			if tt.name != "zero_vector" && tt.name != "both_zero" && tt.name != "parallel_vectors" {
 				dot1 := BigVec3Dot(result, v1, prec)
@@ -66,7 +66,7 @@ func TestBigVec3Cross(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -107,7 +107,7 @@ func TestBigVec3Normalize(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			v := NewBigVec3(tt.v[0], tt.v[1], tt.v[2], prec)
 			normalized := BigVec3Normalize(v, prec)
-			
+
 			if tt.shouldNaN {
 				// Zero vector normalization should return zero vector or NaN
 				mag := BigVec3Magnitude(normalized, prec)
@@ -117,14 +117,14 @@ func TestBigVec3Normalize(t *testing.T) {
 				}
 				return
 			}
-			
+
 			magnitude := BigVec3Magnitude(normalized, prec)
 			mag, _ := magnitude.Float64()
 
 			if math.Abs(mag-1.0) > tt.tolerance {
 				t.Errorf("BigVec3Normalize magnitude = %g, want 1.0 (tolerance %g)", mag, tt.tolerance)
 			}
-			
+
 			// Property: normalized vector should be in same direction
 			if tt.v[0] != 0 || tt.v[1] != 0 || tt.v[2] != 0 {
 				dot := BigVec3Dot(v, normalized, prec)
@@ -138,7 +138,7 @@ func TestBigVec3Normalize(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -179,7 +179,7 @@ func TestBigVec3Angle(t *testing.T) {
 			v2 := NewBigVec3(tt.v2[0], tt.v2[1], tt.v2[2], prec)
 			angle := BigVec3Angle(v1, v2, prec)
 			angleVal, _ := angle.Float64()
-			
+
 			if tt.shouldNaN {
 				// big.Float doesn't support NaN, so NewBigFloat(math.NaN()) returns 0
 				// This is a known limitation - we accept 0 for NaN cases
@@ -188,25 +188,25 @@ func TestBigVec3Angle(t *testing.T) {
 				}
 				return
 			}
-			
+
 			if math.Abs(angleVal-tt.expected) > tt.tolerance {
 				t.Errorf("BigVec3Angle = %g, want %g (tolerance %g)", angleVal, tt.expected, tt.tolerance)
 			}
-			
+
 			// Property: angle(v1, v2) = angle(v2, v1)
 			angle2 := BigVec3Angle(v2, v1, prec)
 			angle2Val, _ := angle2.Float64()
 			if math.Abs(angleVal-angle2Val) > tt.tolerance {
 				t.Errorf("Property violated: angle(v1,v2) = %g != angle(v2,v1) = %g", angleVal, angle2Val)
 			}
-			
+
 			// Property: 0 <= angle <= pi
 			if angleVal < 0 || angleVal > math.Pi+tt.tolerance {
 				t.Errorf("Property violated: angle = %g should be in [0, pi]", angleVal)
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -248,7 +248,7 @@ func TestBigVec3Project(t *testing.T) {
 			v2 := NewBigVec3(tt.v2[0], tt.v2[1], tt.v2[2], prec)
 			projection := BigVec3Project(v1, v2, prec)
 			proj := projection.ToFloat64()
-			
+
 			if tt.shouldNaN {
 				// Projection onto zero vector should return zero or NaN
 				mag := math.Sqrt(proj[0]*proj[0] + proj[1]*proj[1] + proj[2]*proj[2])
@@ -263,7 +263,7 @@ func TestBigVec3Project(t *testing.T) {
 					t.Errorf("BigVec3Project component[%d] = %g, want %g (tolerance %g)", i, proj[i], tt.expected[i], tt.tolerance)
 				}
 			}
-			
+
 			// Property: projection should be parallel to v2
 			if tt.v2[0] != 0 || tt.v2[1] != 0 || tt.v2[2] != 0 {
 				projVec := NewBigVec3(proj[0], proj[1], proj[2], prec)
@@ -276,7 +276,7 @@ func TestBigVec3Project(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}

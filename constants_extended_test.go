@@ -33,12 +33,12 @@ func TestBigPhi(t *testing.T) {
 			if math.Abs(phiVal-expected) > tt.tolerance {
 				t.Errorf("BigPhi at prec %d = %g, want %g (tolerance %g)", tt.prec, phiVal, expected, tt.tolerance)
 			}
-			
+
 			// Compare with known high-precision value
 			if math.Abs(phiVal-knownHighPrec) > tt.tolerance {
 				t.Errorf("BigPhi at prec %d = %g, known high-prec = %g (tolerance %g)", tt.prec, phiVal, knownHighPrec, tt.tolerance)
 			}
-			
+
 			// Property: φ² = φ + 1
 			phi2 := new(BigFloat).SetPrec(tt.prec).Mul(phi, phi)
 			phiPlusOne := new(BigFloat).SetPrec(tt.prec).Add(phi, NewBigFloat(1.0, tt.prec))
@@ -80,12 +80,12 @@ func TestBigSqrt2(t *testing.T) {
 			if math.Abs(sqrt2Val-expected) > tt.tolerance {
 				t.Errorf("BigSqrt2 at prec %d = %g, want %g (tolerance %g)", tt.prec, sqrt2Val, expected, tt.tolerance)
 			}
-			
+
 			// Compare with known high-precision value
 			if math.Abs(sqrt2Val-knownHighPrec) > tt.tolerance {
 				t.Errorf("BigSqrt2 at prec %d = %g, known high-prec = %g (tolerance %g)", tt.prec, sqrt2Val, knownHighPrec, tt.tolerance)
 			}
-			
+
 			// Property: (√2)² = 2
 			sqrt2Squared := new(BigFloat).SetPrec(tt.prec).Mul(sqrt2, sqrt2)
 			two := NewBigFloat(2.0, tt.prec)
@@ -127,12 +127,12 @@ func TestBigSqrt3(t *testing.T) {
 			if math.Abs(sqrt3Val-expected) > tt.tolerance {
 				t.Errorf("BigSqrt3 at prec %d = %g, want %g (tolerance %g)", tt.prec, sqrt3Val, expected, tt.tolerance)
 			}
-			
+
 			// Compare with known high-precision value
 			if math.Abs(sqrt3Val-knownHighPrec) > tt.tolerance {
 				t.Errorf("BigSqrt3 at prec %d = %g, known high-prec = %g (tolerance %g)", tt.prec, sqrt3Val, knownHighPrec, tt.tolerance)
 			}
-			
+
 			// Property: (√3)² = 3
 			sqrt3Squared := new(BigFloat).SetPrec(tt.prec).Mul(sqrt3, sqrt3)
 			three := NewBigFloat(3.0, tt.prec)
@@ -174,12 +174,12 @@ func TestBigLn10(t *testing.T) {
 			if math.Abs(ln10Val-expected) > tt.tolerance {
 				t.Errorf("BigLn10 at prec %d = %g, want %g (tolerance %g)", tt.prec, ln10Val, expected, tt.tolerance)
 			}
-			
+
 			// Compare with known high-precision value
 			if math.Abs(ln10Val-knownHighPrec) > tt.tolerance {
 				t.Errorf("BigLn10 at prec %d = %g, known high-prec = %g (tolerance %g)", tt.prec, ln10Val, knownHighPrec, tt.tolerance)
 			}
-			
+
 			// Property: exp(ln(10)) = 10
 			expLn10 := BigExp(ln10, tt.prec)
 			ten := NewBigFloat(10.0, tt.prec)

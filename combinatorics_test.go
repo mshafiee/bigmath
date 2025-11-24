@@ -11,9 +11,9 @@ func TestBigFactorial(t *testing.T) {
 	prec := uint(256)
 
 	tests := []struct {
-		name     string
-		n        int64
-		expected int64
+		name      string
+		n         int64
+		expected  int64
 		shouldErr bool
 	}{
 		{"zero", 0, 1, false},
@@ -36,7 +36,7 @@ func TestBigFactorial(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			result := BigFactorial(tt.n, prec)
-			
+
 			if tt.shouldErr {
 				// Negative factorial should return error or zero
 				got, _ := result.Int64()
@@ -45,21 +45,21 @@ func TestBigFactorial(t *testing.T) {
 				}
 				return
 			}
-			
+
 			got, _ := result.Int64()
 			if got != tt.expected {
 				t.Errorf("BigFactorial(%d) = %d, want %d", tt.n, got, tt.expected)
 			}
 		})
 	}
-	
+
 	// Property: factorial(n) = gamma(n+1)
 	t.Run("factorial_equals_gamma", func(t *testing.T) {
 		for n := int64(0); n <= 20; n++ {
 			factorial := BigFactorial(n, prec)
 			nPlusOne := NewBigFloat(float64(n+1), prec)
 			gamma := BigGamma(nPlusOne, prec)
-			
+
 			// Use tolerance comparison due to floating point precision
 			factVal, _ := factorial.Float64()
 			gammaVal, _ := gamma.Float64()
@@ -74,7 +74,7 @@ func TestBigFactorial(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Property: factorial(n) = n * factorial(n-1)
 	t.Run("recurrence_property", func(t *testing.T) {
 		for n := int64(1); n <= 20; n++ {
@@ -82,7 +82,7 @@ func TestBigFactorial(t *testing.T) {
 			factorialNMinusOne := BigFactorial(n-1, prec)
 			nBig := NewBigFloat(float64(n), prec)
 			expected := new(BigFloat).SetPrec(prec).Mul(nBig, factorialNMinusOne)
-			
+
 			if factorialN.Cmp(expected) != 0 {
 				factNVal, _ := factorialN.Float64()
 				expectedVal, _ := expected.Float64()
@@ -90,7 +90,7 @@ func TestBigFactorial(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -108,9 +108,9 @@ func TestBigBinomial(t *testing.T) {
 	prec := uint(256)
 
 	tests := []struct {
-		name     string
-		n, k     int64
-		expected int64
+		name      string
+		n, k      int64
+		expected  int64
 		shouldErr bool
 	}{
 		{"C(5,2)", 5, 2, 10, false},
@@ -137,7 +137,7 @@ func TestBigBinomial(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			result := BigBinomial(tt.n, tt.k, prec)
-			
+
 			if tt.shouldErr {
 				// Invalid input should return 0
 				got, _ := result.Int64()
@@ -146,14 +146,14 @@ func TestBigBinomial(t *testing.T) {
 				}
 				return
 			}
-			
+
 			got, _ := result.Int64()
 			if got != tt.expected {
 				t.Errorf("BigBinomial(%d, %d) = %d, want %d", tt.n, tt.k, got, tt.expected)
 			}
 		})
 	}
-	
+
 	// Property: C(n, k) = C(n, n-k)
 	t.Run("symmetry_property", func(t *testing.T) {
 		testCases := [][]int64{
@@ -165,7 +165,7 @@ func TestBigBinomial(t *testing.T) {
 			n, k := tc[0], tc[1]
 			binomial1 := BigBinomial(n, k, prec)
 			binomial2 := BigBinomial(n, n-k, prec)
-			
+
 			if binomial1.Cmp(binomial2) != 0 {
 				val1, _ := binomial1.Int64()
 				val2, _ := binomial2.Int64()
@@ -173,7 +173,7 @@ func TestBigBinomial(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Property: C(n, k) = C(n-1, k-1) + C(n-1, k) (Pascal's triangle)
 	t.Run("pascal_triangle_property", func(t *testing.T) {
 		testCases := [][]int64{
@@ -188,7 +188,7 @@ func TestBigBinomial(t *testing.T) {
 				term1 := BigBinomial(n-1, k-1, prec)
 				term2 := BigBinomial(n-1, k, prec)
 				expected := new(BigFloat).SetPrec(prec).Add(term1, term2)
-				
+
 				if binomial.Cmp(expected) != 0 {
 					binVal, _ := binomial.Int64()
 					term1Val, _ := term1.Int64()
@@ -199,7 +199,7 @@ func TestBigBinomial(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Property: sum of binomial coefficients = 2^n
 	t.Run("sum_property", func(t *testing.T) {
 		for n := int64(1); n <= 10; n++ {
@@ -208,10 +208,10 @@ func TestBigBinomial(t *testing.T) {
 				binomial := BigBinomial(n, k, prec)
 				sum.Add(sum, binomial)
 			}
-			
+
 			two := NewBigFloat(2.0, prec)
 			expected := BigPow(two, NewBigFloat(float64(n), prec), prec)
-			
+
 			if sum.Cmp(expected) != 0 {
 				sumVal, _ := sum.Float64()
 				expectedVal, _ := expected.Float64()
@@ -219,7 +219,7 @@ func TestBigBinomial(t *testing.T) {
 			}
 		}
 	})
-	
+
 	// Test precision levels
 	t.Run("precision_levels", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}

@@ -48,18 +48,18 @@ func TestBigVec3JSON(t *testing.T) {
 					t.Errorf("Component[%d] = %g, want %g (diff %g, tolerance %g)", i, unmarshaled[i], orig[i], diff, tt.tolerance)
 				}
 			}
-			
+
 			// Test round-trip accuracy
 			data2, err := json.Marshal(&v2)
 			if err != nil {
 				t.Fatalf("Second Marshal failed: %v", err)
 			}
-			
+
 			var v3 BigVec3
 			if err := json.Unmarshal(data2, &v3); err != nil {
 				t.Fatalf("Second Unmarshal failed: %v", err)
 			}
-			
+
 			unmarshaled2 := v3.ToFloat64()
 			for i := 0; i < 3; i++ {
 				diff := unmarshaled[i] - unmarshaled2[i]
@@ -72,7 +72,7 @@ func TestBigVec3JSON(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test invalid JSON
 	t.Run("invalid_json", func(t *testing.T) {
 		invalidJSON := []byte(`{"X": "not a number", "Y": 2.0, "Z": 3.0}`)
@@ -81,7 +81,7 @@ func TestBigVec3JSON(t *testing.T) {
 			t.Error("Unmarshal should fail for invalid JSON")
 		}
 	})
-	
+
 	// Test precision preservation
 	t.Run("precision_preservation", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -91,12 +91,12 @@ func TestBigVec3JSON(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Marshal failed at prec %d: %v", p, err)
 			}
-			
+
 			var v2 BigVec3
 			if err := json.Unmarshal(data, &v2); err != nil {
 				t.Fatalf("Unmarshal failed at prec %d: %v", p, err)
 			}
-			
+
 			// Check that precision is preserved (at least approximately)
 			origPrec := v.X.Prec()
 			unmarshaledPrec := v2.X.Prec()
@@ -148,7 +148,7 @@ func TestBigVec6JSON(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test invalid JSON
 	t.Run("invalid_json", func(t *testing.T) {
 		invalidJSON := []byte(`{"X": "not a number", "Y": 2.0}`)
@@ -225,7 +225,7 @@ func TestBigMatrix3x3JSON(t *testing.T) {
 			}
 		})
 	}
-	
+
 	// Test invalid JSON
 	t.Run("invalid_json", func(t *testing.T) {
 		invalidJSON := []byte(`{"M": [["not a number", 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]}`)
@@ -234,7 +234,7 @@ func TestBigMatrix3x3JSON(t *testing.T) {
 			t.Error("Unmarshal should fail for invalid JSON")
 		}
 	})
-	
+
 	// Test precision preservation
 	t.Run("precision_preservation", func(t *testing.T) {
 		testCases := []uint{64, 128, 256, 512}
@@ -244,12 +244,12 @@ func TestBigMatrix3x3JSON(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Marshal failed at prec %d: %v", p, err)
 			}
-			
+
 			var m2 BigMatrix3x3
 			if err := json.Unmarshal(data, &m2); err != nil {
 				t.Fatalf("Unmarshal failed at prec %d: %v", p, err)
 			}
-			
+
 			// Check that precision is preserved (at least approximately)
 			origPrec := m.M[0][0].Prec()
 			unmarshaledPrec := m2.M[0][0].Prec()
