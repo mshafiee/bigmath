@@ -23,4 +23,3 @@ func bigExpAsmWrapper(x *BigFloat, prec uint) *BigFloat {
 func bigLogAsmWrapper(x *BigFloat, prec uint) *BigFloat {
 	return bigLogOptimized(x, prec)
 }
-

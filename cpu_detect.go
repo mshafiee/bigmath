@@ -15,12 +15,12 @@ type CPUFeatures struct {
 	HasAVX2   bool
 	HasAVX512 bool
 	HasFMA    bool
-	HasBMI2   bool  // Bit Manipulation Instructions 2 (ADCX, ADOX, MULX)
-	
+	HasBMI2   bool // Bit Manipulation Instructions 2 (ADCX, ADOX, MULX)
+
 	// ARM64 features
 	HasNEON bool
 	HasSVE  bool
-	
+
 	// Architecture
 	IsAMD64 bool
 	IsARM64 bool
@@ -34,17 +34,17 @@ var (
 // detectCPUFeatures performs runtime CPU feature detection
 func detectCPUFeatures() CPUFeatures {
 	var features CPUFeatures
-	
+
 	arch := runtime.GOARCH
 	features.IsAMD64 = arch == "amd64"
 	features.IsARM64 = arch == "arm64"
-	
+
 	if features.IsAMD64 {
 		detectAMD64Features(&features)
 	} else if features.IsARM64 {
 		detectARM64Features(&features)
 	}
-	
+
 	return features
 }
 
@@ -56,6 +56,5 @@ func GetCPUFeatures() CPUFeatures {
 	return cpuFeatures
 }
 
-// detectAMD64Features and detectARM64Features are implemented in 
+// detectAMD64Features and detectARM64Features are implemented in
 // architecture-specific files: cpu_detect_amd64.go, cpu_detect_arm64.go, cpu_detect_generic.go
-

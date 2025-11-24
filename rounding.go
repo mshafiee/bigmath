@@ -14,7 +14,7 @@ const (
 	ToNearestAway = big.ToNearestAway // Round to nearest, ties away from zero
 	ToZero        = big.ToZero        // Round toward zero
 	ToPositiveInf = big.ToPositiveInf // Round toward +∞
-	ToNegativeInf = big.ToNegativeInf  // Round toward -∞
+	ToNegativeInf = big.ToNegativeInf // Round toward -∞
 	AwayFromZero  = big.AwayFromZero  // Round away from zero
 )
 
@@ -61,19 +61,20 @@ func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
 
 // Round rounds x to prec bits using the specified rounding mode
 // Returns the rounded value and a ternary value:
-//   -1 if rounded down
-//    0 if exact
-//   +1 if rounded up
+//
+//	-1 if rounded down
+//	 0 if exact
+//	+1 if rounded up
 func Round(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 	if prec == 0 {
 		prec = x.Prec()
 	}
-	
+
 	// Create result with specified precision
 	result := new(BigFloat).SetPrec(prec)
 	result.SetMode(mode)
 	result.Set(x)
-	
+
 	// Determine ternary value by comparing original and rounded
 	diff := new(BigFloat).SetPrec(prec).Sub(x, result)
 	if diff.Sign() == 0 {
@@ -90,11 +91,11 @@ func SqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 	if prec == 0 {
 		prec = x.Prec()
 	}
-	
+
 	// Compute sqrt with higher precision
 	workPrec := prec + 32
 	sqrt := BigSqrt(x, workPrec)
-	
+
 	// Round result
 	return Round(sqrt, prec, mode)
 }
@@ -104,11 +105,11 @@ func AddRounded(a, b *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 	if prec == 0 {
 		prec = a.Prec()
 	}
-	
+
 	// Compute sum with higher precision
 	workPrec := prec + 32
 	sum := new(BigFloat).SetPrec(workPrec).Add(a, b)
-	
+
 	// Round result
 	return Round(sum, prec, mode)
 }
@@ -118,11 +119,11 @@ func QuoRounded(a, b *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 	if prec == 0 {
 		prec = a.Prec()
 	}
-	
+
 	// Compute quotient with higher precision
 	workPrec := prec + 32
 	quo := new(BigFloat).SetPrec(workPrec).Quo(a, b)
-	
+
 	// Round result
 	return Round(quo, prec, mode)
 }

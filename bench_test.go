@@ -130,4 +130,3 @@ func BenchmarkEvaluateChebyshevBig(b *testing.B) {
 		_ = EvaluateChebyshevBig(t, coeffs, len(coeffs), benchPrec)
 	}
 }
-

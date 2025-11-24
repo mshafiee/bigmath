@@ -7,14 +7,14 @@ package bigmath
 
 // atanWorkspace holds pre-allocated buffers for arctangent calculations
 type atanWorkspace struct {
-	result    *BigFloat
-	term      *BigFloat
-	xSquared  *BigFloat
-	threshold *BigFloat
-	numerator *BigFloat
+	result      *BigFloat
+	term        *BigFloat
+	xSquared    *BigFloat
+	threshold   *BigFloat
+	numerator   *BigFloat
 	denominator *BigFloat
-	temp      *BigFloat
-	prec      uint
+	temp        *BigFloat
+	prec        uint
 }
 
 // getAtanWorkspace returns a workspace with pre-allocated buffers
@@ -23,14 +23,14 @@ func getAtanWorkspace(prec uint) *atanWorkspace {
 		prec = DefaultPrecision
 	}
 	return &atanWorkspace{
-		result:     NewBigFloat(0.0, prec),
-		term:       NewBigFloat(0.0, prec),
-		xSquared:   NewBigFloat(0.0, prec),
-		threshold:  NewBigFloat(0.0, prec),
-		numerator:  NewBigFloat(0.0, prec),
+		result:      NewBigFloat(0.0, prec),
+		term:        NewBigFloat(0.0, prec),
+		xSquared:    NewBigFloat(0.0, prec),
+		threshold:   NewBigFloat(0.0, prec),
+		numerator:   NewBigFloat(0.0, prec),
 		denominator: NewBigFloat(0.0, prec),
-		temp:       NewBigFloat(0.0, prec),
-		prec:       prec,
+		temp:        NewBigFloat(0.0, prec),
+		prec:        prec,
 	}
 }
 
@@ -205,4 +205,3 @@ func bigAcosOptimized(x *BigFloat, prec uint) *BigFloat {
 	asin := bigAsinOptimized(x, prec)
 	return new(BigFloat).SetPrec(prec).Sub(halfPi, asin)
 }
-

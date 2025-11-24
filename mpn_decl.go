@@ -17,4 +17,3 @@ func mpnAddNDualCarry(dst, src1, src2 *uint64, n int) uint64
 // This is useful for patterns like: result = scale * a + b
 // Returns carry (high limb)
 func mpnFMA(dst, src, addend *uint64, n int, multiplier uint64) uint64
-

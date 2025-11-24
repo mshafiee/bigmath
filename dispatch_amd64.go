@@ -74,4 +74,3 @@ func initDispatcherImpl(d *Dispatcher) {
 		d.BigAtanhImpl = bigAtanhGeneric
 	}
 }
-

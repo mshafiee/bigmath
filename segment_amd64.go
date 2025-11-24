@@ -34,4 +34,3 @@ func evaluateChebyshevBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *
 
 //go:noescape
 func evaluateChebyshevDerivativeBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
-

@@ -32,4 +32,3 @@ func bigSinAsm(x *BigFloat, prec uint) *BigFloat
 
 //go:noescape
 func bigCosAsm(x *BigFloat, prec uint) *BigFloat
-

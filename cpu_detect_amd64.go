@@ -49,4 +49,3 @@ func cpuidFMA() bool
 //
 //go:noescape
 func cpuidBMI2() bool
-

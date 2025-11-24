@@ -7,13 +7,13 @@ package bigmath
 
 // trigWorkspace holds pre-allocated buffers for trigonometric calculations
 type trigWorkspace struct {
-	result   *BigFloat
-	term     *BigFloat
-	xSquared *BigFloat
+	result    *BigFloat
+	term      *BigFloat
+	xSquared  *BigFloat
 	threshold *BigFloat
-	denom1   *BigFloat
-	temp     *BigFloat
-	prec     uint
+	denom1    *BigFloat
+	temp      *BigFloat
+	prec      uint
 }
 
 // getTrigWorkspace returns a workspace with pre-allocated buffers
@@ -67,7 +67,7 @@ func bigSinOptimized(x *BigFloat, prec uint) *BigFloat {
 		// Update term: term = term * (-x²) / ((2n)(2n+1))
 		ws.term.Mul(ws.term, ws.xSquared)
 		ws.term.Neg(ws.term)
-		ws.term.Quo(ws.term, ws.denom1)  // Single division instead of two
+		ws.term.Quo(ws.term, ws.denom1) // Single division instead of two
 
 		ws.result.Add(ws.result, ws.term)
 
@@ -115,7 +115,7 @@ func bigCosOptimized(x *BigFloat, prec uint) *BigFloat {
 		// Update term: term = term * (-x²) / ((2n-1)(2n))
 		ws.term.Mul(ws.term, ws.xSquared)
 		ws.term.Neg(ws.term)
-		ws.term.Quo(ws.term, ws.denom1)  // Single division instead of two
+		ws.term.Quo(ws.term, ws.denom1) // Single division instead of two
 
 		ws.result.Add(ws.result, ws.term)
 
@@ -147,4 +147,3 @@ func bigSinCosOptimized(x *BigFloat, prec uint) (sin, cos *BigFloat) {
 
 	return sin, cos
 }
-

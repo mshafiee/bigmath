@@ -14,4 +14,3 @@ func detectAMD64Features(features *CPUFeatures) {
 func detectARM64Features(features *CPUFeatures) {
 	// No ARM64 features on non-ARM64 platforms
 }
-

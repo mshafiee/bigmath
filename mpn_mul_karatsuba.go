@@ -90,4 +90,3 @@ func mpnMulFull(dst, src1, src2 []uint64, n int) {
 	// Use Karatsuba for large operands
 	mpnMulKaratsuba(dst, src1, src2, n)
 }
-

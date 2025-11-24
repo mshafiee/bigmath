@@ -117,4 +117,3 @@ func evaluateChebyshevDerivativeBigOptimized(t *BigFloat, c []*BigFloat, neval i
 
 	return ws.b0
 }
-

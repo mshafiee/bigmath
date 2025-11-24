@@ -28,15 +28,15 @@ func ApplyRotationMatrixToBigVec6(m *BigMatrix3x3, v *BigVec6, prec uint) *BigVe
 	if prec == 0 {
 		prec = DefaultPrecision
 	}
-	
+
 	// Rotate position
 	pos := &BigVec3{X: v.X, Y: v.Y, Z: v.Z}
 	rotPos := BigMatMul(m, pos, prec)
-	
+
 	// Rotate velocity
 	vel := &BigVec3{X: v.VX, Y: v.VY, Z: v.VZ}
 	rotVel := BigMatMul(m, vel, prec)
-	
+
 	return &BigVec6{
 		X:  rotPos.X,
 		Y:  rotPos.Y,
@@ -53,17 +53,17 @@ func CreateRotationMatrix(angles [3]*BigFloat, prec uint) *BigMatrix3x3 {
 	if prec == 0 {
 		prec = DefaultPrecision
 	}
-	
+
 	// Simple rotation around Z axis (first angle only for now)
 	// For more complex rotations, this would be extended
 	cosA := BigCos(angles[0], prec)
 	sinA := BigSin(angles[0], prec)
-	
+
 	// Combined rotation matrix (Z-axis rotation)
 	zero := NewBigFloat(0, prec)
 	one := NewBigFloat(1, prec)
 	negSinA := NewBigFloat(0, prec).Neg(sinA)
-	
+
 	return &BigMatrix3x3{
 		M: [3][3]*BigFloat{
 			{NewBigFloat(0, prec).Set(cosA), NewBigFloat(0, prec).Set(negSinA), NewBigFloat(0, prec).Set(zero)},
@@ -80,19 +80,19 @@ func BigFloatFMA(a, b, c *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = DefaultPrecision
 	}
-	
+
 	// Use extended precision for intermediate calculation to simulate FMA behavior
 	// This matches how hardware FMA works - single rounding at the end
 	workPrec := prec + 64
-	
+
 	// Compute a*b with extended precision
 	product := new(BigFloat).SetPrec(workPrec)
 	product.Mul(a, b)
-	
+
 	// Add c with extended precision
 	result := new(BigFloat).SetPrec(workPrec)
 	result.Add(product, c)
-	
+
 	// Round to target precision (single rounding, like hardware FMA)
 	return new(BigFloat).SetPrec(prec).Set(result)
 }
@@ -108,23 +108,23 @@ func BigFloatDotProduct(v1, v2 []*BigFloat, prec uint) *BigFloat {
 			prec = DefaultPrecision
 		}
 	}
-	
+
 	if len(v1) != len(v2) {
 		panic("BigFloatDotProduct: vectors must have same length")
 	}
-	
+
 	if len(v1) == 0 {
 		return NewBigFloat(0, prec)
 	}
-	
+
 	// Use FMA chain for better numerical stability
 	// Start with last term, then work backwards
 	result := NewBigFloat(0, prec)
-	
+
 	for i := len(v1) - 1; i >= 0; i-- {
 		result = BigFloatFMA(v1[i], v2[i], result, prec)
 	}
-	
+
 	return result
 }
 
@@ -212,4 +212,3 @@ func BigCatalan(prec uint) *BigFloat {
 	result, _ := NewBigFloatFromString(catalanStr, prec)
 	return result
 }
-

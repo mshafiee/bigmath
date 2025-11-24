@@ -18,4 +18,3 @@ func mpnAddNDualCarry(dst, src1, src2 *uint64, n int) uint64 {
 // Returns carry (high limb)
 // Implemented in assembly: mpn_fma_arm64.s
 func mpnFMA(dst, src, addend *uint64, n int, multiplier uint64) uint64
-

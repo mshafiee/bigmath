@@ -48,12 +48,12 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	tdiff.Sub(t, segInfo.ElemEpoch)
 	tdiff.Quo(tdiff, BigJulianMillennium(prec))
 
-    if segInfo.Body == 9 { // Pluto
-        tF, _ := t.Float64()
-        telemF, _ := segInfo.ElemEpoch.Float64()
-        tdiffF, _ := tdiff.Float64()
-        fmt.Printf("[DEBUG-PLUTO] t=%.6f telem=%.6f tdiff=%.9e\n", tF, telemF, tdiffF)
-    }
+	if segInfo.Body == 9 { // Pluto
+		tF, _ := t.Float64()
+		telemF, _ := segInfo.ElemEpoch.Float64()
+		tdiffF, _ := tdiff.Float64()
+		fmt.Printf("[DEBUG-PLUTO] t=%.6f telem=%.6f tdiff=%.9e\n", tF, telemF, tdiffF)
+	}
 
 	// Calculate orbital parameters
 	var qav, pav *BigFloat
@@ -94,7 +94,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		pav = new(BigFloat).SetPrec(prec)
 		pav.Mul(tdiff, segInfo.DProt)
 		pav.Add(segInfo.Prot, pav)
-		
+
 		qavF, _ := qav.Float64()
 		pavF, _ := pav.Float64()
 		tdiffF, _ := tdiff.Float64()
@@ -115,7 +115,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		omtildF, _ := segInfo.Peri.Float64()
 		fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d has SegFlagEllipse set, Peri=%.15e\n", segInfo.Body, omtildF)
 		fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d, need=%d\n", len(segInfo.RefEllipse), 2*numCoeffs)
-		
+
 		// omtild = Peri + tdiff * DPeri
 		omtild := new(BigFloat).SetPrec(prec)
 		omtild.Mul(tdiff, segInfo.DPeri)
@@ -140,7 +140,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 			somF, _ := som.Float64()
 			fmt.Printf("[BIGFLOAT-ELLIPSE] Applying reference ellipse, refepx[0]=%.15e refepy[0]=%.15e\n", refepxF, refepyF)
 			fmt.Printf("[BIGFLOAT-ELLIPSE] com=%.15e som=%.15e\n", comF, somF)
-			
+
 			x0BeforeF, _ := x[0][0].Float64()
 			for i := 0; i < numCoeffs; i++ {
 				refepx := segInfo.RefEllipse[i]
@@ -159,9 +159,9 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 				x[i][1].Add(x[i][1], temp2)
 			}
 			x0AfterF, _ := x[0][0].Float64()
-			fmt.Printf("[BIGFLOAT-ELLIPSE] x[0][0]: before=%.15e after=%.15e (delta=%.15e)\n", 
+			fmt.Printf("[BIGFLOAT-ELLIPSE] x[0][0]: before=%.15e after=%.15e (delta=%.15e)\n",
 				x0BeforeF, x0AfterF, x0AfterF-x0BeforeF)
-			
+
 			// Print first 10 coefficients after reference ellipse addition
 			fmt.Printf("[BIGFLOAT-ELLIPSE] First 10 X coeffs after ref ellipse:")
 			for i := 0; i < 10 && i < numCoeffs; i++ {
@@ -170,11 +170,11 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 			}
 			fmt.Printf("\n")
 		} else {
-			fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d insufficient (need %d)\n", 
+			fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d insufficient (need %d)\n",
 				len(segInfo.RefEllipse), 2*numCoeffs)
 		}
 	} else {
-		fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d does NOT have SegFlagEllipse (Flags=0x%x)\n", 
+		fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d does NOT have SegFlagEllipse (Flags=0x%x)\n",
 			segInfo.Body, segInfo.Flags)
 	}
 
@@ -188,7 +188,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	denom.Add(denom, pavSq)
 	cosih2 := new(BigFloat).SetPrec(prec)
 	cosih2.Quo(one, denom) // Direct division, NOT sqrt!
-	
+
 	cosih2F, _ := cosih2.Float64()
 	fmt.Printf("[BIGFLOAT-COSIH2] Body=%d cosih2=%.15e\n", segInfo.Body, cosih2F)
 
@@ -203,7 +203,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	temp := new(BigFloat).SetPrec(prec)
 	// uix[0] = (1 + qav² - pav²) * cosih2
 	temp.Add(one, qavSq)  // 1 + qav²
-	temp.Sub(temp, pavSq)  // 1 + qav² - pav²
+	temp.Sub(temp, pavSq) // 1 + qav² - pav²
 	uix[0].Mul(temp, cosih2)
 
 	two := NewBigFloat(2.0, prec)
@@ -217,7 +217,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	temp.Mul(two, pav)
 	temp.Mul(temp, cosih2)
 	uix[2].Neg(temp)
-	
+
 	uix0F, _ := uix[0].Float64()
 	uix1F, _ := uix[1].Float64()
 	uix2F, _ := uix[2].Float64()
@@ -275,7 +275,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	// CRITICAL FIX: Match Standard's exact neval count for each body
 	// Based on empirical testing (TestNeval_AllBodies):
 	// - Body 0 (EMB): Standard uses neval=26 → use threshold=1e-14
-	// - Body 10 (helio Earth): Standard uses neval=26 → use calibrated threshold  
+	// - Body 10 (helio Earth): Standard uses neval=26 → use calibrated threshold
 	// - Body 1 (Moon): Standard uses neval=28 → use threshold=1e-14
 	// - Other bodies: Use 1e-14 (Standard default)
 	var threshold *BigFloat
@@ -402,7 +402,7 @@ func EvaluateSegmentBig(tjd *BigFloat, coeffs []*BigFloat, segStart, segEnd *Big
 	t.Quo(tOffset, segSize)
 	t.Mul(t, NewBigFloat(2.0, prec))
 	t.Sub(t, NewBigFloat(1.0, prec))
-	
+
 	// DEBUG: Log segment evaluation details
 	tjdF, _ := tjd.Float64()
 	segStartF, _ := segStart.Float64()

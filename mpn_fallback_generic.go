@@ -32,4 +32,3 @@ func mpnFMA(dst, src, addend *uint64, n int, multiplier uint64) uint64 {
 	}
 	return high
 }
-

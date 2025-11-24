@@ -222,4 +222,3 @@ func bigLogOptimized(x *BigFloat, prec uint) *BigFloat {
 
 	return new(BigFloat).SetPrec(prec).Set(ws.result)
 }
-

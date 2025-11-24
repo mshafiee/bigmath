@@ -12,4 +12,3 @@ package bigmath
 //
 // Assembly function declarations are in architecture-specific files
 // to avoid redeclaration errors
-

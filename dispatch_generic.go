@@ -37,4 +37,3 @@ func initDispatcherImpl(d *Dispatcher) {
 	d.BigAcoshImpl = bigAcoshGeneric
 	d.BigAtanhImpl = bigAtanhGeneric
 }
-

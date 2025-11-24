@@ -17,4 +17,3 @@ func bigSinAsmARM64(x *BigFloat, prec uint) *BigFloat {
 func bigCosAsmARM64(x *BigFloat, prec uint) *BigFloat {
 	return bigCosOptimized(x, prec)
 }
-

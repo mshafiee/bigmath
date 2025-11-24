@@ -103,4 +103,3 @@ func bigMatMulGeneric(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 
 	return result
 }
-

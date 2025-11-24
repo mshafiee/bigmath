@@ -49,4 +49,3 @@ func bigfloatSqrtGeneric(x *BigFloat, prec uint) *BigFloat {
 	// Use existing BigSqrt implementation
 	return BigSqrt(x, prec)
 }
-

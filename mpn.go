@@ -33,4 +33,3 @@ func mpnRShift(dst, src *uint64, n int, count uint) uint64
 // mpnAddNDualCarry and mpnFMA are declared in their respective implementation files
 // to avoid conflicts between assembly and Go implementations.
 // See: mpn_add_amd64.s, mpn_fma_amd64.s, mpn_fma_arm64.s, mpn_fallback_arm64.go, mpn_fallback_generic.go
-
