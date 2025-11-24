@@ -3,6 +3,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/mshafiee/bigmath.svg)](https://pkg.go.dev/github.com/mshafiee/bigmath)
 [![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mshafiee/bigmath)](https://goreportcard.com/report/github.com/mshafiee/bigmath)
+[![codecov](https://codecov.io/gh/mshafiee/bigmath/branch/main/graph/badge.svg)](https://codecov.io/gh/mshafiee/bigmath)
 
 A high-performance arbitrary-precision mathematics library for Go, optimized with assembly implementations for AMD64 and ARM64 architectures. Provides MPFR-compatible algorithms for scientific computing, astronomical calculations, and high-precision numerical analysis.
 
