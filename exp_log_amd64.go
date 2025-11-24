@@ -1,0 +1,23 @@
+//go:build amd64
+
+package bigmath
+
+// AMD64 assembly implementations for exponential and logarithmic functions
+// These functions are declared in exp_asm_amd64.s and log_asm_amd64.s
+// Currently using optimized Go implementations
+
+//go:noescape
+func bigExpAsm(x *BigFloat, prec uint) *BigFloat
+
+//go:noescape
+func bigLogAsm(x *BigFloat, prec uint) *BigFloat
+
+// Wrapper functions that use optimized implementations
+func bigExpAsmWrapper(x *BigFloat, prec uint) *BigFloat {
+	return bigExpOptimized(x, prec)
+}
+
+func bigLogAsmWrapper(x *BigFloat, prec uint) *BigFloat {
+	return bigLogOptimized(x, prec)
+}
+
