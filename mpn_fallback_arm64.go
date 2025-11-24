@@ -9,6 +9,7 @@ package bigmath
 // Requires BMI2 support (Intel Broadwell+, AMD Excavator+)
 // Returns carry (0 or 1)
 // ARM64 fallback: uses regular mpnAddN since ARM64 doesn't have equivalent dual carry instructions
+//
 //nolint:unused // May be used in future optimizations
 func mpnAddNDualCarry(dst, src1, src2 *uint64, n int) uint64 {
 	return mpnAddN(dst, src1, src2, n)
@@ -18,5 +19,6 @@ func mpnAddNDualCarry(dst, src1, src2 *uint64, n int) uint64 {
 // This is useful for patterns like: result = scale * a + b
 // Returns carry (high limb)
 // Implemented in assembly: mpn_fma_arm64.s
+//
 //nolint:unused // Implemented in assembly (mpn_fma_arm64.s)
 func mpnFMA(dst, src, addend *uint64, n int, multiplier uint64) uint64

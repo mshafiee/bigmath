@@ -21,6 +21,7 @@ func BigExp(x *BigFloat, prec uint) *BigFloat {
 }
 
 // bigExpGeneric is the generic implementation (called by dispatcher)
+//
 //nolint:unused // Used in dispatch system
 func bigExpGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
@@ -49,7 +50,6 @@ func bigExpGeneric(x *BigFloat, prec uint) *BigFloat {
 	kInt := new(big.Int)
 	kFloat.Int(kInt) // Round to nearest integer
 
-	// r = x - k*ln(2)
 	kBig := new(BigFloat).SetPrec(workPrec).SetInt(kInt)
 	r := new(BigFloat).SetPrec(workPrec).Mul(kBig, ln2)
 	r.Sub(x, r)
@@ -78,7 +78,6 @@ func bigExpGeneric(x *BigFloat, prec uint) *BigFloat {
 		S = 0
 	}
 
-	// rReduced = r / 2^S
 	scale := new(BigFloat).SetPrec(workPrec).SetInt64(1)
 	scale.SetMantExp(scale, S) // 2^S
 
@@ -107,7 +106,6 @@ func bigExpGeneric(x *BigFloat, prec uint) *BigFloat {
 	threshold := new(BigFloat).SetPrec(workPrec).SetMantExp(NewBigFloat(1.0, workPrec), -int(workPrec))
 
 	for n := 1; n < 1000; n++ {
-		// term = term * rReduced / n
 		term.Mul(term, rReduced)
 		term.Quo(term, NewBigFloat(float64(n), workPrec))
 

@@ -108,6 +108,7 @@ func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uin
 
 // evaluateChebyshevDerivativeBigGeneric evaluates derivative of Chebyshev polynomial (pure-Go)
 // This is the BigFloat version of swi_edcheb()
+//
 //nolint:unused // Used in dispatch system
 func evaluateChebyshevDerivativeBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat {
 	if prec == 0 {
@@ -136,7 +137,6 @@ func evaluateChebyshevDerivativeBigGeneric(t *BigFloat, c []*BigFloat, neval int
 		nBig := NewBigFloat(float64(i), prec)
 		weighted := new(BigFloat).SetPrec(prec).Mul(c[i], nBig)
 
-		// b0 = 2*t*b1 - b2 + i*c[i]
 		b0.Mul(twoT, b1)
 		b0.Sub(b0, b2)
 		b0.Add(b0, weighted)

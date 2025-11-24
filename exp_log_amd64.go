@@ -16,6 +16,7 @@ func bigExpAsm(x *BigFloat, prec uint) *BigFloat
 func bigLogAsm(x *BigFloat, prec uint) *BigFloat
 
 // Wrapper functions that use optimized implementations
+//
 //nolint:unused // May be used in dispatch or called from assembly
 func bigExpAsmWrapper(x *BigFloat, prec uint) *BigFloat {
 	return bigExpOptimized(x, prec)

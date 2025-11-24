@@ -73,13 +73,13 @@ func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
 //	-1 if rounded down
 //	 0 if exact
 //	+1 if rounded up
-func Round(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func Round(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	if prec == 0 {
 		prec = x.Prec()
 	}
 
 	// Create result with specified precision
-	result := new(BigFloat).SetPrec(prec)
+	result = new(BigFloat).SetPrec(prec)
 	result.SetMode(mode)
 	result.Set(x)
 
@@ -95,7 +95,7 @@ func Round(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 }
 
 // SqrtRounded computes sqrt(x) and rounds according to mode
-func SqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func SqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	if prec == 0 {
 		prec = x.Prec()
 	}
@@ -109,7 +109,7 @@ func SqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 }
 
 // AddRounded adds two BigFloats and rounds according to mode
-func AddRounded(a, b *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func AddRounded(a, b *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	if prec == 0 {
 		prec = a.Prec()
 	}
@@ -123,7 +123,7 @@ func AddRounded(a, b *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
 }
 
 // QuoRounded divides two BigFloats and rounds according to mode
-func QuoRounded(a, b *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func QuoRounded(a, b *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	if prec == 0 {
 		prec = a.Prec()
 	}

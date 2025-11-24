@@ -65,7 +65,6 @@ func evaluateChebyshevBigOptimized(t *BigFloat, c []*BigFloat, neval int, prec u
 		ws.b0.Add(ws.b0, c[i])
 	}
 
-	// Result = (b0 - b2) / 2 + c[0]/2
 	result := new(BigFloat).SetPrec(prec)
 	if len(c) > 0 {
 		c0Half := new(BigFloat).SetPrec(prec).Quo(c[0], ws.two)
@@ -109,7 +108,6 @@ func evaluateChebyshevDerivativeBigOptimized(t *BigFloat, c []*BigFloat, neval i
 		weighted.SetFloat64(float64(i))
 		weighted.Mul(c[i], weighted)
 
-		// b0 = 2*t*b1 - b2 + i*c[i]
 		ws.b0.Mul(ws.twoT, ws.b1)
 		ws.b0.Sub(ws.b0, ws.b2)
 		ws.b0.Add(ws.b0, weighted)

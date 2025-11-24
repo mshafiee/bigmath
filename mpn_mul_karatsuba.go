@@ -9,6 +9,7 @@ package bigmath
 
 // mpnMulKaratsuba multiplies two n-limb numbers using Karatsuba algorithm
 // This is a Go implementation that can be optimized with assembly later
+//
 //nolint:unused,unparam // May be used for large operand multiplication; dst parameter reserved for future implementation
 func mpnMulKaratsuba(dst, src1, src2 []uint64, n int) {
 	// For small operands, use standard multiplication
@@ -80,6 +81,7 @@ func mpnMulKaratsuba(dst, src1, src2 []uint64, n int) {
 
 // mpnMulFull multiplies two full n-limb numbers
 // This dispatches to Karatsuba for large operands, standard multiplication for small
+//
 //nolint:unused // May be used for large operand multiplication
 func mpnMulFull(dst, src1, src2 []uint64, n int) {
 	// For small operands, use standard multiplication

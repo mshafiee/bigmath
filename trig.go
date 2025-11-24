@@ -10,7 +10,7 @@ func BigSin(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigSinRounded computes sin(x) and rounds the result according to the mode
-func BigSinRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigSinRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	// Compute with higher precision then round
 	workPrec := prec + 32
 	res := BigSin(x, workPrec)
@@ -24,7 +24,7 @@ func BigCos(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigCosRounded computes cos(x) and rounds the result according to the mode
-func BigCosRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigCosRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigCos(x, workPrec)
 	return Round(res, prec, mode)
@@ -36,7 +36,7 @@ func BigTan(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigTanRounded computes tan(x) and rounds the result according to the mode
-func BigTanRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigTanRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigTan(x, workPrec)
 	return Round(res, prec, mode)
@@ -50,7 +50,7 @@ func BigAtan(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigAtanRounded computes atan(x) and rounds the result according to the mode
-func BigAtanRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigAtanRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigAtan(x, workPrec)
 	return Round(res, prec, mode)
@@ -63,7 +63,7 @@ func BigAtan2(y, x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigAtan2Rounded computes atan2(y, x) and rounds the result according to the mode
-func BigAtan2Rounded(y, x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigAtan2Rounded(y, x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigAtan2(y, x, workPrec)
 	return Round(res, prec, mode)
@@ -75,7 +75,7 @@ func BigAsin(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigAsinRounded computes asin(x) and rounds the result according to the mode
-func BigAsinRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigAsinRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigAsin(x, workPrec)
 	return Round(res, prec, mode)
@@ -87,7 +87,7 @@ func BigAcos(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigAcosRounded computes acos(x) and rounds the result according to the mode
-func BigAcosRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigAcosRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	workPrec := prec + 32
 	res := BigAcos(x, workPrec)
 	return Round(res, prec, mode)

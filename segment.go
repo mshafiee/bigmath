@@ -10,11 +10,9 @@ import (
 
 // SegmentInfoBig holds segment information with arbitrary precision
 type SegmentInfoBig struct {
-	Body         int
 	SegmentStart *BigFloat
 	SegmentEnd   *BigFloat
 	SegmentSize  *BigFloat
-	NumCoeffs    int
 	ElemEpoch    *BigFloat
 	Qrot         *BigFloat
 	DQrot        *BigFloat
@@ -23,13 +21,15 @@ type SegmentInfoBig struct {
 	Peri         *BigFloat
 	DPeri        *BigFloat
 	RefEllipse   []*BigFloat
+	Body         int
+	NumCoeffs    int
 	Flags        int
 }
 
 // RotateCoeffsToJ2000Big rotates Chebyshev coefficients from orbital plane to equatorial J2000
 // using arbitrary precision to eliminate all rounding errors.
 // This is the BigFloat version of RotateCoeffsToJ2000() from segment_reader.go
-func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon bool, prec uint) ([]*BigFloat, int) {
+func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon bool, prec uint) (result []*BigFloat, neval int) {
 	if prec == 0 {
 		prec = DefaultPrecision
 	}
@@ -43,7 +43,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	t.Add(segStart, segEnd)
 	t.Quo(t, NewBigFloat(2.0, prec))
 
-	// tdiff = (t - ElemEpoch) / 365250.0
 	tdiff := new(BigFloat).SetPrec(prec)
 	tdiff.Sub(t, segInfo.ElemEpoch)
 	tdiff.Quo(tdiff, BigJulianMillennium(prec))
@@ -72,8 +71,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		temp := new(BigFloat).SetPrec(prec).Mul(nBig, twoPi)
 		dn.Sub(dn, temp)
 
-		// qav = (Qrot + tdiff * DQrot) * cos(dn)
-		// pav = (Qrot + tdiff * DQrot) * sin(dn)
 		qrotPlusTdiff := new(BigFloat).SetPrec(prec)
 		qrotPlusTdiff.Mul(tdiff, segInfo.DQrot)
 		qrotPlusTdiff.Add(segInfo.Qrot, qrotPlusTdiff)
@@ -90,7 +87,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		qav.Mul(tdiff, segInfo.DQrot)
 		qav.Add(segInfo.Qrot, qav)
 
-		// pav = Prot + tdiff * DProt
 		pav = new(BigFloat).SetPrec(prec)
 		pav.Mul(tdiff, segInfo.DProt)
 		pav.Add(segInfo.Prot, pav)
@@ -116,7 +112,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		fmt.Printf("[BIGFLOAT-ELLIPSE] Body=%d has SegFlagEllipse set, Peri=%.15e\n", segInfo.Body, omtildF)
 		fmt.Printf("[BIGFLOAT-ELLIPSE] RefEllipse length=%d, need=%d\n", len(segInfo.RefEllipse), 2*numCoeffs)
 
-		// omtild = Peri + tdiff * DPeri
 		omtild := new(BigFloat).SetPrec(prec)
 		omtild.Mul(tdiff, segInfo.DPeri)
 		omtild.Add(segInfo.Peri, omtild)
@@ -146,13 +141,11 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 				refepx := segInfo.RefEllipse[i]
 				refepy := segInfo.RefEllipse[i+numCoeffs]
 
-				// x[i][0] = x[i][0] + com*refepx - som*refepy
 				temp1 := new(BigFloat).SetPrec(prec).Mul(com, refepx)
 				temp2 := new(BigFloat).SetPrec(prec).Mul(som, refepy)
 				x[i][0].Add(x[i][0], temp1)
 				x[i][0].Sub(x[i][0], temp2)
 
-				// x[i][1] = x[i][1] + com*refepy + som*refepx
 				temp1 = new(BigFloat).SetPrec(prec).Mul(com, refepy)
 				temp2 = new(BigFloat).SetPrec(prec).Mul(som, refepx)
 				x[i][1].Add(x[i][1], temp1)
@@ -207,13 +200,11 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	uix[0].Mul(temp, cosih2)
 
 	two := NewBigFloat(2.0, prec)
-	// uix[1] = 2*qav*pav*cosih2
 	temp.Mul(two, qav)
 	temp.Mul(temp, pav)
 	temp.Mul(temp, cosih2)
 	uix[1].Set(temp)
 
-	// uix[2] = -2*pav*cosih2
 	temp.Mul(two, pav)
 	temp.Mul(temp, cosih2)
 	uix[2].Neg(temp)
@@ -231,7 +222,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		new(BigFloat).SetPrec(prec),
 	}
 
-	// uiy[0] = 2*qav*pav*cosih2
 	temp.Mul(two, qav)
 	temp.Mul(temp, pav)
 	temp.Mul(temp, cosih2)
@@ -242,7 +232,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	temp.Add(temp, pavSq)
 	uiy[1].Mul(temp, cosih2)
 
-	// uiy[2] = 2*qav*cosih2
 	temp.Mul(two, qav)
 	temp.Mul(temp, cosih2)
 	uiy[2].Set(temp)
@@ -255,12 +244,10 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		new(BigFloat).SetPrec(prec),
 	}
 
-	// uiz[0] = 2*pav*cosih2
 	temp.Mul(two, pav)
 	temp.Mul(temp, cosih2)
 	uiz[0].Set(temp)
 
-	// uiz[1] = -2*qav*cosih2
 	temp.Mul(two, qav)
 	temp.Mul(temp, cosih2)
 	uiz[1].Neg(temp)
@@ -271,7 +258,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	uiz[2].Mul(temp, cosih2)
 
 	// Rotate coefficients to actual orientation in space
-	neval := 0
+	neval = 0
 	// CRITICAL FIX: Match Standard's exact neval count for each body
 	// Based on empirical testing (TestNeval_AllBodies):
 	// - Body 0 (EMB): Standard uses neval=26 → use threshold=1e-14
@@ -288,7 +275,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	}
 
 	for i := 0; i < numCoeffs; i++ {
-		// xrot = x[0]*uix[0] + x[1]*uiy[0] + x[2]*uiz[0]
 		xrot := new(BigFloat).SetPrec(prec)
 		temp1 := new(BigFloat).SetPrec(prec).Mul(x[i][0], uix[0])
 		temp2 := new(BigFloat).SetPrec(prec).Mul(x[i][1], uiy[0])
@@ -296,7 +282,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		xrot.Add(temp1, temp2)
 		xrot.Add(xrot, temp3)
 
-		// yrot = x[0]*uix[1] + x[1]*uiy[1] + x[2]*uiz[1]
 		yrot := new(BigFloat).SetPrec(prec)
 		temp1 = new(BigFloat).SetPrec(prec).Mul(x[i][0], uix[1])
 		temp2 = new(BigFloat).SetPrec(prec).Mul(x[i][1], uiy[1])
@@ -304,7 +289,6 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		yrot.Add(temp1, temp2)
 		yrot.Add(yrot, temp3)
 
-		// zrot = x[0]*uix[2] + x[1]*uiy[2] + x[2]*uiz[2]
 		zrot := new(BigFloat).SetPrec(prec)
 		temp1 = new(BigFloat).SetPrec(prec).Mul(x[i][0], uix[2])
 		temp2 = new(BigFloat).SetPrec(prec).Mul(x[i][1], uiy[2])
@@ -355,7 +339,7 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 	}
 
 	// Write rotated coefficients back
-	result := make([]*BigFloat, 3*numCoeffs)
+	result = make([]*BigFloat, 3*numCoeffs)
 	for i := 0; i < numCoeffs; i++ {
 		result[i] = x[i][0]
 		result[i+numCoeffs] = x[i][1]
@@ -369,9 +353,10 @@ func RotateCoeffsToJ2000Big(coeffs []*BigFloat, segInfo *SegmentInfoBig, isMoon 
 		fmt.Printf(" %.15e", coeffF)
 	}
 	fmt.Printf("\n")
-	fmt.Printf("[BIGFLOAT-ROTATED] Body=%d neval=%d\n", segInfo.Body, neval+1)
+	neval++
+	fmt.Printf("[BIGFLOAT-ROTATED] Body=%d neval=%d\n", segInfo.Body, neval)
 
-	return result, neval + 1
+	return
 }
 
 // EvaluateChebyshevBig evaluates Chebyshev polynomial with arbitrary precision

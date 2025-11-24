@@ -19,7 +19,6 @@ func Ulp(x *BigFloat, prec uint) *BigFloat {
 	// Get exponent
 	exp := x.MantExp(nil)
 
-	// ulp = 2^(exp - prec)
 	ulpExp := exp - int(prec)
 
 	res := new(BigFloat).SetPrec(prec)

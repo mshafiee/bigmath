@@ -461,7 +461,7 @@ func BigSqrt(x *BigFloat, prec uint) *BigFloat {
 }
 
 // BigSqrtRounded computes sqrt(x) and rounds the result according to the mode
-func BigSqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (*BigFloat, int) {
+func BigSqrtRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat, ternary int) {
 	// Use rounding.go implementation which wraps big.Float.Sqrt
 	return SqrtRounded(x, prec, mode)
 }

@@ -67,7 +67,6 @@ func bigExpOptimized(x *BigFloat, prec uint) *BigFloat {
 	kInt := new(big.Int)
 	kFloat.Int(kInt) // Round to nearest integer
 
-	// r = x - k*ln(2)
 	ws.kBig.SetInt(kInt)
 	r := new(BigFloat).SetPrec(workPrec).Mul(ws.kBig, ws.ln2)
 	r.Sub(x, r)
@@ -83,7 +82,6 @@ func bigExpOptimized(x *BigFloat, prec uint) *BigFloat {
 		S = 0
 	}
 
-	// rReduced = r / 2^S
 	ws.scale.SetInt64(1)
 	ws.scale.SetMantExp(ws.scale, S) // 2^S
 	ws.rReduced.Quo(r, ws.scale)
@@ -95,7 +93,6 @@ func bigExpOptimized(x *BigFloat, prec uint) *BigFloat {
 	ws.threshold.SetMantExp(NewBigFloat(1.0, workPrec), -int(workPrec))
 
 	for n := 1; n < 1000; n++ {
-		// term = term * rReduced / n
 		ws.term.Mul(ws.term, ws.rReduced)
 		ws.temp.SetFloat64(float64(n))
 		ws.term.Quo(ws.term, ws.temp)
@@ -194,7 +191,6 @@ func bigLogOptimized(x *BigFloat, prec uint) *BigFloat {
 	ws.threshold.SetMantExp(NewBigFloat(1.0, workPrec), -int(prec))
 
 	for n := 2; n < 1000; n++ {
-		// term = term * y
 		ws.term.Mul(ws.term, ws.xReduced)
 
 		// Add term with alternating sign

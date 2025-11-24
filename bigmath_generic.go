@@ -88,14 +88,12 @@ func bigMatMulGeneric(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 	temp.Mul(m.M[0][2], v.Z)
 	result.X.Add(result.X, temp)
 
-	// Y = m[1][0]*v.X + m[1][1]*v.Y + m[1][2]*v.Z
 	result.Y.Mul(m.M[1][0], v.X)
 	temp.Mul(m.M[1][1], v.Y)
 	result.Y.Add(result.Y, temp)
 	temp.Mul(m.M[1][2], v.Z)
 	result.Y.Add(result.Y, temp)
 
-	// Z = m[2][0]*v.X + m[2][1]*v.Y + m[2][2]*v.Z
 	result.Z.Mul(m.M[2][0], v.X)
 	temp.Mul(m.M[2][1], v.Y)
 	result.Z.Add(result.Z, temp)

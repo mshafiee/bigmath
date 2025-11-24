@@ -10,6 +10,7 @@ package bigmath
 
 // LoadConstants loads constants from assembly data sections
 // This is called during package initialization
+//
 //nolint:unused // May be called from assembly or init functions
 func loadConstants() {
 	// Constants are loaded from assembly data sections
