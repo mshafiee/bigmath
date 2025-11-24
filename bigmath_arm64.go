@@ -30,7 +30,7 @@ func bigVec3DotARM64(v1, v2 *BigVec3, prec uint) *BigFloat {
 // Assembly wrappers replaced with Go implementations to avoid GC stackmap issues
 // The real implementation is in the generic functions
 
-//nolint:all // Used by ARM64 dispatch  
+//nolint:all // Used by ARM64 dispatch
 func bigVec3AddAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3 {
 	return bigVec3AddGeneric(v1, v2, prec)
 }
