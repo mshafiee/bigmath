@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // Exponential function implementation in assembly
@@ -19,7 +22,7 @@
 //  - Future: Optimize squaring loop with mpn primitives
 
 // func bigExpAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigExpAsm(SB), NOSPLIT, $256-24
+TEXT ·bigExpAsm(SB), $256-24
 	MOVQ	x+0(FP), AX       // AX = x pointer
 	MOVL	prec+8(FP), BX    // BX = precision
 	
