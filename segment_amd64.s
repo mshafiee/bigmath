@@ -1,3 +1,7 @@
+//go:build ignore
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "textflag.h"
 
 // func evaluateChebyshevBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat

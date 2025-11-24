@@ -1,4 +1,7 @@
-//go:build !arm64
+// Copyright (c) 2025 Mohammad Shafiee
+// SPDX-License-Identifier: BSD-3-Clause
+
+//go:build !amd64 && !arm64
 
 package bigmath
 
