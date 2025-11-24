@@ -9,10 +9,12 @@ package bigmath
 // Using optimized Go implementations instead of assembly wrappers
 // to avoid GC stackmap issues
 
+//nolint:all // Used by dispatch system
 func bigExpAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigExpOptimized(x, prec)
 }
 
+//nolint:all // Used by dispatch system
 func bigLogAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigLogOptimized(x, prec)
 }
