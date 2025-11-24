@@ -8,26 +8,32 @@ package bigmath
 
 // mpnAddN adds two n-limb numbers: dst = src1 + src2
 // Returns carry (0 or 1)
+//nolint:unused // Implemented in assembly (mpn_add_amd64.s, mpn_add_arm64.s)
 func mpnAddN(dst, src1, src2 *uint64, n int) uint64
 
 // mpnSubN subtracts two n-limb numbers: dst = src1 - src2
 // Returns borrow (0 or 1)
+//nolint:unused // Implemented in assembly (mpn_add_amd64.s, mpn_add_arm64.s)
 func mpnSubN(dst, src1, src2 *uint64, n int) uint64
 
 // mpnMul1 multiplies n-limb number by single limb: dst = src * multiplier
 // Returns high limb of result
+//nolint:unused // Implemented in assembly (mpn_mul_amd64.s, mpn_mul_arm64.s)
 func mpnMul1(dst, src *uint64, n int, multiplier uint64) uint64
 
 // mpnAddMul1 multiplies and accumulates: dst += src * multiplier
 // Returns carry (high limb)
+//nolint:unused // Implemented in assembly (mpn_mul_amd64.s, mpn_mul_arm64.s)
 func mpnAddMul1(dst, src *uint64, n int, multiplier uint64) uint64
 
 // mpnLShift left shifts n-limb number by count bits
 // Returns bits shifted out
+//nolint:unused // Implemented in assembly (mpn_shift_amd64.s, mpn_shift_arm64.s)
 func mpnLShift(dst, src *uint64, n int, count uint) uint64
 
 // mpnRShift right shifts n-limb number by count bits
 // Returns bits shifted out
+//nolint:unused // Implemented in assembly (mpn_shift_amd64.s, mpn_shift_arm64.s)
 func mpnRShift(dst, src *uint64, n int, count uint) uint64
 
 // mpnAddNDualCarry and mpnFMA are declared in their respective implementation files

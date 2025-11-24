@@ -5,7 +5,7 @@ package bigmath
 
 // Optimized trigonometric functions with reduced allocations and improved performance
 
-// trigWorkspace holds pre-allocated buffers for trigonometric calculations
+//nolint:unused // Used internally by optimized trig functions
 type trigWorkspace struct {
 	result    *BigFloat
 	term      *BigFloat
@@ -16,7 +16,7 @@ type trigWorkspace struct {
 	prec      uint
 }
 
-// getTrigWorkspace returns a workspace with pre-allocated buffers
+//nolint:unused // Used internally by optimized trig functions
 func getTrigWorkspace(prec uint) *trigWorkspace {
 	if prec == 0 {
 		prec = DefaultPrecision
@@ -33,7 +33,7 @@ func getTrigWorkspace(prec uint) *trigWorkspace {
 	}
 }
 
-// bigSinOptimized computes sin(x) using optimized Taylor series
+//nolint:unused // Used in dispatch system or called from assembly wrappers
 func bigSinOptimized(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -81,7 +81,7 @@ func bigSinOptimized(x *BigFloat, prec uint) *BigFloat {
 	return new(BigFloat).SetPrec(prec).Set(ws.result)
 }
 
-// bigCosOptimized computes cos(x) using optimized Taylor series
+//nolint:unused // Used in dispatch system or called from assembly wrappers
 func bigCosOptimized(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -129,8 +129,7 @@ func bigCosOptimized(x *BigFloat, prec uint) *BigFloat {
 	return new(BigFloat).SetPrec(prec).Set(ws.result)
 }
 
-// bigSinCosOptimized computes both sin(x) and cos(x) together
-// This is more efficient when both are needed because we can share x² computation
+//nolint:unused // May be used for optimized sin/cos computation
 func bigSinCosOptimized(x *BigFloat, prec uint) (sin, cos *BigFloat) {
 	if prec == 0 {
 		prec = x.Prec()

@@ -335,12 +335,15 @@ func computePiChudnovsky(prec uint) *BigFloat {
 		P_am, Q_am, T_am := bs(a, m)
 		P_mb, Q_mb, T_mb := bs(m, b)
 
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// P = P_am * P_mb
 		P := new(big.Int).Mul(P_am, P_mb)
 
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// Q = Q_am * Q_mb
 		Q := new(big.Int).Mul(Q_am, Q_mb)
 
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// T = Q_mb * T_am + P_am * T_mb
 		T := new(big.Int).Mul(Q_mb, T_am)
 		tmp := new(big.Int).Mul(P_am, T_mb)
@@ -362,14 +365,17 @@ func computePiChudnovsky(prec uint) *BigFloat {
 	// 426880
 	constFactor := NewBigFloat(426880.0, workPrec)
 
+	//nolint:gocritic // Documentation comment explaining algorithm step
 	// Numerator = 426880 * sqrt(10005) * Q
 	num := new(BigFloat).SetPrec(workPrec).SetInt(Q)
 	num.Mul(num, constFactor)
 	num.Mul(num, sqrt10005)
 
+	//nolint:gocritic // Documentation comment explaining algorithm step
 	// Denominator = T
 	den := new(BigFloat).SetPrec(workPrec).SetInt(T)
 
+	//nolint:gocritic // Documentation comment explaining algorithm step
 	// Pi = Num / Den
 	pi := new(BigFloat).SetPrec(workPrec).Quo(num, den)
 
@@ -428,12 +434,15 @@ func BigSqrt(x *BigFloat, prec uint) *BigFloat {
 	threshold := new(BigFloat).SetPrec(prec).SetFloat64(1e-77) // Convergence threshold
 
 	for i := 0; i < 100; i++ { // Max 100 iterations
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// temp = S / guess
 		temp.Quo(x, guess)
 
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// temp = guess + S/guess
 		temp.Add(guess, temp)
 
+		//nolint:gocritic // Documentation comment explaining algorithm step
 		// guess_new = (guess + S/guess) / 2
 		temp.Quo(temp, two)
 

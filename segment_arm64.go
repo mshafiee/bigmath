@@ -19,7 +19,9 @@ func evaluateChebyshevDerivativeBigARM64(t *BigFloat, c []*BigFloat, neval int, 
 }
 
 //go:noescape
+//nolint:unused // Implemented in assembly (segment_arm64.s)
 func evaluateChebyshevBigAsmARM64(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (segment_arm64.s)
 func evaluateChebyshevDerivativeBigAsmARM64(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat

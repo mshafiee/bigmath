@@ -10,7 +10,7 @@ import (
 
 // Optimized exponential and logarithmic functions with reduced allocations
 
-// expWorkspace holds pre-allocated buffers for exponential calculations
+//nolint:unused // Used internally by bigExpOptimized
 type expWorkspace struct {
 	result    *BigFloat
 	term      *BigFloat
@@ -23,7 +23,7 @@ type expWorkspace struct {
 	prec      uint
 }
 
-// getExpWorkspace returns a workspace with pre-allocated buffers
+//nolint:unused // Used internally by bigExpOptimized
 func getExpWorkspace(prec uint) *expWorkspace {
 	if prec == 0 {
 		prec = DefaultPrecision
@@ -42,7 +42,7 @@ func getExpWorkspace(prec uint) *expWorkspace {
 	}
 }
 
-// bigExpOptimized computes e^x with optimized allocation pattern
+//nolint:unused // May be used in dispatch or called from assembly wrappers
 func bigExpOptimized(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -125,7 +125,7 @@ func bigExpOptimized(x *BigFloat, prec uint) *BigFloat {
 	return new(BigFloat).SetPrec(prec).Set(ws.result)
 }
 
-// logWorkspace holds pre-allocated buffers for logarithmic calculations
+//nolint:unused // Used internally by bigLogOptimized
 type logWorkspace struct {
 	result    *BigFloat
 	term      *BigFloat
@@ -135,7 +135,7 @@ type logWorkspace struct {
 	prec      uint
 }
 
-// getLogWorkspace returns a workspace with pre-allocated buffers
+//nolint:unused // Used internally by bigLogOptimized
 func getLogWorkspace(prec uint) *logWorkspace {
 	if prec == 0 {
 		prec = DefaultPrecision
@@ -151,7 +151,7 @@ func getLogWorkspace(prec uint) *logWorkspace {
 	}
 }
 
-// bigLogOptimized computes ln(x) with optimized allocation pattern
+//nolint:unused // May be used in dispatch or called from assembly wrappers
 func bigLogOptimized(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()

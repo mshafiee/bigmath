@@ -137,7 +137,10 @@ func BigLog2(prec uint) *BigFloat {
 	// Use high-precision string constant for ln(2)
 	// 0.69314718055994530941723212145817656807550013436025525412068000949339362196969471
 	log2Str := "0.69314718055994530941723212145817656807550013436025525412068000949339362196969471"
-	result, _ := NewBigFloatFromString(log2Str, prec)
+	result, err := NewBigFloatFromString(log2Str, prec)
+	if err != nil {
+		panic("BigLog2: invalid constant string: " + err.Error())
+	}
 	return result
 }
 
@@ -183,7 +186,10 @@ func BigE(prec uint) *BigFloat {
 	// Use high-precision string constant for e
 	// 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759
 	eStr := "2.71828182845904523536028747135266249775724709369995957496696762772407663035354759"
-	result, _ := NewBigFloatFromString(eStr, prec)
+	result, err := NewBigFloatFromString(eStr, prec)
+	if err != nil {
+		panic("BigE: invalid constant string: " + err.Error())
+	}
 	return result
 }
 
@@ -196,7 +202,10 @@ func BigEulerGamma(prec uint) *BigFloat {
 	// Placeholder: return approximate value
 	// Full implementation would compute using series: γ = lim(n→∞) (H_n - ln(n))
 	gammaStr := "0.57721566490153286060651209008240243104215933593992359880576723488486772677766467"
-	result, _ := NewBigFloatFromString(gammaStr, prec)
+	result, err := NewBigFloatFromString(gammaStr, prec)
+	if err != nil {
+		panic("BigEulerGamma: invalid constant string: " + err.Error())
+	}
 	return result
 }
 
@@ -209,6 +218,9 @@ func BigCatalan(prec uint) *BigFloat {
 	// Placeholder: return approximate value
 	// Full implementation would compute using series
 	catalanStr := "0.91596559417721901505460351493238411077414937428167213426649811962176301977625476"
-	result, _ := NewBigFloatFromString(catalanStr, prec)
+	result, err := NewBigFloatFromString(catalanStr, prec)
+	if err != nil {
+		panic("BigCatalan: invalid constant string: " + err.Error())
+	}
 	return result
 }

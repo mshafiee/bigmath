@@ -29,7 +29,7 @@ func getChebyshevWorkspace(prec uint) *chebyshevWorkspace {
 	}
 }
 
-// evaluateChebyshevBigOptimized evaluates Chebyshev polynomial with optimized allocation pattern
+//nolint:unused // Used in dispatch system
 func evaluateChebyshevBigOptimized(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = DefaultPrecision

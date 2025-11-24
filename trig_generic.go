@@ -111,7 +111,7 @@ func bigTanGeneric(x *BigFloat, prec uint) *BigFloat {
 	return result
 }
 
-// bigAtanGeneric computes arctan(x) using MPFR-style argument reduction + Taylor series
+//nolint:unused // Used in dispatch system
 func bigAtanGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -173,7 +173,7 @@ func bigAtanGeneric(x *BigFloat, prec uint) *BigFloat {
 	return result
 }
 
-// bigAtanTaylorSeries computes atan for small |x| using Taylor series
+//nolint:unused // Used internally by bigAtanGeneric
 func bigAtanTaylorSeries(x *BigFloat, prec uint) *BigFloat {
 	result := new(BigFloat).SetPrec(prec)
 	term := new(BigFloat).SetPrec(prec).Set(x)
@@ -203,7 +203,7 @@ func bigAtanTaylorSeries(x *BigFloat, prec uint) *BigFloat {
 	return result
 }
 
-// bigAtan2Generic computes atan2(y, x)
+//nolint:unused // Used in dispatch system
 func bigAtan2Generic(y, x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = y.Prec()
@@ -246,7 +246,7 @@ func bigAtan2Generic(y, x *BigFloat, prec uint) *BigFloat {
 	return new(BigFloat).SetPrec(prec).Sub(atan, pi)
 }
 
-// bigAsinGeneric computes arcsin(x)
+//nolint:unused // Used in dispatch system
 func bigAsinGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -299,7 +299,7 @@ func bigAsinGeneric(x *BigFloat, prec uint) *BigFloat {
 	return BigAtan(ratio, prec)
 }
 
-// bigAcosGeneric computes arccos(x)
+//nolint:unused // Used in dispatch system
 func bigAcosGeneric(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()

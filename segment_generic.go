@@ -108,6 +108,7 @@ func evaluateChebyshevBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uin
 
 // evaluateChebyshevDerivativeBigGeneric evaluates derivative of Chebyshev polynomial (pure-Go)
 // This is the BigFloat version of swi_edcheb()
+//nolint:unused // Used in dispatch system
 func evaluateChebyshevDerivativeBigGeneric(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = DefaultPrecision

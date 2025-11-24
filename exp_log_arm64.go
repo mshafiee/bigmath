@@ -10,10 +10,12 @@ package bigmath
 // The assembly files (exp_asm_arm64.s, log_asm_arm64.s) exist but have calling convention issues
 // TODO: Fix ARM64 assembly calling convention - ensure proper stack setup for CALL instructions
 
+//nolint:unused // Declared in exp_log_decl.go, may be used in dispatch
 func bigExpAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigExpOptimized(x, prec)
 }
 
+//nolint:unused // Declared in exp_log_decl.go, may be used in dispatch
 func bigLogAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigLogOptimized(x, prec)
 }

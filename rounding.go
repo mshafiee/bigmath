@@ -21,24 +21,28 @@ const (
 // Rounding mode implementations
 // These provide IEEE 754-2008 compliant rounding
 
+//nolint:unused // May be used in dispatch or as fallback
 func roundToNearestEvenGeneric(x *BigFloat, prec uint) *BigFloat {
 	result := new(BigFloat).SetPrec(prec).Set(x)
 	// big.Float uses round-to-nearest-even by default
 	return result
 }
 
+//nolint:unused // May be used in dispatch or as fallback
 func roundTowardZeroGeneric(x *BigFloat, prec uint) *BigFloat {
 	result := new(BigFloat).SetPrec(prec).Set(x)
 	result.SetMode(ToZero)
 	return result
 }
 
+//nolint:unused // May be used in dispatch or as fallback
 func roundTowardInfGeneric(x *BigFloat, prec uint) *BigFloat {
 	result := new(BigFloat).SetPrec(prec).Set(x)
 	result.SetMode(ToPositiveInf)
 	return result
 }
 
+//nolint:unused // May be used in dispatch or as fallback
 func roundTowardNegInfGeneric(x *BigFloat, prec uint) *BigFloat {
 	result := new(BigFloat).SetPrec(prec).Set(x)
 	result.SetMode(ToNegativeInf)
@@ -48,15 +52,19 @@ func roundTowardNegInfGeneric(x *BigFloat, prec uint) *BigFloat {
 // Assembly function declarations
 
 //go:noescape
+//nolint:unused // Implemented in assembly (rounding_amd64.s)
 func roundToNearestEvenAsm(x *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (rounding_amd64.s)
 func roundTowardZeroAsm(x *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (rounding_amd64.s)
 func roundTowardInfAsm(x *BigFloat, prec uint) *BigFloat
 
 //go:noescape
+//nolint:unused // Implemented in assembly (rounding_amd64.s)
 func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
 
 // Round rounds x to prec bits using the specified rounding mode

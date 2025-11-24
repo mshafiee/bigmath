@@ -76,13 +76,12 @@ func bigAtanOptimized(x *BigFloat, prec uint) *BigFloat {
 	// Pre-allocate buffers for reduction loop
 	xSquared := NewBigFloat(0.0, prec)
 	onePlusXSquared := NewBigFloat(0.0, prec)
-	sqrtTerm := NewBigFloat(0.0, prec)
 	denominator := NewBigFloat(0.0, prec)
 
 	for xReduced.Cmp(threshold) > 0 && reductionCount < 10 {
 		xSquared.Mul(xReduced, xReduced)
 		onePlusXSquared.Add(one, xSquared)
-		sqrtTerm = BigSqrt(onePlusXSquared, prec)
+		sqrtTerm := BigSqrt(onePlusXSquared, prec)
 		denominator.Add(one, sqrtTerm)
 		xReduced.Quo(xReduced, denominator)
 		reductionCount++

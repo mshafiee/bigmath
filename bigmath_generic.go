@@ -80,6 +80,7 @@ func bigMatMulGeneric(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 
 	temp := new(BigFloat).SetPrec(prec)
 
+	//nolint:gocritic // Documentation comment explaining matrix multiplication step
 	// X = m[0][0]*v.X + m[0][1]*v.Y + m[0][2]*v.Z
 	result.X.Mul(m.M[0][0], v.X)
 	temp.Mul(m.M[0][1], v.Y)
