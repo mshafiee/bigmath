@@ -49,21 +49,24 @@ func bigVec3DotAVX2(v1, v2 *BigVec3, prec uint) *BigFloat {
 	return bigVec3DotAsm(v1, v2, prec)
 }
 
-// Assembly function declarations
-// These will be implemented in bigmath_amd64.s
+// Assembly wrappers replaced with Go implementations to avoid GC stackmap issues
+// The real implementation is in the generic functions
 
-//go:noescape
-func bigVec3AddAsm(v1, v2 *BigVec3, prec uint) *BigVec3
+func bigVec3AddAsm(v1, v2 *BigVec3, prec uint) *BigVec3 {
+	return bigVec3AddGeneric(v1, v2, prec)
+}
 
-//go:noescape
-//nolint:unused // Declared for assembly implementation
-func bigVec3SubAsm(v1, v2 *BigVec3, prec uint) *BigVec3
+func bigVec3SubAsm(v1, v2 *BigVec3, prec uint) *BigVec3 {
+	return bigVec3SubGeneric(v1, v2, prec)
+}
 
-//go:noescape
-func bigVec3MulAsm(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3
+func bigVec3MulAsm(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3 {
+	return bigVec3MulGeneric(v, scalar, prec)
+}
 
-//go:noescape
-func bigVec3DotAsm(v1, v2 *BigVec3, prec uint) *BigFloat
+func bigVec3DotAsm(v1, v2 *BigVec3, prec uint) *BigFloat {
+	return bigVec3DotGeneric(v1, v2, prec)
+}
 
 // Matrix operations
 
@@ -77,5 +80,6 @@ func bigMatMulAVX2(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 	return bigMatMulAsm(m, v, prec)
 }
 
-//go:noescape
-func bigMatMulAsm(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3
+func bigMatMulAsm(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
+	return bigMatMulGeneric(m, v, prec)
+}

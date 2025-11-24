@@ -27,32 +27,31 @@ func bigVec3DotARM64(v1, v2 *BigVec3, prec uint) *BigFloat {
 	return bigVec3DotAsmARM64(v1, v2, prec)
 }
 
-// Assembly function declarations
-// These will be implemented in bigmath_arm64.s
+// Assembly wrappers replaced with Go implementations to avoid GC stackmap issues
+// The real implementation is in the generic functions
 
-//go:noescape
-//nolint:unused // May be used in future dispatch implementations
-func bigVec3AddAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3
+func bigVec3AddAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3 {
+	return bigVec3AddGeneric(v1, v2, prec)
+}
 
-//go:noescape
-//nolint:unused // May be used in future dispatch implementations
-func bigVec3SubAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3
+func bigVec3SubAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3 {
+	return bigVec3SubGeneric(v1, v2, prec)
+}
 
-//go:noescape
-//nolint:unused // May be used in future dispatch implementations
-func bigVec3MulAsmARM64(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3
+func bigVec3MulAsmARM64(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3 {
+	return bigVec3MulGeneric(v, scalar, prec)
+}
 
-//go:noescape
-//nolint:unused // May be used in future dispatch implementations
-func bigVec3DotAsmARM64(v1, v2 *BigVec3, prec uint) *BigFloat
+func bigVec3DotAsmARM64(v1, v2 *BigVec3, prec uint) *BigFloat {
+	return bigVec3DotGeneric(v1, v2, prec)
+}
 
 // Matrix operations
 
-//nolint:unused // May be used in future dispatch implementations
 func bigMatMulARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
 	return bigMatMulAsmARM64(m, v, prec)
 }
 
-//go:noescape
-//nolint:unused // May be used in future dispatch implementations
-func bigMatMulAsmARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3
+func bigMatMulAsmARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3 {
+	return bigMatMulGeneric(m, v, prec)
+}
