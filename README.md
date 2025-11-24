@@ -1,4 +1,4 @@
-# bigmath
+# BigMath
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/mshafiee/bigmath.svg)](https://pkg.go.dev/github.com/mshafiee/bigmath)
 [![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
