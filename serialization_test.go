@@ -56,7 +56,7 @@ func TestBigVec3JSON(t *testing.T) {
 			}
 
 			var v3 BigVec3
-			if err := json.Unmarshal(data2, &v3); err != nil {
+			if err = json.Unmarshal(data2, &v3); err != nil {
 				t.Fatalf("Second Unmarshal failed: %v", err)
 			}
 
