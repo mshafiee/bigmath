@@ -7,17 +7,25 @@ Complete API reference for the bigmath package.
 - [Constants](#constants)
 - [Types](#types)
 - [BigFloat Operations](#bigfloat-operations)
+- [Basic Math Utilities](#basic-math-utilities)
 - [Vector Operations](#vector-operations)
+- [Advanced Vector Operations](#advanced-vector-operations)
 - [Matrix Operations](#matrix-operations)
+- [Advanced Matrix Operations](#advanced-matrix-operations)
 - [Trigonometric Functions](#trigonometric-functions)
 - [Hyperbolic Functions](#hyperbolic-functions)
 - [Exponential and Logarithmic Functions](#exponential-and-logarithmic-functions)
+- [Advanced Logarithmic Functions](#advanced-logarithmic-functions)
 - [Power Functions](#power-functions)
 - [Root Functions](#root-functions)
+- [Special Functions](#special-functions)
+- [Combinatorics](#combinatorics)
 - [Rounding Functions](#rounding-functions)
 - [Angle Normalization](#angle-normalization)
 - [Chebyshev Polynomial Evaluation](#chebyshev-polynomial-evaluation)
 - [Mathematical Constants](#mathematical-constants)
+- [Extended Constants](#extended-constants)
+- [Serialization](#serialization)
 - [Error Handling](#error-handling)
 - [CPU Feature Detection](#cpu-feature-detection)
 
@@ -208,6 +216,48 @@ func BigFloatFMA(a, b, c *BigFloat, prec uint) *BigFloat
 
 Fused multiply-add: computes `a * b + c` with a single rounding operation.
 
+## Basic Math Utilities
+
+### BigFloor
+
+```go
+func BigFloor(x *BigFloat, prec uint) *BigFloat
+```
+
+Returns the greatest integer value less than or equal to x (rounds toward negative infinity).
+
+### BigCeil
+
+```go
+func BigCeil(x *BigFloat, prec uint) *BigFloat
+```
+
+Returns the smallest integer value greater than or equal to x (rounds toward positive infinity).
+
+### BigTrunc
+
+```go
+func BigTrunc(x *BigFloat, prec uint) *BigFloat
+```
+
+Returns the integer value of x truncated toward zero.
+
+### BigMod
+
+```go
+func BigMod(x, y *BigFloat, prec uint) *BigFloat
+```
+
+Returns x mod y (x - y*floor(x/y)). The result has the same sign as y.
+
+### BigRem
+
+```go
+func BigRem(x, y *BigFloat, prec uint) *BigFloat
+```
+
+Returns the remainder of x/y (IEEE 754 remainder operation). The result has the same sign as x.
+
 ## Vector Operations
 
 ### NewBigVec3
@@ -324,6 +374,40 @@ func (v *BigVec6) ToFloat64() [6]float64
 
 Converts the vector to a float64 array.
 
+## Advanced Vector Operations
+
+### BigVec3Cross
+
+```go
+func BigVec3Cross(v1, v2 *BigVec3, prec uint) *BigVec3
+```
+
+Computes the cross product of two 3D vectors: `v1 × v2`.
+
+### BigVec3Normalize
+
+```go
+func BigVec3Normalize(v *BigVec3, prec uint) *BigVec3
+```
+
+Normalizes a 3D vector to unit length. Returns a unit vector in the same direction, or zero vector if input is zero.
+
+### BigVec3Angle
+
+```go
+func BigVec3Angle(v1, v2 *BigVec3, prec uint) *BigFloat
+```
+
+Computes the angle between two 3D vectors in radians using: `angle = arccos((v1·v2) / (|v1|*|v2|))`. Returns angle in range [0, π].
+
+### BigVec3Project
+
+```go
+func BigVec3Project(v1, v2 *BigVec3, prec uint) *BigVec3
+```
+
+Projects vector v1 onto vector v2: `((v1·v2) / |v2|²) * v2`.
+
 ## Matrix Operations
 
 ### NewIdentityMatrix
@@ -349,6 +433,40 @@ func CreateRotationMatrix(angles [3]*BigFloat, prec uint) *BigMatrix3x3
 ```
 
 Creates a rotation matrix from three Euler angles (used for precession and coordinate transformations).
+
+## Advanced Matrix Operations
+
+### BigMatTranspose
+
+```go
+func BigMatTranspose(m *BigMatrix3x3, prec uint) *BigMatrix3x3
+```
+
+Returns the transpose of a 3x3 matrix.
+
+### BigMatMulMat
+
+```go
+func BigMatMulMat(m1, m2 *BigMatrix3x3, prec uint) *BigMatrix3x3
+```
+
+Multiplies two 3x3 matrices: `result = m1 * m2`.
+
+### BigMatDet
+
+```go
+func BigMatDet(m *BigMatrix3x3, prec uint) *BigFloat
+```
+
+Computes the determinant of a 3x3 matrix using cofactor expansion.
+
+### BigMatInverse
+
+```go
+func BigMatInverse(m *BigMatrix3x3, prec uint) (*BigMatrix3x3, error)
+```
+
+Computes the inverse of a 3x3 matrix using adjugate/determinant. Returns error if matrix is singular (determinant is zero).
 
 ## Trigonometric Functions
 
@@ -511,6 +629,32 @@ func BigLog2(prec uint) *BigFloat
 
 Returns ln(2) with specified precision.
 
+## Advanced Logarithmic Functions
+
+### BigLog1p
+
+```go
+func BigLog1p(x *BigFloat, prec uint) *BigFloat
+```
+
+Computes log(1+x) accurately for values near zero. Uses series expansion to avoid precision loss when x is very small.
+
+### BigExp1m
+
+```go
+func BigExp1m(x *BigFloat, prec uint) *BigFloat
+```
+
+Computes exp(x)-1 accurately for values near zero. Uses series expansion to avoid precision loss when x is very small.
+
+### BigLogb
+
+```go
+func BigLogb(x, base *BigFloat, prec uint) *BigFloat
+```
+
+Computes the logarithm of x with base b: `log_b(x) = ln(x) / ln(b)`.
+
 ## Power Functions
 
 ### BigPow
@@ -536,6 +680,8 @@ func BigSqrt(x *BigFloat, prec uint) *BigFloat
 ```
 
 Computes √x using Newton-Raphson method. Returns NaN for negative inputs.
+
+**Note:** See [Root Functions](#root-functions) for additional root functions like cube root and nth root.
 
 ## Rounding Functions
 
@@ -722,6 +868,70 @@ func BigLightSpeedAUperDay(prec uint) *BigFloat
 ```
 
 Returns the speed of light in AU per day (173.14463267424034).
+
+## Extended Constants
+
+### BigPhi
+
+```go
+func BigPhi(prec uint) *BigFloat
+```
+
+Returns the golden ratio φ = (1 + √5) / 2 ≈ 1.6180339887498948482... with specified precision.
+
+### BigSqrt2
+
+```go
+func BigSqrt2(prec uint) *BigFloat
+```
+
+Returns √2 ≈ 1.4142135623730950488... with specified precision.
+
+### BigSqrt3
+
+```go
+func BigSqrt3(prec uint) *BigFloat
+```
+
+Returns √3 ≈ 1.7320508075688772935... with specified precision.
+
+### BigLn10
+
+```go
+func BigLn10(prec uint) *BigFloat
+```
+
+Returns ln(10) ≈ 2.3025850929940456840... with specified precision.
+
+## Serialization
+
+### BigFloatMarshalJSON
+
+```go
+func BigFloatMarshalJSON(x *BigFloat) ([]byte, error)
+```
+
+Marshals a BigFloat to JSON using string representation for precision.
+
+### BigFloatUnmarshalJSON
+
+```go
+func BigFloatUnmarshalJSON(data []byte, prec uint) (*BigFloat, error)
+```
+
+Unmarshals a BigFloat from JSON.
+
+### BigVec3 JSON Methods
+
+`BigVec3` implements `json.Marshaler` and `json.Unmarshaler` interfaces. Vectors are serialized as arrays of strings.
+
+### BigVec6 JSON Methods
+
+`BigVec6` implements `json.Marshaler` and `json.Unmarshaler` interfaces. Vectors are serialized as arrays of strings.
+
+### BigMatrix3x3 JSON Methods
+
+`BigMatrix3x3` implements `json.Marshaler` and `json.Unmarshaler` interfaces. Matrices are serialized as 3x3 arrays of strings.
 
 ## Error Handling
 

@@ -11,11 +11,15 @@ A high-performance arbitrary-precision mathematics library for Go, optimized wit
 
 - ⚡ **High Performance**: Assembly-optimized implementations achieving 20-40% performance improvements
 - 🔢 **Arbitrary Precision**: Default 256-bit precision (77 decimal digits), configurable to any precision
-- 🎯 **Comprehensive Math**: Trigonometric, hyperbolic, exponential, logarithmic, and power functions
-- 📐 **Vector & Matrix Operations**: 3D/6D vectors and 3x3 matrices with arbitrary precision
+- 🎯 **Comprehensive Math**: Trigonometric, hyperbolic, exponential, logarithmic, power, and special functions
+- 📐 **Vector & Matrix Operations**: 3D/6D vectors and 3x3 matrices with arbitrary precision, including advanced operations
 - 🧮 **Chebyshev Polynomials**: Optimized evaluation for astronomical ephemeris calculations
 - 🔍 **CPU Feature Detection**: Automatically uses optimal code paths (BMI2, AVX2, NEON)
 - ✅ **MPFR-Compatible**: Algorithms designed to match MPFR behavior for scientific computing
+- 🧪 **Special Functions**: Gamma, error functions (erf, erfc), and Bessel functions
+- 🔢 **Root Functions**: Square root, cube root, and nth root
+- 📊 **Combinatorics**: Factorial and binomial coefficients
+- 💾 **Serialization**: JSON marshaling/unmarshaling support for all types
 
 ## Installation
 
@@ -29,8 +33,15 @@ While Go's standard `math/big` package provides arbitrary-precision arithmetic, 
 
 - **Assembly optimizations** for critical operations (20-40% faster)
 - **Complete transcendental functions** (trig, hyperbolic, exp, log) with MPFR-compatible algorithms
+- **Special functions** (Gamma, erf, erfc, Bessel functions)
+- **Root functions** (square root, cube root, nth root)
+- **Basic math utilities** (floor, ceil, trunc, mod, remainder)
+- **Advanced vector operations** (cross product, normalization, angle, projection)
+- **Advanced matrix operations** (transpose, matrix-matrix multiply, determinant, inverse)
+- **Combinatorics** (factorial, binomial coefficients)
 - **Vector and matrix operations** optimized for scientific computing
 - **Chebyshev polynomial evaluation** for astronomical calculations
+- **JSON serialization** support for all types
 - **CPU-specific optimizations** that automatically adapt to your hardware
 
 Perfect for applications requiring both high precision and high performance, such as astronomical ephemeris calculations, financial modeling, and scientific simulations.
