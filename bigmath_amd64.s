@@ -6,7 +6,7 @@
 // func bigVec3AddAsm(v1, v2 *BigVec3, prec uint) *BigVec3
 // Optimized assembly for 3D vector addition with arbitrary precision
 // Currently delegates to generic implementation but structured for future optimization
-TEXT ·bigVec3AddAsm(SB), NOSPLIT, $128-32
+TEXT ·bigVec3AddAsm(SB), $128-32
 	// Load arguments
 	MOVQ	v1+0(FP), AX      // AX = v1
 	MOVQ	v2+8(FP), BX      // BX = v2
@@ -24,7 +24,7 @@ TEXT ·bigVec3AddAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3SubAsm(v1, v2 *BigVec3, prec uint) *BigVec3
-TEXT ·bigVec3SubAsm(SB), NOSPLIT, $128-32
+TEXT ·bigVec3SubAsm(SB), $128-32
 	MOVQ	v1+0(FP), AX
 	MOVQ	v2+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -38,7 +38,7 @@ TEXT ·bigVec3SubAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3MulAsm(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3
-TEXT ·bigVec3MulAsm(SB), NOSPLIT, $128-32
+TEXT ·bigVec3MulAsm(SB), $128-32
 	MOVQ	v+0(FP), AX
 	MOVQ	scalar+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -52,7 +52,7 @@ TEXT ·bigVec3MulAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3DotAsm(v1, v2 *BigVec3, prec uint) *BigFloat
-TEXT ·bigVec3DotAsm(SB), NOSPLIT, $128-24
+TEXT ·bigVec3DotAsm(SB), $128-24
 	MOVQ	v1+0(FP), AX
 	MOVQ	v2+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -67,7 +67,7 @@ TEXT ·bigVec3DotAsm(SB), NOSPLIT, $128-24
 
 // func bigMatMulAsm(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3
 // Matrix-vector multiplication optimized for AMD64
-TEXT ·bigMatMulAsm(SB), NOSPLIT, $128-32
+TEXT ·bigMatMulAsm(SB), $128-32
 	MOVQ	m+0(FP), AX       // AX = matrix pointer
 	MOVQ	v+8(FP), BX       // BX = vector pointer
 	MOVL	prec+16(FP), CX   // CX = precision

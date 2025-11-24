@@ -6,7 +6,7 @@
 // Power function for ARM64
 
 // func bigPowAsm(x, y *BigFloat, prec uint) *BigFloat
-TEXT ·bigPowAsm(SB), NOSPLIT, $128-32
+TEXT ·bigPowAsm(SB), $128-32
 	MOVD	x+0(FP), R0
 	MOVD	y+8(FP), R1
 	MOVW	prec+16(FP), R2

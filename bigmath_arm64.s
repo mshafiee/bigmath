@@ -5,7 +5,7 @@
 
 // func bigVec3AddAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3
 // ARM64/NEON optimized 3D vector addition with arbitrary precision
-TEXT ·bigVec3AddAsmARM64(SB), NOSPLIT, $128-32
+TEXT ·bigVec3AddAsmARM64(SB), $128-32
 	MOVD	v1+0(FP), R0
 	MOVD	v2+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -19,7 +19,7 @@ TEXT ·bigVec3AddAsmARM64(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3SubAsmARM64(v1, v2 *BigVec3, prec uint) *BigVec3
-TEXT ·bigVec3SubAsmARM64(SB), NOSPLIT, $128-32
+TEXT ·bigVec3SubAsmARM64(SB), $128-32
 	MOVD	v1+0(FP), R0
 	MOVD	v2+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -33,7 +33,7 @@ TEXT ·bigVec3SubAsmARM64(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3MulAsmARM64(v *BigVec3, scalar *BigFloat, prec uint) *BigVec3
-TEXT ·bigVec3MulAsmARM64(SB), NOSPLIT, $128-32
+TEXT ·bigVec3MulAsmARM64(SB), $128-32
 	MOVD	v+0(FP), R0
 	MOVD	scalar+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -47,7 +47,7 @@ TEXT ·bigVec3MulAsmARM64(SB), NOSPLIT, $128-32
 	RET
 
 // func bigVec3DotAsmARM64(v1, v2 *BigVec3, prec uint) *BigFloat
-TEXT ·bigVec3DotAsmARM64(SB), NOSPLIT, $128-32
+TEXT ·bigVec3DotAsmARM64(SB), $128-32
 	MOVD	v1+0(FP), R0
 	MOVD	v2+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -61,7 +61,7 @@ TEXT ·bigVec3DotAsmARM64(SB), NOSPLIT, $128-32
 	RET
 
 // func bigMatMulAsmARM64(m *BigMatrix3x3, v *BigVec3, prec uint) *BigVec3
-TEXT ·bigMatMulAsmARM64(SB), NOSPLIT, $128-32
+TEXT ·bigMatMulAsmARM64(SB), $128-32
 	MOVD	m+0(FP), R0
 	MOVD	v+8(FP), R1
 	MOVW	prec+16(FP), R2

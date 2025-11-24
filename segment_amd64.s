@@ -8,7 +8,7 @@
 // Chebyshev polynomial evaluation using Clenshaw's algorithm
 // This is a critical hot-path function in astronomical calculations
 // Optimized assembly implementation with loop unrolling for common neval values
-TEXT ·evaluateChebyshevBigAsm(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevBigAsm(SB), $128-48
 	MOVQ	t+0(FP), AX        // AX = t pointer
 	MOVQ	c+8(FP), BX        // BX = c slice data pointer
 	MOVQ	c+16(FP), CX       // CX = c slice length
@@ -32,7 +32,7 @@ TEXT ·evaluateChebyshevBigAsm(SB), NOSPLIT, $128-48
 
 // func evaluateChebyshevDerivativeBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
 // Derivative of Chebyshev polynomial evaluation
-TEXT ·evaluateChebyshevDerivativeBigAsm(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevDerivativeBigAsm(SB), $128-48
 	MOVQ	t+0(FP), AX
 	MOVQ	c+8(FP), BX
 	MOVQ	c+16(FP), CX

@@ -6,7 +6,7 @@
 // func evaluateChebyshevBigAsmARM64(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
 // Chebyshev polynomial evaluation using Clenshaw's algorithm
 // ARM64/NEON optimized version
-TEXT ·evaluateChebyshevBigAsmARM64(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevBigAsmARM64(SB), $128-48
 	MOVD	t+0(FP), R0
 	MOVD	c+8(FP), R1
 	MOVD	c+16(FP), R2
@@ -25,7 +25,7 @@ TEXT ·evaluateChebyshevBigAsmARM64(SB), NOSPLIT, $128-48
 
 // func evaluateChebyshevDerivativeBigAsmARM64(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
 // Derivative of Chebyshev polynomial evaluation
-TEXT ·evaluateChebyshevDerivativeBigAsmARM64(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevDerivativeBigAsmARM64(SB), $128-48
 	MOVD	t+0(FP), R0
 	MOVD	c+8(FP), R1
 	MOVD	c+16(FP), R2

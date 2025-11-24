@@ -6,7 +6,7 @@
 // Power function in assembly
 
 // func bigPowAsm(x, y *BigFloat, prec uint) *BigFloat
-TEXT ·bigPowAsm(SB), NOSPLIT, $128-32
+TEXT ·bigPowAsm(SB), $128-32
 	MOVQ	x+0(FP), AX
 	MOVQ	y+8(FP), BX
 	MOVL	prec+16(FP), CX

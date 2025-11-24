@@ -10,7 +10,7 @@
 // These work with Go's big.Float type through its API
 
 // func bigfloatAddAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatAddAsm(SB), NOSPLIT, $0-32
+TEXT ·bigfloatAddAsm(SB), $0-32
 	MOVD	a+0(FP), R0
 	MOVD	b+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -19,7 +19,7 @@ TEXT ·bigfloatAddAsm(SB), NOSPLIT, $0-32
 	RET
 
 // func bigfloatSubAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatSubAsm(SB), NOSPLIT, $0-32
+TEXT ·bigfloatSubAsm(SB), $0-32
 	MOVD	a+0(FP), R0
 	MOVD	b+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -28,7 +28,7 @@ TEXT ·bigfloatSubAsm(SB), NOSPLIT, $0-32
 	RET
 
 // func bigfloatMulAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatMulAsm(SB), NOSPLIT, $0-32
+TEXT ·bigfloatMulAsm(SB), $0-32
 	MOVD	a+0(FP), R0
 	MOVD	b+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -37,7 +37,7 @@ TEXT ·bigfloatMulAsm(SB), NOSPLIT, $0-32
 	RET
 
 // func bigfloatDivAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatDivAsm(SB), NOSPLIT, $0-32
+TEXT ·bigfloatDivAsm(SB), $0-32
 	MOVD	a+0(FP), R0
 	MOVD	b+8(FP), R1
 	MOVW	prec+16(FP), R2
@@ -46,7 +46,7 @@ TEXT ·bigfloatDivAsm(SB), NOSPLIT, $0-32
 	RET
 
 // func bigfloatSqrtAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatSqrtAsm(SB), NOSPLIT, $0-24
+TEXT ·bigfloatSqrtAsm(SB), $0-24
 	MOVD	x+0(FP), R0
 	MOVW	prec+8(FP), R1
 	CALL	·bigfloatSqrtGeneric(SB)

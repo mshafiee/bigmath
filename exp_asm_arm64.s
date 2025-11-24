@@ -25,7 +25,7 @@
 //  - Future: Optimize squaring loop with mpn primitives
 
 // func bigExpAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigExpAsm(SB), NOSPLIT, $32-24
+TEXT ·bigExpAsm(SB), $32-24
 	MOVD	x+0(FP), R0
 	MOVW	prec+8(FP), R1
 

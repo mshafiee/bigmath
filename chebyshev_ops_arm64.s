@@ -6,7 +6,7 @@
 // Chebyshev polynomial evaluation for ARM64
 
 // func evaluateChebyshevBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
-TEXT ·evaluateChebyshevBigAsm(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevBigAsm(SB), $128-48
 	MOVD	t+0(FP), R0
 	MOVD	c+8(FP), R1
 	MOVD	c+16(FP), R2
@@ -24,7 +24,7 @@ TEXT ·evaluateChebyshevBigAsm(SB), NOSPLIT, $128-48
 	RET
 
 // func evaluateChebyshevDerivativeBigAsm(t *BigFloat, c []*BigFloat, neval int, prec uint) *BigFloat
-TEXT ·evaluateChebyshevDerivativeBigAsm(SB), NOSPLIT, $128-48
+TEXT ·evaluateChebyshevDerivativeBigAsm(SB), $128-48
 	MOVD	t+0(FP), R0
 	MOVD	c+8(FP), R1
 	MOVD	c+16(FP), R2

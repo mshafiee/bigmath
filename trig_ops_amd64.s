@@ -6,7 +6,7 @@
 // Additional trigonometric functions in assembly
 
 // func bigTanAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigTanAsm(SB), NOSPLIT, $128-24
+TEXT ·bigTanAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -18,7 +18,7 @@ TEXT ·bigTanAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAtanAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAtanAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAtanAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -30,7 +30,7 @@ TEXT ·bigAtanAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAsinAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAsinAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAsinAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -42,7 +42,7 @@ TEXT ·bigAsinAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAcosAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAcosAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAcosAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -54,7 +54,7 @@ TEXT ·bigAcosAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAtan2Asm(y, x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAtan2Asm(SB), NOSPLIT, $128-32
+TEXT ·bigAtan2Asm(SB), $128-32
 	MOVQ	y+0(FP), AX
 	MOVQ	x+8(FP), BX
 	MOVL	prec+16(FP), CX

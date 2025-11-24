@@ -13,7 +13,7 @@
 
 // func bigfloatAddAsm(a, b *BigFloat, prec uint) *BigFloat
 // Optimized addition - minimizes allocation overhead
-TEXT ·bigfloatAddAsm(SB), NOSPLIT, $128-32
+TEXT ·bigfloatAddAsm(SB), $128-32
 	MOVQ	a+0(FP), AX       // AX = a pointer
 	MOVQ	b+8(FP), BX       // BX = b pointer
 	MOVL	prec+16(FP), CX   // CX = precision
@@ -30,7 +30,7 @@ TEXT ·bigfloatAddAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigfloatSubAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatSubAsm(SB), NOSPLIT, $128-32
+TEXT ·bigfloatSubAsm(SB), $128-32
 	MOVQ	a+0(FP), AX
 	MOVQ	b+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -44,7 +44,7 @@ TEXT ·bigfloatSubAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigfloatMulAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatMulAsm(SB), NOSPLIT, $128-32
+TEXT ·bigfloatMulAsm(SB), $128-32
 	MOVQ	a+0(FP), AX
 	MOVQ	b+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -58,7 +58,7 @@ TEXT ·bigfloatMulAsm(SB), NOSPLIT, $128-32
 	RET
 
 // func bigfloatDivAsm(a, b *BigFloat, prec uint) *BigFloat
-TEXT ·bigfloatDivAsm(SB), NOSPLIT, $128-32
+TEXT ·bigfloatDivAsm(SB), $128-32
 	MOVQ	a+0(FP), AX
 	MOVQ	b+8(FP), BX
 	MOVL	prec+16(FP), CX
@@ -73,7 +73,7 @@ TEXT ·bigfloatDivAsm(SB), NOSPLIT, $128-32
 
 // func bigfloatSqrtAsm(x *BigFloat, prec uint) *BigFloat
 // Square root using Newton-Raphson iteration
-TEXT ·bigfloatSqrtAsm(SB), NOSPLIT, $128-24
+TEXT ·bigfloatSqrtAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 

@@ -6,7 +6,7 @@
 // Hyperbolic functions in assembly
 
 // func bigSinhAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigSinhAsm(SB), NOSPLIT, $128-24
+TEXT ·bigSinhAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -18,7 +18,7 @@ TEXT ·bigSinhAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigCoshAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigCoshAsm(SB), NOSPLIT, $128-24
+TEXT ·bigCoshAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -30,7 +30,7 @@ TEXT ·bigCoshAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigTanhAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigTanhAsm(SB), NOSPLIT, $128-24
+TEXT ·bigTanhAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -42,7 +42,7 @@ TEXT ·bigTanhAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAsinhAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAsinhAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAsinhAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -54,7 +54,7 @@ TEXT ·bigAsinhAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAcoshAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAcoshAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAcoshAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -66,7 +66,7 @@ TEXT ·bigAcoshAsm(SB), NOSPLIT, $128-24
 	RET
 
 // func bigAtanhAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigAtanhAsm(SB), NOSPLIT, $128-24
+TEXT ·bigAtanhAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 

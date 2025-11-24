@@ -23,7 +23,7 @@
 //  - Optimize register pressure for ARM64's 32 registers
 //  - Future: Inline Taylor series evaluation with loop unrolling
 //  - Future: Optimize angle normalization with direct mantissa operations
-TEXT ·bigSinAsmARM64(SB), NOSPLIT, $32-24
+TEXT ·bigSinAsmARM64(SB), $32-24
 	MOVD	x+0(FP), R0
 	MOVW	prec+8(FP), R1
 
@@ -47,7 +47,7 @@ TEXT ·bigSinAsmARM64(SB), NOSPLIT, $32-24
 //  - Leverage same angle normalization code
 //  - Use FMLA for multiply-add chains
 //  - NEON for parallel term evaluation
-TEXT ·bigCosAsmARM64(SB), NOSPLIT, $32-24
+TEXT ·bigCosAsmARM64(SB), $32-24
 	MOVD	x+0(FP), R0
 	MOVW	prec+8(FP), R1
 

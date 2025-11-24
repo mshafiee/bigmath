@@ -8,7 +8,7 @@
 
 // func roundToNearestEvenAsm(x *BigFloat, prec uint) *BigFloat
 // Round to nearest, ties to even (default IEEE 754 mode)
-TEXT ·roundToNearestEvenAsm(SB), NOSPLIT, $128-24
+TEXT ·roundToNearestEvenAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -21,7 +21,7 @@ TEXT ·roundToNearestEvenAsm(SB), NOSPLIT, $128-24
 
 // func roundTowardZeroAsm(x *BigFloat, prec uint) *BigFloat
 // Round toward zero (truncate)
-TEXT ·roundTowardZeroAsm(SB), NOSPLIT, $128-24
+TEXT ·roundTowardZeroAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -34,7 +34,7 @@ TEXT ·roundTowardZeroAsm(SB), NOSPLIT, $128-24
 
 // func roundTowardInfAsm(x *BigFloat, prec uint) *BigFloat
 // Round toward +∞ (ceiling)
-TEXT ·roundTowardInfAsm(SB), NOSPLIT, $128-24
+TEXT ·roundTowardInfAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 
@@ -47,7 +47,7 @@ TEXT ·roundTowardInfAsm(SB), NOSPLIT, $128-24
 
 // func roundTowardNegInfAsm(x *BigFloat, prec uint) *BigFloat
 // Round toward -∞ (floor)
-TEXT ·roundTowardNegInfAsm(SB), NOSPLIT, $128-24
+TEXT ·roundTowardNegInfAsm(SB), $128-24
 	MOVQ	x+0(FP), AX
 	MOVL	prec+8(FP), BX
 

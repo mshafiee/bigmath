@@ -25,7 +25,7 @@
 //  - Future: Optimize square root loop with mpn primitives
 
 // func bigLogAsm(x *BigFloat, prec uint) *BigFloat
-TEXT ·bigLogAsm(SB), NOSPLIT, $32-24
+TEXT ·bigLogAsm(SB), $32-24
 	MOVD	x+0(FP), R0
 	MOVW	prec+8(FP), R1
 

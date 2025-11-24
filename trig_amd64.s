@@ -21,7 +21,7 @@
 //  - Unroll Taylor series loop (4-8 terms at a time)
 //  - Use FMA3 for term calculations
 //  - Early exit on convergence
-TEXT ·bigSinAsm(SB), NOSPLIT, $256-24
+TEXT ·bigSinAsm(SB), $256-24
 	MOVQ	x+0(FP), AX        // AX = x pointer
 	MOVL	prec+8(FP), BX     // BX = precision
 	
@@ -55,7 +55,7 @@ TEXT ·bigSinAsm(SB), NOSPLIT, $256-24
 //  - Leverage same angle normalization code
 //  - Unroll Taylor series loop
 //  - Use FMA3 for term calculations
-TEXT ·bigCosAsm(SB), NOSPLIT, $256-24
+TEXT ·bigCosAsm(SB), $256-24
 	MOVQ	x+0(FP), AX        // AX = x pointer
 	MOVL	prec+8(FP), BX     // BX = precision
 	
