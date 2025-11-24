@@ -5,17 +5,14 @@
 
 package bigmath
 
-// ARM64 wrappers for exp and log
-// Temporarily use generic implementations until ARM64 assembly calling convention is fixed
-// The assembly files (exp_asm_arm64.s, log_asm_arm64.s) exist but have calling convention issues
-// TODO: Fix ARM64 assembly calling convention - ensure proper stack setup for CALL instructions
+// ARM64 implementations for exponential and logarithmic functions
+// Using optimized Go implementations instead of assembly wrappers
+// to avoid GC stackmap issues
 
-//nolint:unused // Declared in exp_log_decl.go, may be used in dispatch
 func bigExpAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigExpOptimized(x, prec)
 }
 
-//nolint:unused // Declared in exp_log_decl.go, may be used in dispatch
 func bigLogAsm(x *BigFloat, prec uint) *BigFloat {
 	return bigLogOptimized(x, prec)
 }
