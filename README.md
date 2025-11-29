@@ -20,6 +20,7 @@ A high-performance arbitrary-precision mathematics library for Go, optimized wit
 - 🔢 **Root Functions**: Square root, cube root, and nth root
 - 📊 **Combinatorics**: Factorial and binomial coefficients
 - 💾 **Serialization**: JSON marshaling/unmarshaling support for all types
+- 🔄 **Binary I/O**: Direct IEEE 754 double precision to BigFloat conversion with full 53-bit precision preservation
 
 ## Installation
 
@@ -250,6 +251,7 @@ Performance improvements:
 - Chebyshev evaluation: 30-40% faster
 - Trigonometric functions: 30-40% faster
 - Exponential/logarithmic: 25-35% faster
+- Binary serialization (ReadDoubleAsBigFloat): 70-72% faster with assembly optimizations
 
 ## Architecture Support
 
@@ -276,6 +278,29 @@ x := bigmath.NewBigFloat(3.14, 1024)
 - **Financial Calculations**: Currency and interest rate computations requiring exact precision
 - **Cryptography**: Key generation and verification requiring exact arithmetic
 - **Computer Algebra Systems**: Symbolic computation and exact arithmetic
+
+## Binary Serialization
+
+Read IEEE 754 double precision floating-point numbers directly from binary data with full precision:
+
+```go
+import (
+    "bytes"
+    "github.com/mshafiee/bigmath"
+)
+
+// Read double from binary data (little-endian)
+reader := bytes.NewReader(doubleBytes)
+value, err := bigmath.ReadDoubleAsBigFloat(reader, false, 256)
+if err != nil {
+    return err
+}
+
+// Read double from binary data (big-endian)
+value, err = bigmath.ReadDoubleAsBigFloat(reader, true, 256)
+```
+
+This function preserves full 53-bit precision by constructing BigFloat directly from IEEE 754 components (sign, exponent, mantissa), avoiding the precision loss that occurs when converting through float64.
 
 ## Examples
 
