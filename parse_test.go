@@ -397,7 +397,7 @@ func TestNewBigFloatFromStringSpecialCharacters(t *testing.T) {
 		{"multiple_dots", "12.34.56", true},
 		{"dot_after_e", "1e.5", true},
 		{"e_after_dot", "12.e5", false}, // Valid: 12.0e5 = 1.2e6
-		{"underscore", "12_34", false},   // Valid: Go 1.13+ supports underscores
+		{"underscore", "12_34", false},  // Valid: Go 1.13+ supports underscores
 		{"comma", "12,34", true},
 		{"space_in_middle", "12 34", true},
 	}
@@ -438,4 +438,3 @@ func TestNewBigFloatFromStringBoundaryPrecision(t *testing.T) {
 		})
 	}
 }
-
