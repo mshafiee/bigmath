@@ -276,7 +276,7 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 	if exponent == 0 {
 		if mantissa == 0 {
 			// Zero (positive or negative)
-			result := new(big.Float).SetPrec(uint(prec))
+			result := new(big.Float).SetPrec(prec)
 			if sign {
 				result.Neg(result)
 			}
@@ -286,7 +286,7 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 		// For denormalized: value = (-1)^sign * 2^(-1022) * (mantissa / 2^52)
 		// This is a very small number, handle as zero for now
 		// TODO: Implement denormalized number handling if needed
-		result := new(big.Float).SetPrec(uint(prec))
+		result := new(big.Float).SetPrec(prec)
 		return result, nil
 	}
 
@@ -294,12 +294,12 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 		// Infinity or NaN
 		if mantissa == 0 {
 			// Infinity
-			result := new(big.Float).SetPrec(uint(prec))
+			result := new(big.Float).SetPrec(prec)
 			result.SetInf(sign)
 			return result, nil
 		}
 		// NaN
-		result := new(big.Float).SetPrec(uint(prec))
+		result := new(big.Float).SetPrec(prec)
 		// big.Float doesn't have NaN, so we'll return zero
 		// Caller should check for NaN if needed
 		return result, nil
@@ -310,16 +310,16 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 
 	// Construct mantissa as BigFloat: 1 + mantissa / 2^52
 	// This gives us the full 53-bit precision (1 implicit + 52 explicit)
-	mantissaBig := new(big.Float).SetPrec(uint(prec))
+	mantissaBig := new(big.Float).SetPrec(prec)
 	mantissaBig.SetUint64(mantissa)
 
 	// Divide by 2^52 to get fractional part
-	two52 := new(big.Float).SetPrec(uint(prec))
+	two52 := new(big.Float).SetPrec(prec)
 	two52.SetUint64(1 << 52) // 2^52
 	mantissaBig.Quo(mantissaBig, two52)
 
 	// Add 1 (implicit leading bit)
-	one := new(big.Float).SetPrec(uint(prec))
+	one := new(big.Float).SetPrec(prec)
 	one.SetUint64(1)
 	mantissaBig.Add(mantissaBig, one)
 
@@ -329,10 +329,10 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 	// Construct result: mantissa * 2^expValue
 	// Use SetMantExp to set mantissa and exponent together
 	// This is more efficient and handles large exponents correctly
-	result := new(big.Float).SetPrec(uint(prec))
+	result := new(big.Float).SetPrec(prec)
 
 	// Get mantissa from mantissaBig (which is in range [1, 2))
-	mant := new(big.Float).SetPrec(uint(prec))
+	mant := new(big.Float).SetPrec(prec)
 	_ = mantissaBig.MantExp(mant) // Extract mantissa, ignore exponent (it's 0)
 
 	// Set result = mant * 2^expValue
