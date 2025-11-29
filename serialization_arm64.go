@@ -6,6 +6,7 @@
 package bigmath
 
 import (
+	"encoding/binary"
 	"fmt"
 	"io"
 	"math/big"
@@ -27,6 +28,7 @@ func convertEndiannessBytesARM64(bytes *[8]byte, bigEndian uint8) uint64
 // Combined function: extract IEEE 754 components directly from bytes with endianness conversion
 // This reduces function call overhead by combining two operations into one
 //
+//nolint:unused // Kept for API compatibility but now using binary package for endianness
 //go:noescape
 func extractIEEE754FromBytesARM64(bytes *[8]byte, bigEndian uint8) (sign uint64, exponent int64, mantissa uint64)
 
@@ -56,9 +58,82 @@ func init() {
 	cachedZeroARM64 = new(big.Float).SetUint64(0)
 }
 
-// readDoubleAsBigFloatAsm is the assembly-optimized version of ReadDoubleAsBigFloat
+// handleZeroOrDenormalizedARM64 handles zero and denormalized numbers
+func handleZeroOrDenormalizedARM64(sign bool, prec uint) *BigFloat {
+	result := new(big.Float).SetPrec(prec)
+	result.Set(cachedZeroARM64)
+	if sign {
+		result.Neg(result)
+	}
+	return result
+}
+
+// handleInfinityOrNaNARM64 handles infinity and NaN cases
+func handleInfinityOrNaNARM64(sign bool, mantissa uint64, prec uint) *BigFloat {
+	if mantissa == 0 {
+		// Infinity - fast path: single operation
+		result := new(big.Float).SetPrec(prec)
+		result.SetInf(sign)
+		return result
+	}
+	// NaN - use pre-computed zero
+	result := new(big.Float).SetPrec(prec)
+	result.Set(cachedZeroARM64) // big.Float doesn't have NaN, so we'll return zero
+	return result
+}
+
+// handleCommonValuesARM64 handles fast paths for common values like 1.0 and -1.0
+func handleCommonValuesARM64(exponent int, mantissa uint64, sign bool, prec uint) *BigFloat {
+	if exponent == 1023 && mantissa == 0 {
+		result := new(big.Float).SetPrec(prec)
+		result.Set(cachedOneARM64)
+		if sign {
+			result.Neg(result)
+		}
+		return result
+	}
+	return nil
+}
+
+// handleNormalizedFastPathARM64 handles normalized numbers using fast float64 path
 //
-//nolint:gocyclo // High complexity due to multiple fast paths and special case handling
+//nolint:unparam // sign parameter kept for consistency with other handlers
+func handleNormalizedFastPathARM64(sign bool, signUint uint64, exponentInt int64, mantissaUint uint64, expValue int, prec uint) *BigFloat {
+	if expValue >= -1022 && expValue <= 1023 {
+		// Phase 3: Use assembly to construct float64 directly from components
+		floatValue := constructFloat64FromIEEE754ARM64(signUint, exponentInt, mantissaUint)
+		result := new(big.Float).SetPrec(prec)
+		result.SetFloat64(floatValue)
+		return result
+	}
+	return nil
+}
+
+// handleNormalizedExactARM64 handles normalized numbers using exact BigFloat arithmetic
+func handleNormalizedExactARM64(sign bool, mantissa uint64, expValue int, prec uint) *BigFloat {
+	result := new(big.Float).SetPrec(prec)
+	result.SetUint64(mantissa)
+
+	// Reuse single temporary variable for both two52 and one operations
+	temp := new(big.Float).SetPrec(prec)
+	temp.Set(two52ConstARM64)
+	result.Quo(result, temp)
+
+	temp.Set(oneConstARM64)
+	result.Add(result, temp)
+
+	// Extract mantissa and construct result
+	mantExp := result.MantExp(result)
+	result.SetMantExp(result, expValue+mantExp)
+
+	if sign {
+		result.Neg(result)
+	}
+
+	return result
+}
+
+// readDoubleAsBigFloatAsm is the assembly-optimized version of ReadDoubleAsBigFloat
 func readDoubleAsBigFloatAsm(r io.Reader, bigEndian bool, prec uint) (*BigFloat, error) {
 	if prec == 0 {
 		prec = DefaultPrecision
@@ -70,126 +145,53 @@ func readDoubleAsBigFloatAsm(r io.Reader, bigEndian bool, prec uint) (*BigFloat,
 		return nil, fmt.Errorf("failed to read 8 bytes: %w", err)
 	}
 
-	// Optimized: Use combined assembly function to do endianness conversion + extraction in one call
-	// This reduces function call overhead from 2 calls to 1
-	var bigEndianFlag uint8
+	// Extract IEEE 754 components with correct endianness handling
+	// Use binary package to correctly interpret bytes based on endianness
+	// This matches the generic implementation and fixes the endianness bug
+	var bits uint64
 	if bigEndian {
-		bigEndianFlag = 1
+		bits = binary.BigEndian.Uint64(doubleBytes[:])
+	} else {
+		bits = binary.LittleEndian.Uint64(doubleBytes[:])
 	}
-	signUint, exponentInt, mantissaUint := extractIEEE754FromBytesARM64(&doubleBytes, bigEndianFlag)
-	sign := signUint != 0
-	exponent := int(exponentInt)
-	mantissa := mantissaUint
-	// Keep signUint, exponentInt, mantissaUint for Phase 3 assembly function
 
-	// Handle special cases with optimized fast paths
+	// Extract components from bits
+	sign := (bits >> 63) != 0
+	exponent := int((bits >> 52) & 0x7FF)
+	mantissa := bits & 0xFFFFFFFFFFFFF
+
+	// Convert to types needed for assembly functions
+	var signUint uint64
+	if sign {
+		signUint = 1
+	}
+	exponentInt := int64(exponent)
+	mantissaUint := mantissa
+
+	// Handle special cases
 	if exponent == 0 {
-		if mantissa == 0 {
-			// Zero (positive or negative) - Phase 5: use pre-computed zero
-			result := new(big.Float).SetPrec(prec)
-			result.Set(cachedZeroARM64) // Use cached zero instead of SetInt64
-			if sign {
-				result.Neg(result)
-			}
-			return result, nil
-		}
-		// Denormalized number (subnormal)
-		// For denormalized: value = (-1)^sign * 2^(-1022) * (mantissa / 2^52)
-		// This is a very small number, handle as zero for now
-		// TODO: Implement denormalized number handling if needed
-		result := new(big.Float).SetPrec(prec)
-		result.Set(cachedZeroARM64) // Phase 5: use pre-computed zero
-		return result, nil
+		return handleZeroOrDenormalizedARM64(sign, prec), nil
 	}
 
 	if exponent == 0x7FF {
-		// Infinity or NaN - optimized: single allocation, direct SetInf
-		if mantissa == 0 {
-			// Infinity - fast path: single operation
-			result := new(big.Float).SetPrec(prec)
-			result.SetInf(sign)
-			return result, nil
-		}
-		// NaN - Phase 5: use pre-computed zero
-		result := new(big.Float).SetPrec(prec)
-		result.Set(cachedZeroARM64) // big.Float doesn't have NaN, so we'll return zero
-		// Caller should check for NaN if needed
+		return handleInfinityOrNaNARM64(sign, mantissa, prec), nil
+	}
+
+	// Handle common values
+	if result := handleCommonValuesARM64(exponent, mantissa, sign, prec); result != nil {
 		return result, nil
 	}
 
-	// Normalized number
-	// Value = (-1)^sign * 2^(exponent - 1023) * (1 + mantissa / 2^52)
-
-	// Phase 5: Fast path for common value 1.0 (exponent=1023, mantissa=0, sign=0)
-	if exponent == 1023 && mantissa == 0 && !sign {
-		result := new(big.Float).SetPrec(prec)
-		result.Set(cachedOneARM64)
-		return result, nil
-	}
-	// Fast path for -1.0 (exponent=1023, mantissa=0, sign=1)
-	if exponent == 1023 && mantissa == 0 && sign {
-		result := new(big.Float).SetPrec(prec)
-		result.Set(cachedOneARM64)
-		result.Neg(result)
-		return result, nil
-	}
-
-	// Phase 1 & 3: Direct Float64 construction path - fastest for normalized numbers
-	// For common exponent ranges, use float64 arithmetic and SetFloat64 (highly optimized)
-	// Fall back to exact method for very large/small exponents to maintain precision
+	// Handle normalized numbers
 	expValue := exponent - 1023
 
-	// Use float64 fast path for common exponent ranges (-1022 to 1023)
-	// This avoids expensive BigFloat arithmetic operations (Quo, Add, MantExp, SetMantExp)
-	if expValue >= -1022 && expValue <= 1023 {
-		// Phase 3: Use assembly to construct float64 directly from components
-		// This is faster than Go-level bit manipulation
-		var signUint uint64
-		if sign {
-			signUint = 1
-		}
-		floatValue := constructFloat64FromIEEE754ARM64(signUint, exponentInt, mantissaUint)
-
-		// Use SetFloat64 which is highly optimized in Go's big.Float
-		result := new(big.Float).SetPrec(prec)
-		result.SetFloat64(floatValue)
+	// Try fast path first
+	if result := handleNormalizedFastPathARM64(sign, signUint, exponentInt, mantissaUint, expValue, prec); result != nil {
 		return result, nil
 	}
 
-	// Fall back to exact method for very large/small exponents to maintain precision
-	// Phase 1 & 7 optimization: Eliminate temporary allocations and reduce precision setting
-	// Create result with precision first, then reuse for intermediate calculations
-	result := new(big.Float).SetPrec(prec)
-
-	// Step 1: Construct mantissa value (1 + mantissa / 2^52) using cached constants
-	// Use result for mantissa construction to avoid extra SetPrec calls
-	result.SetUint64(mantissa)
-
-	// Reuse single temporary variable for both two52 and one operations
-	// Phase 7: Set precision once on temp, reuse for both operations
-	temp := new(big.Float).SetPrec(prec)
-	temp.Set(two52ConstARM64)
-	result.Quo(result, temp)
-
-	temp.Set(oneConstARM64) // Reuse same variable instead of creating new one
-	result.Add(result, temp)
-
-	// Step 2: Calculate exponent and construct result directly
-	// result is in range [1, 2), so MantExp will return mantExp = 1
-	// Reuse result for mant extraction, then use it directly
-	// This eliminates the need for a separate 'mant' variable
-	mantExp := result.MantExp(result) // Extract mantissa to [0.5, 1), mantExp is 1
-
-	// Construct result directly using SetMantExp
-	// result now contains the mantissa in [0.5, 1) range
-	result.SetMantExp(result, expValue+mantExp)
-
-	// Apply sign
-	if sign {
-		result.Neg(result)
-	}
-
-	return result, nil
+	// Fall back to exact method
+	return handleNormalizedExactARM64(sign, mantissa, expValue, prec), nil
 }
 
 // readDoubleAsBigFloatImpl dispatches to the assembly-optimized version
