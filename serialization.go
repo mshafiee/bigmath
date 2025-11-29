@@ -329,14 +329,14 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 	// Construct result: mantissa * 2^expValue
 	// Use SetMantExp to set mantissa and exponent together
 	// This is more efficient and handles large exponents correctly
-	result := new(big.Float).SetPrec(prec)
-
-	// Get mantissa from mantissaBig (which is in range [1, 2))
+	// mantissaBig is in range [1, 2), so we extract it and add expValue
 	mant := new(big.Float).SetPrec(prec)
-	_ = mantissaBig.MantExp(mant) // Extract mantissa, ignore exponent (it's 0)
+	mantExp := mantissaBig.MantExp(mant) // Extract mantissa to [0.5, 1), mantExp is 1
 
-	// Set result = mant * 2^expValue
-	result.SetMantExp(mant, expValue)
+	// Set result = mant * 2^(expValue + mantExp)
+	// mantExp is 1 because mantissaBig was in [1, 2), so we add it back
+	result := new(big.Float).SetPrec(prec)
+	result.SetMantExp(mant, expValue+mantExp)
 
 	// Apply sign
 	if sign {

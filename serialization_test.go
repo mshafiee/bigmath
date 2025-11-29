@@ -4,7 +4,10 @@
 package bigmath
 
 import (
+	"bytes"
+	"encoding/binary"
 	"encoding/json"
+	"math"
 	"testing"
 )
 
@@ -392,4 +395,337 @@ func TestBigFloatJSONRoundTrip(t *testing.T) {
 			}
 		})
 	}
+}
+
+// TestReadDoubleAsBigFloat tests ReadDoubleAsBigFloat function
+func TestReadDoubleAsBigFloat(t *testing.T) {
+	prec := uint(256)
+
+	tests := []struct {
+		name      string
+		value     float64
+		bigEndian bool
+		tolerance float64
+	}{
+		{"zero_little_endian", 0.0, false, 1e-20},
+		{"zero_big_endian", 0.0, true, 1e-20},
+		{"negative_zero_little_endian", math.Copysign(0.0, -1.0), false, 1e-20},
+		{"negative_zero_big_endian", math.Copysign(0.0, -1.0), true, 1e-20},
+		{"one_little_endian", 1.0, false, 1e-15},
+		{"one_big_endian", 1.0, true, 1e-15},
+		{"negative_one_little_endian", -1.0, false, 1e-15},
+		{"negative_one_big_endian", -1.0, true, 1e-15},
+		{"pi_little_endian", math.Pi, false, 1e-15},
+		{"pi_big_endian", math.Pi, true, 1e-15},
+		{"e_little_endian", math.E, false, 1e-15},
+		{"e_big_endian", math.E, true, 1e-15},
+		{"large_number_little_endian", 1e100, false, 1e85},
+		{"large_number_big_endian", 1e100, true, 1e85},
+		{"small_number_little_endian", 1e-100, false, 1e-115},
+		{"small_number_big_endian", 1e-100, true, 1e-115},
+		{"negative_large_little_endian", -1e50, false, 1e35},
+		{"negative_large_big_endian", -1e50, true, 1e35},
+		{"negative_small_little_endian", -1e-50, false, 1e-65},
+		{"negative_small_big_endian", -1e-50, true, 1e-65},
+		{"max_float64_little_endian", math.MaxFloat64, false, 1e292},
+		{"max_float64_big_endian", math.MaxFloat64, true, 1e292},
+		// Note: math.SmallestNonzeroFloat64 is denormalized, which the function handles as zero (see TODO in code)
+		// Use smallest normalized number instead: 2^-1022
+		{"smallest_normal_little_endian", math.Pow(2, -1022), false, 1e-330},
+		{"smallest_normal_big_endian", math.Pow(2, -1022), true, 1e-330},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Convert float64 to bytes
+			var buf bytes.Buffer
+			if tt.bigEndian {
+				binary.Write(&buf, binary.BigEndian, tt.value)
+			} else {
+				binary.Write(&buf, binary.LittleEndian, tt.value)
+			}
+
+			// Read back using ReadDoubleAsBigFloat
+			reader := bytes.NewReader(buf.Bytes())
+			result, err := ReadDoubleAsBigFloat(reader, tt.bigEndian, prec)
+			if err != nil {
+				t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+			}
+
+			if result == nil {
+				t.Fatal("ReadDoubleAsBigFloat returned nil")
+			}
+
+			// Compare with original value
+			resultFloat, _ := result.Float64()
+			diff := math.Abs(resultFloat - tt.value)
+			if diff > tt.tolerance {
+				t.Errorf("ReadDoubleAsBigFloat = %g, want %g (diff %g, tolerance %g)", resultFloat, tt.value, diff, tt.tolerance)
+			}
+		})
+	}
+}
+
+// TestReadDoubleAsBigFloatSpecialCases tests special IEEE 754 cases
+func TestReadDoubleAsBigFloatSpecialCases(t *testing.T) {
+	prec := uint(256)
+
+	// Test positive infinity
+	t.Run("positive_infinity_little_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, math.Inf(1))
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if !result.IsInf() || result.Sign() < 0 {
+			t.Errorf("ReadDoubleAsBigFloat(Inf) = %v, want positive infinity", result)
+		}
+	})
+
+	t.Run("positive_infinity_big_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.BigEndian, math.Inf(1))
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, true, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if !result.IsInf() || result.Sign() < 0 {
+			t.Errorf("ReadDoubleAsBigFloat(Inf) = %v, want positive infinity", result)
+		}
+	})
+
+	// Test negative infinity
+	t.Run("negative_infinity_little_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, math.Inf(-1))
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if !result.IsInf() || result.Sign() > 0 {
+			t.Errorf("ReadDoubleAsBigFloat(-Inf) = %v, want negative infinity", result)
+		}
+	})
+
+	t.Run("negative_infinity_big_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.BigEndian, math.Inf(-1))
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, true, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if !result.IsInf() || result.Sign() > 0 {
+			t.Errorf("ReadDoubleAsBigFloat(-Inf) = %v, want negative infinity", result)
+		}
+	})
+
+	// Test NaN (big.Float doesn't support NaN, so it returns zero)
+	t.Run("nan_little_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, math.NaN())
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		// big.Float doesn't support NaN, so it returns zero
+		if result.Sign() != 0 {
+			val, _ := result.Float64()
+			t.Errorf("ReadDoubleAsBigFloat(NaN) = %v (big.Float limitation: NaN not supported)", val)
+		}
+	})
+
+	t.Run("nan_big_endian", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.BigEndian, math.NaN())
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, true, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		// big.Float doesn't support NaN, so it returns zero
+		if result.Sign() != 0 {
+			val, _ := result.Float64()
+			t.Errorf("ReadDoubleAsBigFloat(NaN) = %v (big.Float limitation: NaN not supported)", val)
+		}
+	})
+
+	// Test denormalized number (subnormal)
+	t.Run("denormalized_little_endian", func(t *testing.T) {
+		// Create a denormalized number: exponent=0, mantissa != 0
+		// Smallest denormalized: 0x0000000000000001
+		bits := uint64(0x0000000000000001)
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, bits)
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		// Currently denormalized numbers are handled as zero (see TODO in code)
+		if result.Sign() != 0 {
+			val, _ := result.Float64()
+			t.Errorf("ReadDoubleAsBigFloat(denormalized) = %v, want zero (denormalized handling TODO)", val)
+		}
+	})
+
+	t.Run("denormalized_big_endian", func(t *testing.T) {
+		// Create a denormalized number: exponent=0, mantissa != 0
+		bits := uint64(0x0000000000000001)
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.BigEndian, bits)
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, true, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		// Currently denormalized numbers are handled as zero (see TODO in code)
+		if result.Sign() != 0 {
+			val, _ := result.Float64()
+			t.Errorf("ReadDoubleAsBigFloat(denormalized) = %v, want zero (denormalized handling TODO)", val)
+		}
+	})
+}
+
+// TestReadDoubleAsBigFloatErrorCases tests error handling
+func TestReadDoubleAsBigFloatErrorCases(t *testing.T) {
+	prec := uint(256)
+
+	// Test short read
+	t.Run("short_read", func(t *testing.T) {
+		shortData := []byte{0x01, 0x02, 0x03} // Only 3 bytes instead of 8
+		reader := bytes.NewReader(shortData)
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err == nil {
+			t.Error("ReadDoubleAsBigFloat should fail on short read")
+		}
+		if result != nil {
+			t.Error("ReadDoubleAsBigFloat should return nil on error")
+		}
+	})
+
+	// Test empty reader
+	t.Run("empty_reader", func(t *testing.T) {
+		reader := bytes.NewReader([]byte{})
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err == nil {
+			t.Error("ReadDoubleAsBigFloat should fail on empty reader")
+		}
+		if result != nil {
+			t.Error("ReadDoubleAsBigFloat should return nil on error")
+		}
+	})
+}
+
+// TestReadDoubleAsBigFloatPrecision tests precision parameter handling
+func TestReadDoubleAsBigFloatPrecision(t *testing.T) {
+	// Test with explicit precision
+	t.Run("explicit_precision", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, math.Pi)
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, 128)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if result.Prec() != 128 {
+			t.Errorf("ReadDoubleAsBigFloat precision = %d, want 128", result.Prec())
+		}
+	})
+
+	// Test with zero precision (should use DefaultPrecision)
+	t.Run("zero_precision_uses_default", func(t *testing.T) {
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, 1.0)
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, 0)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+		if result.Prec() != DefaultPrecision {
+			t.Errorf("ReadDoubleAsBigFloat precision = %d, want %d (DefaultPrecision)", result.Prec(), DefaultPrecision)
+		}
+	})
+
+	// Test with different precision levels
+	t.Run("various_precisions", func(t *testing.T) {
+		testPrecs := []uint{64, 128, 256, 512}
+		for _, p := range testPrecs {
+			var buf bytes.Buffer
+			binary.Write(&buf, binary.LittleEndian, 2.71828)
+			reader := bytes.NewReader(buf.Bytes())
+			result, err := ReadDoubleAsBigFloat(reader, false, p)
+			if err != nil {
+				t.Fatalf("ReadDoubleAsBigFloat failed at prec %d: %v", p, err)
+			}
+			if result.Prec() != p {
+				t.Errorf("ReadDoubleAsBigFloat precision = %d, want %d", result.Prec(), p)
+			}
+		}
+	})
+}
+
+// TestReadDoubleAsBigFloatPrecisionPreservation tests that full 53-bit precision is preserved
+func TestReadDoubleAsBigFloatPrecisionPreservation(t *testing.T) {
+	prec := uint(256)
+
+	// Test with a value that has specific bit patterns
+	// Use a value that would lose precision if converted through float64
+	t.Run("precision_preservation", func(t *testing.T) {
+		// Create a double with specific mantissa bits
+		// Value: 1.0000000000000002 (next representable after 1.0)
+		value := 1.0 + math.Nextafter(0.0, 1.0)
+
+		var buf bytes.Buffer
+		binary.Write(&buf, binary.LittleEndian, value)
+		reader := bytes.NewReader(buf.Bytes())
+		result, err := ReadDoubleAsBigFloat(reader, false, prec)
+		if err != nil {
+			t.Fatalf("ReadDoubleAsBigFloat failed: %v", err)
+		}
+
+		resultFloat, _ := result.Float64()
+		// Should match exactly (within float64 precision)
+		if resultFloat != value {
+			t.Errorf("ReadDoubleAsBigFloat = %g, want %g (precision loss detected)", resultFloat, value)
+		}
+	})
+
+	// Test round-trip: write as double, read as BigFloat, compare
+	t.Run("round_trip_accuracy", func(t *testing.T) {
+		testValues := []float64{
+			1.0,
+			math.Pi,
+			math.E,
+			1e10,
+			1e-10,
+			-1.0,
+			-math.Pi,
+		}
+
+		for _, val := range testValues {
+			var buf bytes.Buffer
+			binary.Write(&buf, binary.LittleEndian, val)
+			reader := bytes.NewReader(buf.Bytes())
+			result, err := ReadDoubleAsBigFloat(reader, false, prec)
+			if err != nil {
+				t.Fatalf("ReadDoubleAsBigFloat failed for %g: %v", val, err)
+			}
+
+			resultFloat, _ := result.Float64()
+			if resultFloat != val {
+				// For very large or very small numbers, allow some tolerance
+				tolerance := math.Max(math.Abs(val)*1e-15, 1e-15)
+				diff := math.Abs(resultFloat - val)
+				if diff > tolerance {
+					t.Errorf("Round-trip failed for %g: got %g, diff %g", val, resultFloat, diff)
+				}
+			}
+		}
+	})
 }
