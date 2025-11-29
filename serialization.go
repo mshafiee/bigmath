@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 )
 
 // BigFloatMarshalJSON marshals a BigFloat to JSON
@@ -211,4 +212,37 @@ func (m *BigMatrix3x3) UnmarshalJSON(data []byte) error {
 	}
 
 	return nil
+}
+
+// ReadDoubleAsBigFloat reads 8 bytes from the reader and converts them directly to BigFloat
+// without going through float64. This preserves the full 53-bit precision of IEEE 754 doubles.
+//
+// The bytes are interpreted as an IEEE 754 double precision floating-point number:
+// - 1 sign bit
+// - 11 exponent bits
+// - 52 mantissa bits (with implicit leading 1)
+//
+// This function extracts the sign, exponent, and mantissa, then constructs a BigFloat
+// directly from these components, avoiding the float64 intermediate conversion.
+//
+// Parameters:
+//   - r: io.Reader to read 8 bytes from
+//   - bigEndian: true for big-endian byte order, false for little-endian
+//   - prec: BigFloat precision in bits (0 uses DefaultPrecision)
+//
+// Returns:
+//   - *BigFloat: The converted value with full 53-bit precision
+//   - error: Any error encountered during reading or conversion
+//
+// Example:
+//
+//	reader := bytes.NewReader(doubleBytes)
+//	value, err := bigmath.ReadDoubleAsBigFloat(reader, false, 256)
+//	if err != nil {
+//	    return err
+//	}
+func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, error) {
+	// Use platform-specific optimized implementation when available
+	// Falls back to generic implementation on unsupported platforms
+	return readDoubleAsBigFloatImpl(r, bigEndian, prec)
 }
