@@ -18,6 +18,7 @@ import (
 //  3. Taylor series for ln(y) using atanh series:
 //     ln(y) = 2 * atanh((y-1)/(y+1))
 //     = 2 * sum_{n=0} (u^(2n+1) / (2n+1)) where u = (y-1)/(y+1)
+//
 // If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigLog(x *BigFloat, prec uint) *BigFloat {
 	if CanUseExtendedPrecision(prec) {

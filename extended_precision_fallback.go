@@ -11,21 +11,29 @@ import "math"
 // These functions use standard Go math operations and convert to/from BigFloat.
 
 // ExtendedAdd: result = a + b
+//
+//nolint:unused // Used via build tags on non-x86 platforms
 func extendedAdd(a, b float64) float64 {
 	return a + b
 }
 
 // ExtendedSub: result = a - b
+//
+//nolint:unused // Used via build tags on non-x86 platforms
 func extendedSub(a, b float64) float64 {
 	return a - b
 }
 
 // ExtendedMul: result = a * b
+//
+//nolint:unused // Used via build tags on non-x86 platforms
 func extendedMul(a, b float64) float64 {
 	return a * b
 }
 
 // ExtendedDiv: result = a / b
+//
+//nolint:unused // Used via build tags on non-x86 platforms
 func extendedDiv(a, b float64) float64 {
 	return a / b
 }
@@ -74,4 +82,3 @@ func extendedSqrt(x float64) float64 {
 func extendedPow(x, y float64) float64 {
 	return math.Pow(x, y)
 }
-

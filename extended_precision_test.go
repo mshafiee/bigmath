@@ -217,4 +217,3 @@ func TestExtendedPrecisionFallback(t *testing.T) {
 		t.Errorf("BigSin with prec=256 should use BigFloat, got %v, want %v (diff: %v)", resultFloat, expected, diff)
 	}
 }
-

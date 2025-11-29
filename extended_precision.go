@@ -7,19 +7,9 @@ import (
 	"math"
 )
 
-// ExtendedFloat represents an 80-bit extended precision floating-point value
-// stored in the x87 FPU. This type is used internally for hardware extended
-// precision operations on x86/x86-64 platforms.
-//
-// Note: ExtendedFloat values are not directly accessible from Go code.
-// They exist only during x87 FPU operations and must be converted to/from
-// BigFloat for use in Go code.
-type ExtendedFloat struct {
-	// value stores the 80-bit extended precision value as a float64
-	// for conversion purposes. The actual x87 operations work directly
-	// with the FPU stack.
-	value float64
-}
+// ExtendedFloat represents an 80-bit extended precision floating-point value.
+// This type is used conceptually for extended precision operations.
+// Actual operations use float64 values converted to/from BigFloat.
 
 // BigFloatToExtendedFloat converts a BigFloat to extended precision format.
 // This function prepares the value for x87 FPU operations.
@@ -40,7 +30,7 @@ func ExtendedFloatToBigFloat(val float64, prec uint) *BigFloat {
 		prec = DefaultPrecision
 	}
 	result := new(BigFloat).SetPrec(prec)
-	
+
 	// Handle special values
 	if math.IsNaN(val) {
 		// big.Float doesn't support NaN, return 0
@@ -50,7 +40,7 @@ func ExtendedFloatToBigFloat(val float64, prec uint) *BigFloat {
 		result.SetInf(math.IsInf(val, -1))
 		return result
 	}
-	
+
 	return result.SetFloat64(val)
 }
 
@@ -69,4 +59,3 @@ func CanUseExtendedPrecision(prec uint) bool {
 	features := GetCPUFeatures()
 	return features.HasX87
 }
-
