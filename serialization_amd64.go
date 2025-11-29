@@ -28,6 +28,7 @@ func convertEndiannessBytes(bytes *[8]byte, bigEndian uint8) uint64
 // Combined function: extract IEEE 754 components directly from bytes with endianness conversion
 // This reduces function call overhead by combining two operations into one
 //
+//nolint:unused // Kept for API compatibility but now using binary package for endianness
 //go:noescape
 func extractIEEE754FromBytes(bytes *[8]byte, bigEndian uint8) (sign uint64, exponent int64, mantissa uint64)
 
@@ -95,6 +96,8 @@ func handleCommonValuesAMD64(exponent int, mantissa uint64, sign bool, prec uint
 }
 
 // handleNormalizedFastPathAMD64 handles normalized numbers using fast float64 path
+//
+//nolint:unparam // sign parameter kept for consistency with other handlers
 func handleNormalizedFastPathAMD64(sign bool, signUint uint64, exponentInt int64, mantissaUint uint64, expValue int, prec uint) *BigFloat {
 	if expValue >= -1022 && expValue <= 1023 {
 		// Phase 3: Use assembly to construct float64 directly from components
