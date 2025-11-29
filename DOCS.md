@@ -28,6 +28,7 @@ Complete API reference for the bigmath package.
 - [Serialization](#serialization)
 - [Error Handling](#error-handling)
 - [CPU Feature Detection](#cpu-feature-detection)
+- [Extended Precision Mode](#extended-precision-mode)
 
 ## Constants
 
@@ -38,6 +39,29 @@ const DefaultPrecision = 256
 ```
 
 Default precision in bits (77 decimal digits). Used when `prec` parameter is 0.
+
+### ExtendedPrecision
+
+```go
+const ExtendedPrecision = 80
+```
+
+Extended precision constant (80 bits) that enables hardware extended precision mode using the x87 FPU.
+When `prec == ExtendedPrecision` and x87 is available (x86/x86-64 platforms), operations use the hardware
+80-bit extended precision format for faster intermediate calculations. On other platforms or when x87 is
+unavailable, operations automatically fall back to BigFloat implementations.
+
+**Platform Support**: Only available on x86/x86-64 (amd64 or 386) platforms with x87 FPU support.
+
+**Usage**:
+```go
+// Use extended precision for sin calculation
+x := bigmath.NewBigFloat(math.Pi/4, bigmath.ExtendedPrecision)
+result := bigmath.BigSin(x, bigmath.ExtendedPrecision)
+```
+
+**Supported Operations**: Trigonometric (sin, cos, tan, atan, atan2), exponential/logarithmic (exp, log),
+power (pow), and square root (sqrt) functions support extended precision mode.
 
 ### Rounding Modes
 
@@ -1019,6 +1043,72 @@ Returns detected CPU features. Used internally by the dispatcher to select optim
 
 **ARM64 Features:**
 - `HasNEON`: NEON SIMD instructions (always available on ARMv8)
+- `HasX87`: x87 FPU support (80-bit extended precision, x86/x86-64 only)
+
+## Extended Precision Mode
+
+The library supports hardware extended precision (80-bit x87 FPU) mode for faster intermediate calculations
+on x86/x86-64 platforms. This mode uses the x87 FPU's native 80-bit extended precision format instead of
+arbitrary-precision BigFloat calculations.
+
+### Activation
+
+Extended precision mode is activated by setting `prec = ExtendedPrecision` (80) when calling functions:
+
+```go
+// Use extended precision for trigonometric calculations
+x := bigmath.NewBigFloat(math.Pi/4, bigmath.ExtendedPrecision)
+sinX := bigmath.BigSin(x, bigmath.ExtendedPrecision)
+cosX := bigmath.BigCos(x, bigmath.ExtendedPrecision)
+```
+
+### Platform Support
+
+Extended precision mode is only available on:
+- x86-64 (amd64) platforms
+- x86 (386) platforms
+- Systems with x87 FPU support
+
+On other platforms or when x87 is unavailable, operations automatically fall back to BigFloat implementations.
+
+### Supported Operations
+
+The following operations support extended precision mode:
+- **Trigonometric**: `BigSin`, `BigCos`, `BigTan`, `BigAtan`, `BigAtan2`
+- **Exponential/Logarithmic**: `BigExp`, `BigLog`
+- **Power**: `BigPow`
+- **Root**: `BigSqrt`
+
+### Checking Availability
+
+Use `CanUseExtendedPrecision(prec)` to check if extended precision can be used:
+
+```go
+if bigmath.CanUseExtendedPrecision(bigmath.ExtendedPrecision) {
+    // Extended precision is available
+    result := bigmath.BigSin(x, bigmath.ExtendedPrecision)
+} else {
+    // Fall back to BigFloat
+    result := bigmath.BigSin(x, 256)
+}
+```
+
+### Performance Considerations
+
+Extended precision mode provides:
+- **Faster execution**: Hardware x87 FPU operations are typically faster than software BigFloat calculations
+- **80-bit precision**: Provides approximately 19 decimal digits of precision (64-bit mantissa)
+- **Automatic fallback**: Seamlessly falls back to BigFloat when extended precision is unavailable
+
+**Use cases:**
+- Intermediate calculations where 80-bit precision is sufficient
+- Performance-critical code paths on x86/x86-64 platforms
+- When exact arbitrary precision is not required
+
+**Limitations:**
+- Fixed 80-bit precision (not arbitrary)
+- Platform-specific (x86/x86-64 only)
+- May have different rounding behavior than BigFloat
 
 ## Performance Notes
 

@@ -13,6 +13,8 @@ func detectAMD64Features(features *CPUFeatures) {
 	features.HasAVX512 = cpuidAVX512()
 	features.HasFMA = cpuidFMA()
 	features.HasBMI2 = cpuidBMI2()
+	// x87 FPU is always available on x86-64 (AMD64)
+	features.HasX87 = true
 }
 
 // detectARM64Features is not applicable on AMD64

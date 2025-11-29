@@ -1,5 +1,18 @@
 # Build Tags and Assembly Function Declarations
 
+## Extended Precision (x87 FPU) Support
+
+The library includes support for hardware extended precision (80-bit x87 FPU) on x86/x86-64 platforms:
+
+- **Build tag**: `//go:build amd64 || 386` - Enables x87 extended precision support
+- **Files**:
+  - `extended_precision_decl.go` - Function declarations for x87 operations
+  - `extended_precision_amd64.s` - x87 FPU assembly implementations
+  - `extended_precision_fallback.go` - Fallback to standard math on other platforms
+
+Extended precision mode is activated by setting `prec = ExtendedPrecision` (80) when calling functions.
+On platforms without x87 support, operations automatically fall back to BigFloat implementations.
+
 ## Pattern for Assembly Function Declarations
 
 When adding assembly function declarations, follow this pattern to ensure cross-platform compatibility:
@@ -49,6 +62,9 @@ func myAsmFunction(x *BigFloat) *BigFloat  // Missing body - fails on generic pl
 - `bigfloat_ops_arm64.go` - `//go:build arm64` (fallback implementations)
 - `exp_log_decl.go` - `//go:build !amd64 && !arm64` (fallback implementations)
 - `rounding_asm_decl.go` - `//go:build amd64` (assembly implementations exist)
+- `extended_precision_decl.go` - `//go:build amd64 || 386` (x87 FPU assembly implementations)
+- `extended_precision_amd64.s` - `//go:build amd64 || 386` (x87 FPU assembly code)
+- `extended_precision_fallback.go` - `//go:build !amd64 && !386` (fallback to standard math)
 
 ### Testing
 

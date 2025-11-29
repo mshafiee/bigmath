@@ -11,10 +11,11 @@ A high-performance arbitrary-precision mathematics library for Go, optimized wit
 
 - ⚡ **High Performance**: Assembly-optimized implementations achieving 20-40% performance improvements
 - 🔢 **Arbitrary Precision**: Default 256-bit precision (77 decimal digits), configurable to any precision
+- 🚀 **Extended Precision Mode**: Hardware 80-bit x87 FPU support for faster intermediate calculations (x86/x86-64)
 - 🎯 **Comprehensive Math**: Trigonometric, hyperbolic, exponential, logarithmic, power, and special functions
 - 📐 **Vector & Matrix Operations**: 3D/6D vectors and 3x3 matrices with arbitrary precision, including advanced operations
 - 🧮 **Chebyshev Polynomials**: Optimized evaluation for astronomical ephemeris calculations
-- 🔍 **CPU Feature Detection**: Automatically uses optimal code paths (BMI2, AVX2, NEON)
+- 🔍 **CPU Feature Detection**: Automatically uses optimal code paths (BMI2, AVX2, NEON, x87)
 - ✅ **MPFR-Compatible**: Algorithms designed to match MPFR behavior for scientific computing
 - 🧪 **Special Functions**: Gamma, error functions (erf, erfc), and Bessel functions
 - 🔢 **Root Functions**: Square root, cube root, and nth root
@@ -267,7 +268,13 @@ x := bigmath.NewBigFloat(3.14, 64)
 
 // High precision (1024 bits)
 x := bigmath.NewBigFloat(3.14, 1024)
+
+// Extended precision mode (80-bit x87 FPU, x86/x86-64 only)
+x := bigmath.NewBigFloat(3.14, bigmath.ExtendedPrecision)
+result := bigmath.BigSin(x, bigmath.ExtendedPrecision)
 ```
+
+**Extended Precision Mode**: On x86/x86-64 platforms, setting `prec = ExtendedPrecision` (80) enables hardware extended precision using the x87 FPU. This provides faster intermediate calculations with 80-bit precision (~19 decimal digits). Operations automatically fall back to BigFloat on other platforms.
 
 ## Use Cases
 

@@ -5,7 +5,13 @@ package bigmath
 
 // BigSin computes sin(x) using Taylor series with arbitrary precision
 // sin(x) = x - x³/3! + x⁵/5! - x⁷/7! + x⁹/9! - ...
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigSin(x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedSin(val)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	return getDispatcher().BigSinImpl(x, prec)
 }
 
@@ -19,7 +25,13 @@ func BigSinRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat,
 
 // BigCos computes cos(x) using Taylor series with arbitrary precision
 // cos(x) = 1 - x²/2! + x⁴/4! - x⁶/6! + x⁸/8! - ...
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigCos(x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedCos(val)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	return getDispatcher().BigCosImpl(x, prec)
 }
 
@@ -31,7 +43,13 @@ func BigCosRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat,
 }
 
 // BigTan computes tan(x) = sin(x) / cos(x)
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigTan(x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedTan(val)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	return getDispatcher().BigTanImpl(x, prec)
 }
 
@@ -45,7 +63,13 @@ func BigTanRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat,
 // BigAtan computes arctan(x) using Taylor series
 // atan(x) = x - x³/3 + x⁵/5 - x⁷/7 + ... for |x| ≤ 1
 // For |x| > 1, use atan(x) = π/2 - atan(1/x)
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigAtan(x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedAtan(val)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	return getDispatcher().BigAtanImpl(x, prec)
 }
 
@@ -58,7 +82,14 @@ func BigAtanRounded(x *BigFloat, prec uint, mode RoundingMode) (result *BigFloat
 
 // BigAtan2 computes atan2(y, x) with arbitrary precision
 // Returns the angle in radians between the positive x-axis and the point (x, y)
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigAtan2(y, x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		yVal := BigFloatToExtendedFloat(y)
+		xVal := BigFloatToExtendedFloat(x)
+		result := extendedAtan2(yVal, xVal)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	return getDispatcher().BigAtan2Impl(y, x, prec)
 }
 

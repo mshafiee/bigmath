@@ -16,6 +16,7 @@ type CPUFeatures struct {
 	HasAVX512 bool
 	HasFMA    bool
 	HasBMI2   bool // Bit Manipulation Instructions 2 (ADCX, ADOX, MULX)
+	HasX87    bool // x87 FPU support (80-bit extended precision)
 
 	// ARM64 features
 	HasNEON bool

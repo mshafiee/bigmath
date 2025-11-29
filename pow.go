@@ -9,7 +9,14 @@ import (
 
 // BigPow computes x^y with specified precision
 // Uses exp(y * ln(x)) for non-integer y
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigPow(x, y *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		xVal := BigFloatToExtendedFloat(x)
+		yVal := BigFloatToExtendedFloat(y)
+		result := extendedPow(xVal, yVal)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	// Use dispatcher to select assembly or generic implementation
 	return getDispatcher().BigPowImpl(x, y, prec)
 }

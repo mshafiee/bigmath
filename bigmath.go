@@ -14,6 +14,12 @@ import (
 // 256 bits is sufficient - errors are not due to BigFloat precision limits
 const DefaultPrecision = 256
 
+// ExtendedPrecision enables hardware extended precision (80-bit x87 FPU) mode.
+// When prec == ExtendedPrecision, operations use the x87 FPU for faster intermediate
+// calculations. This is only available on x86/x86-64 platforms with x87 support.
+// On other platforms or when x87 is unavailable, operations fall back to BigFloat.
+const ExtendedPrecision = 80
+
 // BigFloat is an alias for big.Float for convenience
 type BigFloat = big.Float
 
@@ -408,6 +414,7 @@ func BigHalfPI(prec uint) *BigFloat {
 }
 
 // BigSqrt computes the square root using Newton-Raphson method
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigSqrt(x *BigFloat, prec uint) *BigFloat {
 	if prec == 0 {
 		prec = x.Prec()
@@ -420,6 +427,13 @@ func BigSqrt(x *BigFloat, prec uint) *BigFloat {
 	if x.Sign() < 0 {
 		// Return NaN for negative numbers
 		return NewBigFloat(math.NaN(), prec)
+	}
+
+	// Check for extended precision mode
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedSqrt(val)
+		return ExtendedFloatToBigFloat(result, prec)
 	}
 
 	// Initial guess using float64 sqrt

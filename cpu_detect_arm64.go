@@ -8,6 +8,7 @@ package bigmath
 // detectAMD64Features is not applicable on ARM64
 func detectAMD64Features(features *CPUFeatures) {
 	// No AMD64 features on ARM64
+	features.HasX87 = false
 }
 
 // detectARM64Features detects ARM64-specific CPU features

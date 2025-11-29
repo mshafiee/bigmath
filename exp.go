@@ -15,7 +15,13 @@ import (
 //  2. Further reduction: exp(r) = (exp(r/2^p))^(2^p)
 //     Reduce r until |r| is small enough for Taylor series to converge fast.
 //  3. Taylor series with binary splitting for exp(r/2^p).
+// If prec == ExtendedPrecision and x87 is available, uses hardware extended precision.
 func BigExp(x *BigFloat, prec uint) *BigFloat {
+	if CanUseExtendedPrecision(prec) {
+		val := BigFloatToExtendedFloat(x)
+		result := extendedExp(val)
+		return ExtendedFloatToBigFloat(result, prec)
+	}
 	// Use dispatcher to select assembly or generic implementation
 	return getDispatcher().BigExpImpl(x, prec)
 }
