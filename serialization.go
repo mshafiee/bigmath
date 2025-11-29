@@ -280,14 +280,14 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 			if sign {
 				result.Neg(result)
 			}
-			return (*BigFloat)(result), nil
+			return result, nil
 		}
 		// Denormalized number (subnormal)
 		// For denormalized: value = (-1)^sign * 2^(-1022) * (mantissa / 2^52)
 		// This is a very small number, handle as zero for now
 		// TODO: Implement denormalized number handling if needed
 		result := new(big.Float).SetPrec(uint(prec))
-		return (*BigFloat)(result), nil
+		return result, nil
 	}
 
 	if exponent == 0x7FF {
@@ -296,13 +296,13 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 			// Infinity
 			result := new(big.Float).SetPrec(uint(prec))
 			result.SetInf(sign)
-			return (*BigFloat)(result), nil
+			return result, nil
 		}
 		// NaN
 		result := new(big.Float).SetPrec(uint(prec))
 		// big.Float doesn't have NaN, so we'll return zero
 		// Caller should check for NaN if needed
-		return (*BigFloat)(result), nil
+		return result, nil
 	}
 
 	// Normalized number
@@ -343,5 +343,5 @@ func ReadDoubleAsBigFloat(r io.Reader, bigEndian bool, prec uint) (*BigFloat, er
 		result.Neg(result)
 	}
 
-	return (*BigFloat)(result), nil
+	return result, nil
 }
