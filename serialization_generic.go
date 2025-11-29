@@ -176,8 +176,3 @@ func readDoubleAsBigFloatGeneric(r io.Reader, bigEndian bool, prec uint) (*BigFl
 
 	return result, nil
 }
-
-// readDoubleAsBigFloatImpl dispatches to the generic version
-func readDoubleAsBigFloatImpl(r io.Reader, bigEndian bool, prec uint) (*BigFloat, error) {
-	return readDoubleAsBigFloatGeneric(r, bigEndian, prec)
-}

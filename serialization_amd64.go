@@ -8,7 +8,6 @@ package bigmath
 import (
 	"fmt"
 	"io"
-	"math"
 	"math/big"
 )
 

@@ -21,7 +21,8 @@ TEXT ·extractIEEE754Components(SB), NOSPLIT, $0-32
 
 	// Extract mantissa (bits 0-51, 52 bits)
 	MOVQ AX, DX
-	ANDQ $0xFFFFFFFFFFFFF, DX   // Mask to get lower 52 bits
+	MOVQ $0xFFFFFFFFFFFFF, SI   // Load mask for lower 52 bits (0xFFFFFFFFFFFFF = 4503599627370495)
+	ANDQ SI, DX                 // Mask to get lower 52 bits
 	MOVQ DX, mantissa+24(FP)
 
 	RET
@@ -80,7 +81,8 @@ TEXT ·extractIEEE754FromBytes(SB), NOSPLIT, $0-40
 
 	// Extract mantissa (bits 0-51, 52 bits)
 	MOVQ AX, DX                   // DX = bits
-	ANDQ $0xFFFFFFFFFFFFF, DX     // Mask to get lower 52 bits
+	MOVQ $0xFFFFFFFFFFFFF, SI     // Load mask for lower 52 bits
+	ANDQ SI, DX                   // Mask to get lower 52 bits
 
 	// Phase 4: Write all results in sequence for better cache locality
 	MOVQ BX, sign+16(FP)          // Store sign
@@ -106,10 +108,12 @@ TEXT ·constructFloat64FromIEEE754(SB), NOSPLIT, $0-24
 	// Shift exponent to bits 52-62 and mask
 	MOVQ BX, DX                   // DX = exponent
 	SHLQ $52, DX                  // DX = exponent << 52
-	ANDQ $0x7FF0000000000000, DX  // Mask to 11 bits (0x7FF = 2047)
+	MOVQ $0x7FF0000000000000, SI  // Load mask for exponent bits
+	ANDQ SI, DX                   // Mask to 11 bits (0x7FF = 2047)
 
 	// Mantissa is already in correct position (bits 0-51)
-	ANDQ $0xFFFFFFFFFFFFF, CX     // Mask mantissa to 52 bits (ensure clean)
+	MOVQ $0xFFFFFFFFFFFFF, SI     // Load mask for mantissa
+	ANDQ SI, CX                   // Mask mantissa to 52 bits (ensure clean)
 
 	// Combine: sign | exponent | mantissa
 	ORQ DX, AX                    // AX = sign | exponent
